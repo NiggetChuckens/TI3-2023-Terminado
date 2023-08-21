@@ -34,8 +34,8 @@ Para empezar el desarrollo de la app, se tiene que descargar Android Studio, par
 3. Una vez instalado, se debe abrir Android Studio y se debe crear un nuevo proyecto, se debe seleccionar la opcion de Empty Activity.
 
 ## Desarrolladores:
-Nicolas Vergara: https://github.com/Nipicoco
-Rodrigo Altamirano: https://github.com/NiggetChuckens
-Roberto Nieves: https://github.com/cowerino
-Jecar Yañez: https://github.com/Mecar7
-Benjamin Sanchez: https://github.com/pansito2
+- Nicolas Vergara: https://github.com/Nipicoco
+- Rodrigo Altamirano: https://github.com/NiggetChuckens
+- Roberto Nieves: https://github.com/cowerino
+- Jecar Yañez: https://github.com/Mecar7
+- Benjamin Sanchez: https://github.com/pansito2
