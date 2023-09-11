@@ -1,41 +1,33 @@
-# integra-3
-#Prueba
+## Branches:
 
+- Main
+- Development
+- Development-Jecar
+- Development-Nico
+- Development-Benja
+- Development-Rodrigo
+- Development-Rob
 
+## Instalación de Flutter
 
-Branches:
+1. Para instalar flutter debemos ingresar a su [pagina web](https://flutter.dev) y seguir los pasos dependiendo la plataforma en la que nos encontremos.
+2. En mi caso estaré utilizando windows por lo que bajaré esa version.
+3. Lo siguiente es agregar flutter al path, para ello debemos entrar en variables del entorno de nuestro usuario, agregar la ruta en la que instalamos flutter y seleccionar la carpeta bin (ej: `%userprofile%\Flutter\bin`)
+4. Luego debemos ejecutar el siguiente comando:
+```bash
+flutter doctor -v
+```
+5. Una vez ejecutado el comando, nos va a indicar lo que debemos instalar en caso que no haya encontrado las instalaciones correspondientes
 
---Main
---Development
+## Creacion del proyecto
 
-
-Para este proyecto se usara kotlin, para instalar kotlin se tendran que seguir los siguientes pasos:
-
-1. Dentro de powershell se debe ejecutar el siguiente comando:
-```curl -L -o kotlin-compiler.zip https://github.com/JetBrains/kotlin/releases/download/v1.9.0/kotlin-compiler-1.9.0.zip```
-2. Despues se debe descomprimir el archivo kotlin-compiler.zip
-```unzip kotlin-compiler.zip```
-3. Seteamos las variables de entorno
-4. Verificamos que se haya instalado correctamente
-```kotlinc -version```
-
-Extensiones usadas en el proyecto para visual studio code:
-
-1. Kotlin
-2. Kotlin Language
-3. Code Runner
-4. Java Extension Pack
-
-
-Para empezar el desarrollo de la app, se tiene que descargar Android Studio, para ello se debe seguir los siguientes pasos:
-1. Descargar Android Studio desde la pagina oficial de Android Studio
-```https://developer.android.com/studio```
-2. Ejecutar el instalador y seguir los pasos que se indican, se instalara Android Studio y el SDK de Android Studio.
-3. Una vez instalado, se debe abrir Android Studio y se debe crear un nuevo proyecto, se debe seleccionar la opcion de Empty Activity.
+1. Para la creacion del proyecto, dentro de Visual Studio Code, presionaremos las teclas Control+Shift+P y escribiremos "Flutter"
+2. Buscaremos la opcion que diga "Flutter: Create new project" y la seleccionaremos
+3. Una vez terminado el proceso ya tendremos creado nuestro proyecto el cual podremos testear utilizando la herramienta "Debug" dentro de Visual Studio Code
 
 ## Desarrolladores:
-- Nicolas Vergara: https://github.com/Nipicoco
-- Rodrigo Altamirano: https://github.com/NiggetChuckens
-- Roberto Nieves: https://github.com/cowerino
-- Jecar Yañez: https://github.com/Mecar7
-- Benjamin Sanchez: https://github.com/pansito2
+- [Nicolas Vergara](https://github.com/Nipicoco)
+- [Rodrigo Altamirano](https://github.com/NiggetChuckens)
+- [Roberto Nieves](https://github.com/cowerino)
+- [Jecar Yañez](https://github.com/Mecar7)
+- [Benjamin Sanchez](https://github.com/pansito2)
