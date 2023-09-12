@@ -136,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: NetworkImage(
-                          'https://www.pngmart.com/files/11/Dank-Meme-Transparent-PNG.png'), // replace with your image url
+                          'https://www.pngmart.com/files/11/Dank-Meme-PNG-Clipart.png'), // replace with your image url
                       fit: BoxFit.cover,
                     ),
                   ),
