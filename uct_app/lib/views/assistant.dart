@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uct_app/views/profile.dart';
 
 class Assistant extends StatelessWidget {
   const Assistant({Key? key, this.username, this.picture}) : super(key: key);

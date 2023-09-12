@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Boton extends StatelessWidget {
   final VoidCallback? onTap;
 
-  const Boton({Key? key, required this.onTap});
+  const Boton({super.key , required this.onTap});
 
   @override
   Widget build(BuildContext context) {
