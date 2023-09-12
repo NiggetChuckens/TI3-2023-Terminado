@@ -35,14 +35,14 @@ class ProfilesGrid extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => const Profile(
                       username: 'Kim Yong Un',
-                      picture: 'https://i.imgur.com/BoN9kdC.jpeg',
+                      picture: 'https://i.imgur.com/BoN9kdC.png',
                     ),
                   ),
                 );
               },
               child: const Assistant(
                 username: 'Kim Yong Unn',
-                picture: 'https://i.imgur.com/BoN9kdC.jpeg',)
+                picture: 'https://i.imgur.com/BoN9kdC.png',)
             ),
           ),
           Container(
@@ -54,7 +54,7 @@ class ProfilesGrid extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => const Profile(
                       username: 'Vladimir Putin',
-                      picture: 'https://i.imgur.com/BoN9kdC.jpeg',
+                      picture: 'https://i.imgur.com/BoN9kdC.png',
                     ),
                   ),
                 );
@@ -62,7 +62,7 @@ class ProfilesGrid extends StatelessWidget {
               child: Column(
                 children: [
                   Image.network(
-                    'https://i.imgur.com/BoN9kdC.jpeg',
+                    'https://i.imgur.com/BoN9kdC.png',
                     width: 140,
                     height: 140,
                   ),
@@ -79,7 +79,7 @@ class ProfilesGrid extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => const Profile(
                       username: 'Donald Trump',
-                      picture: 'https://i.imgur.com/BoN9kdC.jpeg',
+                      picture: 'https://i.imgur.com/BoN9kdC.png',
                     ),
                   ),
                 );
@@ -87,7 +87,7 @@ class ProfilesGrid extends StatelessWidget {
               child: Column(
                 children: [
                   Image.network(
-                    'https://i.imgur.com/BoN9kdC.jpeg',
+                    'https://i.imgur.com/BoN9kdC.png',
                     width: 140,
                     height: 140,
                   ),
