@@ -19,9 +19,8 @@ class LoginPage extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 50),
-
               // logo
               const Image(
                 image: AssetImage('lib/images/Logo_UCT.png'),
@@ -29,7 +28,7 @@ class LoginPage extends StatelessWidget {
                 width: 100,
               ),
 
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
 
               Text(
                 'Bienvenido!',
@@ -39,7 +38,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 25),
+              const SizedBox(height: 10),
 
               MyTextField(
                 controller: usernameController,
@@ -57,90 +56,63 @@ class LoginPage extends StatelessWidget {
 
               const SizedBox(height: 10),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Olvidaste tu Contraseña?',
-                      style: TextStyle(color: Colors.grey[600]),
-                    ),
-                  ],
-                ),
+              Text(
+                'Olvidaste tu Contraseña?',
+                style: TextStyle(color: Colors.grey[600]),
               ),
 
-              const SizedBox(height: 25),
-              SizedBox(
-                width: 200, // Set the desired width
-                height: 60, // Set the desired height
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 500),
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            const MyHomePage(
-                          title: 'DTE',
-                        ),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          const begin = Offset(0.0, 1.0);
-                          const end = Offset.zero;
-                          const curve = Curves.ease;
-                          final tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          return SlideTransition(
-                            position: animation.drive(tween),
-                            child: child,
-                          );
-                        },
+              const SizedBox(height: 20),
+
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      transitionDuration: const Duration(milliseconds: 500),
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          const MyHomePage(
+                        title: 'DTE',
                       ),
-                    );
-                  },
-                  child: const Text(
-                    'Iniciar Sesión',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        const begin = Offset(0.0, 1.0);
+                        const end = Offset.zero;
+                        const curve = Curves.ease;
+                        final tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
                     ),
+                  );
+                },
+                child: const Text(
+                  'Iniciar Sesión',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text(
-                        'O iniciar sesion con',
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                  ],
-                ),
+              Divider(
+                thickness: 0.5,
+                color: Colors.grey[400],
               ),
 
-              const SizedBox(height: 50),
+              const SizedBox(height: 10),
 
-              // google + apple sign in buttons
+              Text(
+                'O iniciar sesión con',
+                style: TextStyle(color: Colors.grey[700]),
+              ),
+
+              const SizedBox(height: 10),
+
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -154,9 +126,8 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
 
-              // not a member? register now
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

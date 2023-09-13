@@ -2,10 +2,19 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 
 class LandingPage extends StatelessWidget {
-  const LandingPage({super.key});
+  const LandingPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
+
+    // Define smaller font sizes based on screen width and text scale factor
+    final titleFontSize = 24.0 * screenWidth / 360.0;
+    final subtitleFontSize = 16.0 * screenWidth / 360.0;
+    final buttonFontSize = 14.0 * screenWidth / 360.0;
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(
@@ -22,36 +31,37 @@ class LandingPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Spacer(),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
+                  width: screenWidth * 0.9,
                   padding: const EdgeInsets.all(16.0),
-                  margin: const EdgeInsets.only(
-                      bottom: 40.0, top: 100.0), // Adjust top margin
+                  margin: EdgeInsets.only(
+                    bottom: screenHeight * 0.1,
+                    top: screenHeight * 0.2,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   child: Column(
                     children: [
-                      const Text(
+                      Text(
                         'Bienvenido a DTE',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 30,
+                          fontSize: titleFontSize,
                         ),
                       ),
-                      const SizedBox(height: 20.0),
-                      const Text(
+                      SizedBox(height: 16.0 * textScaleFactor),
+                      Text(
                         'Ayuda profesional para el desarrollo de tu carrera profesional',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: subtitleFontSize,
                         ),
                       ),
-                      const SizedBox(height: 20.0),
+                      SizedBox(height: 16.0 * textScaleFactor),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -60,18 +70,14 @@ class LandingPage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 PageRouteBuilder(
-                                  transitionDuration:
-                                      const Duration(milliseconds: 500),
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
+                                  transitionDuration: const Duration(milliseconds: 500),
+                                  pageBuilder: (context, animation, secondaryAnimation) =>
                                       LoginPage(),
-                                  transitionsBuilder: (context, animation,
-                                      secondaryAnimation, child) {
+                                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                     const begin = Offset(0.0, 1.0);
                                     const end = Offset.zero;
                                     const curve = Curves.ease;
-                                    final tween = Tween(begin: begin, end: end)
-                                        .chain(CurveTween(curve: curve));
+                                    final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
                                     return SlideTransition(
                                       position: animation.drive(tween),
                                       child: child,
@@ -80,14 +86,14 @@ class LandingPage extends StatelessWidget {
                                 ),
                               );
                             },
-                            child: const Text(
+                            child: Text(
                               'Iniciar Sesión',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: buttonFontSize,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            ),
+                          ),
                         ],
                       )
                     ],
