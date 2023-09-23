@@ -54,7 +54,7 @@ class LandingPage extends StatelessWidget {
                       ),
                       SizedBox(height: 16.0 * textScaleFactor),
                       Text(
-                        'Ayuda profesional para el desarrollo de tu carrera profesional',
+                        'Ayuda profesional para el desarrollo de tu carrera profesional.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
