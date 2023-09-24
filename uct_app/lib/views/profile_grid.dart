@@ -32,7 +32,8 @@ class ProfilesGrid extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => const Profile(
                         username: 'Kim Yong Un',
-                        picture: 'https://i.imgur.com/BoN9kdC.jpeg',
+                        picture:
+                            'images/Default_Profile.jpg', // no se cambiar la imagen aqui ayudame rodirgo gracias -vaca
                         description:
                             'this is a test description, assume this guy is good at building rockets or something lol',
                         email: 'mrkim@northkorea.net',

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uct_app/views/profile.dart';
 
 class Assistant extends StatelessWidget {
   const Assistant({Key? key, this.username, this.picture}) : super(key: key);
@@ -9,21 +8,18 @@ class Assistant extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: 
-          Column(
-            children: [
-                Column(
-                  children: [
-                    Image.network(
-                      '$picture',
-                      width: 140,
-                      height: 140,
-                    ),
-                  Text('$username'),
-              ]
+      body: Column(
+        children: [
+          Column(children: [
+            Image.network(
+              '$picture',
+              width: 140,
+              height: 140,
             ),
-            ],
-            ),
-          );
+            Text('$username'),
+          ]),
+        ],
+      ),
+    );
   }
 }

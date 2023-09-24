@@ -89,8 +89,15 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: const Text('Chat de Ayuda'),
               onTap: () {
-                Navigator.pop(context); // close the drawer
+                Navigator.pop(context);
                 Navigator.pushNamed(context, '/profile_grid');
+              },
+            ),
+            ListTile(
+              title: const Text('Recursos'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/recursos');
               },
             ),
           ],
@@ -98,9 +105,17 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: GridView.count(
         crossAxisCount: 2,
+        padding: const EdgeInsets.all(
+            16), // Add spacing between the buttons and the screen
+        mainAxisSpacing: 16, // Add spacing between the buttons vertically
+        crossAxisSpacing: 16, // Add spacing between the buttons horizontally
         children: [
           Center(
             child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(10), // strength of rounded corners
+              ),
               child: InkWell(
                 onTap: () {
                   Navigator.pushNamed(context, '/profile_grid');
@@ -108,8 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Container(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(
-                          'https://cdn-icons-png.flaticon.com/512/2534/2534183.png'), // replace with your image url
+                      image: AssetImage('lib/images/Docentes.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -122,14 +136,19 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Card(
               child: InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, '/profile_grid');
+                  Navigator.pushNamed(context, '/recursos');
                 },
-                child: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          'https://www.pngmart.com/files/11/Dank-Meme-Transparent-PNG.png'), // replace with your image url
-                      fit: BoxFit.cover,
+                child: ClipRRect(
+                  borderRadius:
+                      BorderRadius.circular(10), // strength of round corners
+                  clipBehavior: Clip
+                      .antiAlias, // Clip the child widget with rounded corners
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('lib/images/Default.jpg'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
