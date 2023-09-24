@@ -23,18 +23,12 @@ class _MyHomePageState extends State<MyHomePage> {
     String nombre = 'Juan';
 
     return Scaffold(
-      
-
       appBar: AppBar(
-        backgroundColor:
-            Colors.transparent, 
+        backgroundColor: Colors.transparent,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Colors.blue,
-                Colors.yellow
-              ], 
+              colors: [Colors.blue, Colors.yellow],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -43,11 +37,10 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Row(
           children: [
             Text(widget.title),
-            const SizedBox(
-                width: 10), 
-            const Spacer(), 
+            const SizedBox(width: 10),
+            const Spacer(),
             Image.asset(
-              'lib/images/Logo_UCT.png', 
+              'lib/images/Logo_UCT.png',
               height: 40,
             ),
           ],
@@ -103,7 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-
       body: GridView.count(
         crossAxisCount: 2,
         children: [
