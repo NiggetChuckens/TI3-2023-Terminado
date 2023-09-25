@@ -62,6 +62,18 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "flutter_web_plugins",
+      "rootUri": "file:///C:/Flutter/packages/flutter_web_plugins",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "intl",
+      "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.18.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "lints",
       "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/lints-2.1.1",
       "packageUri": "lib/",
@@ -90,6 +102,12 @@
       "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "plugin_platform_interface",
+      "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
     },
     {
       "name": "sky_engine",
@@ -134,6 +152,54 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "url_launcher",
+      "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher-6.1.14",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "url_launcher_android",
+      "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_android-6.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "url_launcher_ios",
+      "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_ios-6.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "url_launcher_linux",
+      "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_linux-3.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "url_launcher_macos",
+      "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_macos-3.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "url_launcher_platform_interface",
+      "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_platform_interface-2.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "url_launcher_web",
+      "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_web-2.0.20",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "url_launcher_windows",
+      "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_windows-3.0.8",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "vector_math",
       "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4",
       "packageUri": "lib/",
@@ -152,7 +218,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-09-10T19:58:23.908156Z",
+  "generated": "2023-09-25T01:31:21.704016Z",
   "generator": "pub",
   "generatorVersion": "3.1.1"
 }
