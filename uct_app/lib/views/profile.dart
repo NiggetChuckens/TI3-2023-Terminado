@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatelessWidget {
   const Profile({
@@ -24,7 +25,8 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(child: 
+    Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         flexibleSpace: Container(
@@ -38,7 +40,7 @@ class Profile extends StatelessWidget {
         ),
         title: Text('Perfil de $username'),
       ),
-      body: 
+      body: SingleChildScrollView(child: 
         Column(children: [
           Center(
               child: Container(
@@ -65,7 +67,7 @@ class Profile extends StatelessWidget {
                     children: [
                       const SizedBox(height: 35),
                       SizedBox(
-                        width: 250,
+                        width: 240,
                         child: 
                           Text(
                           description,
@@ -83,7 +85,8 @@ class Profile extends StatelessWidget {
               ),
             ),
           ),  
-            Column( children: [ 
+            Column( 
+              children: [ 
               Center(
                 child: Container( 
                   padding: const EdgeInsets.all(16.0),
@@ -113,7 +116,7 @@ class Profile extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ),
-                          const SizedBox(height: 50),
+                          const SizedBox(height: 30),
                           //Professional experience
                           Text(
                             'Experiencia profesional',
@@ -128,7 +131,7 @@ class Profile extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ),
-                          const SizedBox(height: 50),
+                          const SizedBox(height: 30),
                           //Schedule
                           Text(
                             'Horario de atención',
@@ -146,7 +149,7 @@ class Profile extends StatelessWidget {
                               ), 
                               
                             ),
-                          const SizedBox(height: 50),
+                          const SizedBox(height: 30),
                           
                           //here goes a divider
                               
@@ -169,6 +172,68 @@ class Profile extends StatelessWidget {
                               ),
                             ),
                           //Functions
+                          const SizedBox(height: 16),
+                          Column(
+                            children:[
+                              ElevatedButton(
+                                child: const Text('Schedule Meeting'),
+                                onPressed: () async {
+                                  final Uri calendarEventUri = Uri.https(
+                                      'calendar.google.com', '/calendar/r/eventedit', {
+                                    'text': 'Meeting with $username',
+                                    'dates':
+                                        '20220915T160000Z/20220915T170000Z', // replace with your dates in the format 'yyyyMMddTHHmmssZ/yyyyMMddTHHmmssZ'
+                                    'details': 'Meeting details go here',
+                                    'location': 'Meeting location',
+                                  });
+
+                                  try {
+                                    await launch(calendarEventUri.toString());
+                                  } catch (e) {
+                                    print('Could not launch $calendarEventUri: $e');
+                                    }
+                                  },
+                                ),
+                                ElevatedButton(
+                                child: const Text('Schedule Meeting'),
+                                onPressed: () async {
+                                  final Uri calendarEventUri = Uri.https(
+                                      'calendar.google.com', '/calendar/r/eventedit', {
+                                    'text': 'Meeting with $username',
+                                    'dates':
+                                        '20220915T160000Z/20220915T170000Z', // replace with your dates in the format 'yyyyMMddTHHmmssZ/yyyyMMddTHHmmssZ'
+                                    'details': 'Meeting details go here',
+                                    'location': 'Meeting location',
+                                  });
+
+                                  try {
+                                    await launch(calendarEventUri.toString());
+                                  } catch (e) {
+                                    print('Could not launch $calendarEventUri: $e');
+                                    }
+                                  },
+                                ),
+                                ElevatedButton(
+                                child: const Text('Schedule Meeting'),
+                                onPressed: () async {
+                                  final Uri calendarEventUri = Uri.https(
+                                      'calendar.google.com', '/calendar/r/eventedit', {
+                                    'text': 'Meeting with $username',
+                                    'dates':
+                                        '20220915T160000Z/20220915T170000Z', // replace with your dates in the format 'yyyyMMddTHHmmssZ/yyyyMMddTHHmmssZ'
+                                    'details': 'Meeting details go here',
+                                    'location': 'Meeting location',
+                                  });
+
+                                  try {
+                                    await launch(calendarEventUri.toString());
+                                  } catch (e) {
+                                    print('Could not launch $calendarEventUri: $e');
+                                    }
+                                  },
+                                ),
+                              ]
+                            ),
                           ],
                         ),
                       ],
@@ -180,7 +245,8 @@ class Profile extends StatelessWidget {
             
           ],
         ),
-        
+      ),  
+      ),
     );
   }
 }
