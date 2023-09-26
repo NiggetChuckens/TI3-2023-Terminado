@@ -213,8 +213,25 @@ class Profile extends StatelessWidget {
                                     }
                                   },
                                 ),
-                                
-                                
+                                ElevatedButton(
+                                child: const Text('Schedule Meeting'),
+                                onPressed: () async {
+                                  final Uri calendarEventUri = Uri.https(
+                                      'calendar.google.com', '/calendar/r/eventedit', {
+                                    'text': 'Meeting with $username',
+                                    'dates':
+                                        '20220915T160000Z/20220915T170000Z', // replace with your dates in the format 'yyyyMMddTHHmmssZ/yyyyMMddTHHmmssZ'
+                                    'details': 'Meeting details go here',
+                                    'location': 'Meeting location',
+                                  });
+
+                                  try {
+                                    await launch(calendarEventUri.toString());
+                                  } catch (e) {
+                                    print('Could not launch $calendarEventUri: $e');
+                                    }
+                                  },
+                                ),
                               ]
                             ),
                           ],
