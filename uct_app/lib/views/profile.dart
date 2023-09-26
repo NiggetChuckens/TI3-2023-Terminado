@@ -80,6 +80,7 @@ class Profile extends StatelessWidget {
                     try {
                       await launch(calendarEventUri.toString());
                     } catch (e) {
+                      // ignore: avoid_print
                       print('Could not launch $calendarEventUri: $e');
                     }
                   },
