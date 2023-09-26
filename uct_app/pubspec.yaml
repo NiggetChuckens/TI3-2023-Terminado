@@ -39,7 +39,6 @@ dependencies:
   intl: ^0.18.1
   
 dev_dependencies:
-  flutter_launcher_icons: "^0.13.1"
   flutter_test:
     sdk: flutter
 
