@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart' as calendar;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class RecursosPage extends StatelessWidget {
   const RecursosPage({Key? key}) : super(key: key);
@@ -40,11 +41,32 @@ class RecursosPage extends StatelessWidget {
         // Create a new calendar.CalendarApi instance
         calendar.CalendarApi calendarApi = calendar.CalendarApi(client);
 
-        // Make authenticated API request
-        await calendarApi.events.insert(event, 'primary');
+        // Create a new http.Request instance
+        final request = http.Request(
+          'POST',
+          Uri.parse(
+              'https://www.googleapis.com/calendar/v3/calendars/primary/events'),
+        );
+
+        // Set the access token in the request headers
+        request.headers['Authorization'] = 'Bearer ${googleAuth.accessToken}';
+
+        // Set the request body as JSON
+        request.body = jsonEncode(event.toJson());
+
+        // Send the request and get the response
+        final response = await client.send(request);
 
         // Close the http.Client instance
         client.close();
+
+        // Check the response status code
+        if (response.statusCode == 200) {
+          print('Appointment created successfully');
+        } else {
+          print(
+              'Failed to create appointment. Status code: ${response.statusCode}');
+        }
       }
     } catch (error) {
       if (error.toString().contains('access_token_expired')) {
@@ -74,11 +96,33 @@ class RecursosPage extends StatelessWidget {
             // Create a new calendar.CalendarApi instance
             calendar.CalendarApi calendarApi = calendar.CalendarApi(client);
 
-            // Make authenticated API request
-            await calendarApi.events.insert(event, 'primary');
+            // Create a new http.Request instance
+            final request = http.Request(
+              'POST',
+              Uri.parse(
+                  'https://www.googleapis.com/calendar/v3/calendars/primary/events'),
+            );
+
+            // Set the access token in the request headers
+            request.headers['Authorization'] =
+                'Bearer ${refreshedAuth.accessToken}';
+
+            // Set the request body as JSON
+            request.body = jsonEncode(event.toJson());
+
+            // Send the request and get the response
+            final response = await client.send(request);
 
             // Close the http.Client instance
             client.close();
+
+            // Check the response status code
+            if (response.statusCode == 200) {
+              print('Appointment created successfully');
+            } else {
+              print(
+                  'Failed to create appointment. Status code: ${response.statusCode}');
+            }
           }
         } catch (refreshError) {
           print('Failed to refresh access token: $refreshError');
