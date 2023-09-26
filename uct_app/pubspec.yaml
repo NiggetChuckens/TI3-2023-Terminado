@@ -30,22 +30,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  googleapis: ^5.0.1
-  googleapis_auth: ^1.4.1
-  url_launcher: ^6.1.14
-  flutter_googlecalendar: ^1.0.0
-  add_2_calendar: ^2.1.2
-  calendar_date_picker2: ^0.5.3
-  intl: ^0.17.0
-  http: ^0.13.0
-  
+  flutter_spinkit: "^5.1.0"
+  flutter_launcher_icons: "^0.13.1"
+  google_sign_in: ^6.1.5
+  googleapis: 11.4.0
+  table_calendar: ^3.0.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  intl: ^0.18.1
+  url_launcher: ^6.1.14
+  http: ^1.1.0
+  googleapis_auth: ^1.4.1
 
 dev_dependencies:
-  flutter_lints: ^1.0.4
   flutter_test:
     sdk: flutter
 
@@ -54,15 +53,18 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
+  flutter_lints: ^2.0.0
 
-
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "lib/images/Logo_UCT.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
-  assets:
-    - assets/credentials.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -70,9 +72,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - lib/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
