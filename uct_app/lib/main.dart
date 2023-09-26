@@ -3,6 +3,7 @@ import 'views/login.dart';
 import 'views/profile_grid.dart';
 import 'views/dashboard.dart';
 import 'views/splash.dart';
+import 'views/recursos.dart';
 
 
 void main() {
@@ -20,7 +21,10 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => LoginPage(),
         '/profile_grid': (context) => const ProfilesGrid(),
-        '/dashboard': (context) => const MyHomePage(title: 'DTE',),
+        '/dashboard': (context) => const MyHomePage(
+              title: 'DTE',
+            ),
+        '/recursos': (context) => const RecursosPage(),
       },
     );
   }
