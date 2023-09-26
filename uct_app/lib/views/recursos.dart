@@ -32,8 +32,8 @@ class RecursosPage extends StatelessWidget {
           ..summary = 'Appointment'
           ..start = calendar.EventDateTime()
           ..end = calendar.EventDateTime()
-          ..start!.dateTime = DateTime.now().add(Duration(hours: 1))
-          ..end!.dateTime = DateTime.now().add(Duration(hours: 2));
+          ..start!.dateTime = DateTime.now().add(const Duration(hours: 1))
+          ..end!.dateTime = DateTime.now().add(const Duration(hours: 2));
 
         // Create a new http.Client instance
         final client = http.Client();
@@ -87,8 +87,8 @@ class RecursosPage extends StatelessWidget {
               ..summary = 'Appointment'
               ..start = calendar.EventDateTime()
               ..end = calendar.EventDateTime()
-              ..start!.dateTime = DateTime.now().add(Duration(hours: 1))
-              ..end!.dateTime = DateTime.now().add(Duration(hours: 2));
+              ..start!.dateTime = DateTime.now().add(const Duration(hours: 1))
+              ..end!.dateTime = DateTime.now().add(const Duration(hours: 2));
 
             // Create a new http.Client instance
             final client = http.Client();
