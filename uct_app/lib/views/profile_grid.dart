@@ -39,6 +39,7 @@ class ProfilesGrid extends StatelessWidget {
                         experience: 'Amplio trabajo con armamento militar, bombas y abrazos, capaz de ayudar a solucionar los problemas que puedas tener',
                         schedule: 'Lunes a Domingo - 8:00 a 17:00',
                         comment: 'Nice job',
+                        rating: 3,
                       ),
                     ),
                   );
@@ -70,6 +71,7 @@ class ProfilesGrid extends StatelessWidget {
                         experience: 'a',
                         schedule: 'a',
                         comment: 'Nice job',
+                        rating: 2.3,
                     ),
                   ),
                 );
@@ -101,6 +103,7 @@ class ProfilesGrid extends StatelessWidget {
                         experience: 'a',
                         schedule: 'a',
                         comment: 'Nice job',
+                        rating: 2.5,
                     ),
                   ),
                 );

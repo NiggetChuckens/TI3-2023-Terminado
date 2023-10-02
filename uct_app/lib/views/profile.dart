@@ -1,5 +1,7 @@
+import 'recursos.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class Profile extends StatelessWidget {
   const Profile({
@@ -12,6 +14,7 @@ class Profile extends StatelessWidget {
     required this.experience,
     required this.schedule,
     required this.comment,
+    required this.rating,
   }) : super(key: key);
 
   final String username;
@@ -22,6 +25,7 @@ class Profile extends StatelessWidget {
   final String experience;
   final String schedule;
   final String comment;
+  final double rating;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +36,7 @@ class Profile extends StatelessWidget {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.blue, Colors.yellow],
+              colors: [Colors.blue, Color.fromARGB(255, 114, 255, 59)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -92,7 +96,7 @@ class Profile extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
                     color:
-                        Colors.amberAccent[700], // change this color to your liking
+                        const Color.fromARGB(255, 36, 185, 173), // change this color to your liking
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(
@@ -152,8 +156,31 @@ class Profile extends StatelessWidget {
                           const SizedBox(height: 30),
                           
                           //here goes a divider
-                              
+                          const Divider(
+                            color: Color.fromARGB(255, 192, 23, 23),
+                            height: 10,
+                            thickness: 5,
+                            
+                          ),
+                          const SizedBox(height: 12),
                           //Rating system
+                          RatingBar.builder(
+                            initialRating: rating,
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            ignoreGestures: true,
+                            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            itemBuilder: (context, _) =>  const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            onRatingUpdate: (rating) {
+                              (rating);
+                            },
+                          ),
+                          const SizedBox(height: 10),
                           //Comments
                           Text(
                             'Comentarios',
@@ -176,61 +203,11 @@ class Profile extends StatelessWidget {
                           Column(
                             children:[
                               ElevatedButton(
+                                onPressed: (){  Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(builder: (context) => const RecursosPage()),
+                                                );},
                                 child: const Text('Schedule Meeting'),
-                                onPressed: () async {
-                                  final Uri calendarEventUri = Uri.https(
-                                      'calendar.google.com', '/calendar/r/eventedit', {
-                                    'text': 'Meeting with $username',
-                                    'dates':
-                                        '20220915T160000Z/20220915T170000Z', // replace with your dates in the format 'yyyyMMddTHHmmssZ/yyyyMMddTHHmmssZ'
-                                    'details': 'Meeting details go here',
-                                    'location': 'Meeting location',
-                                  });
-
-                                  try {
-                                    await launch(calendarEventUri.toString());
-                                  } catch (e) {
-                                    print('Could not launch $calendarEventUri: $e');
-                                    }
-                                  },
-                                ),
-                                ElevatedButton(
-                                child: const Text('Schedule Meeting'),
-                                onPressed: () async {
-                                  final Uri calendarEventUri = Uri.https(
-                                      'calendar.google.com', '/calendar/r/eventedit', {
-                                    'text': 'Meeting with $username',
-                                    'dates':
-                                        '20220915T160000Z/20220915T170000Z', // replace with your dates in the format 'yyyyMMddTHHmmssZ/yyyyMMddTHHmmssZ'
-                                    'details': 'Meeting details go here',
-                                    'location': 'Meeting location',
-                                  });
-
-                                  try {
-                                    await launch(calendarEventUri.toString());
-                                  } catch (e) {
-                                    print('Could not launch $calendarEventUri: $e');
-                                    }
-                                  },
-                                ),
-                                ElevatedButton(
-                                child: const Text('Schedule Meeting'),
-                                onPressed: () async {
-                                  final Uri calendarEventUri = Uri.https(
-                                      'calendar.google.com', '/calendar/r/eventedit', {
-                                    'text': 'Meeting with $username',
-                                    'dates':
-                                        '20220915T160000Z/20220915T170000Z', // replace with your dates in the format 'yyyyMMddTHHmmssZ/yyyyMMddTHHmmssZ'
-                                    'details': 'Meeting details go here',
-                                    'location': 'Meeting location',
-                                  });
-
-                                  try {
-                                    await launch(calendarEventUri.toString());
-                                  } catch (e) {
-                                    print('Could not launch $calendarEventUri: $e');
-                                    }
-                                  },
                                 ),
                               ]
                             ),
