@@ -18,11 +18,13 @@ class _RecursosPageState extends State<RecursosPage> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   TimeOfDay? _selectedTime;
-  static const int appointmentDurationInHours = 1; // Set the appointment duration
+  static const int appointmentDurationInHours =
+      1; // Set the appointment duration
 
   // Function to show a success dialog
   void _showSuccessDialog(DateTime scheduledDateTime) {
-    final endTime = scheduledDateTime.add(const Duration(hours: appointmentDurationInHours));
+    final endTime = scheduledDateTime
+        .add(const Duration(hours: appointmentDurationInHours));
     final formattedStartTime = DateFormat.jm().format(scheduledDateTime);
     final formattedEndTime = DateFormat.jm().format(endTime);
 
@@ -36,10 +38,13 @@ class _RecursosPageState extends State<RecursosPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text('Scheduled Date and Time:'),
-              Text(DateFormat.yMd().add_jm().format(scheduledDateTime)), // Display date and time
+              Text(DateFormat.yMd()
+                  .add_jm()
+                  .format(scheduledDateTime)), // Display date and time
               const SizedBox(height: 10),
               const Text('Time Frame:'),
-              Text('$formattedStartTime - $formattedEndTime'), // Display the time frame
+              Text(
+                  '$formattedStartTime - $formattedEndTime'), // Display the time frame
             ],
           ),
           actions: <Widget>[
@@ -153,7 +158,7 @@ class _RecursosPageState extends State<RecursosPage> {
             if (_selectedDay == null || _selectedTime == null) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('select a date and time'),
+                  content: Text('Please select a date and time'),
                 ),
               );
               return;
@@ -250,7 +255,8 @@ class _RecursosPageState extends State<RecursosPage> {
                 onDaySelected: (selectedDay, focusedDay) {
                   setState(() {
                     _selectedDay = selectedDay;
-                    _selectedTime = null; // Reset selected time when a new date is selected
+                    _selectedTime =
+                        null; // Reset selected time when a new date is selected
                   });
                   _selectTime(context);
                 },
@@ -259,7 +265,8 @@ class _RecursosPageState extends State<RecursosPage> {
                 },
                 calendarStyle: CalendarStyle(
                   todayDecoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 22, 4, 56).withOpacity(0.5),
+                    color:
+                        const Color.fromARGB(255, 22, 4, 56).withOpacity(0.5),
                   ),
                   selectedDecoration: BoxDecoration(
                     color: Colors.green.withOpacity(0.5),
@@ -270,8 +277,10 @@ class _RecursosPageState extends State<RecursosPage> {
                 Column(
                   children: [
                     ListTile(
-                      title: Text('Selected Date: ${DateFormat.yMd().format(_selectedDay!)}'), // Display only the date
-                      subtitle: Text('Selected Time: ${_selectedTime?.format(context) ?? 'Not selected'}'),
+                      title: Text(
+                          'Selected Date: ${DateFormat.yMd().format(_selectedDay!)}'), // Display only the date
+                      subtitle: Text(
+                          'Selected Time: ${_selectedTime?.format(context) ?? 'Not selected'}'),
                     ),
                     const SizedBox(height: 10),
                     const Text(

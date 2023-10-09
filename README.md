@@ -1,41 +1,32 @@
 # integra-3
-#Prueba
 
+## Prueba
 
+Este es un proyecto de prueba para demostrar cómo utilizar Flutter y Dart en el desarrollo de aplicaciones móviles.
 
-Branches:
+### Branches:
 
---Main
---Development
+- **Main**: La rama principal del proyecto. Debe contener el código estable y listo para su despliegue en producción.
 
+- **Development**: La rama de desarrollo donde se realizan las nuevas características y correcciones de errores. Puede ser menos estable que la rama principal.
 
-Para este proyecto se usara kotlin, para instalar kotlin se tendran que seguir los siguientes pasos:
+### Instalación de Flutter
 
-1. Dentro de powershell se debe ejecutar el siguiente comando:
-```curl -L -o kotlin-compiler.zip https://github.com/JetBrains/kotlin/releases/download/v1.9.0/kotlin-compiler-1.9.0.zip```
-2. Despues se debe descomprimir el archivo kotlin-compiler.zip
-```unzip kotlin-compiler.zip```
-3. Seteamos las variables de entorno
-4. Verificamos que se haya instalado correctamente
-```kotlinc -version```
+Para trabajar en este proyecto, necesitarás instalar Flutter en tu sistema. Sigue estos pasos para configurar tu entorno de desarrollo:
 
-Extensiones usadas en el proyecto para visual studio code:
+1. **Descargar Flutter**:
 
-1. Kotlin
-2. Kotlin Language
-3. Code Runner
-4. Java Extension Pack
+   Visita [la página oficial de Flutter](https://flutter.dev/docs/get-started/install) y sigue las instrucciones de instalación para tu sistema operativo específico (Windows, macOS, o Linux).
 
+2. **Configurar el PATH**:
 
-Para empezar el desarrollo de la app, se tiene que descargar Android Studio, para ello se debe seguir los siguientes pasos:
-1. Descargar Android Studio desde la pagina oficial de Android Studio
-```https://developer.android.com/studio```
-2. Ejecutar el instalador y seguir los pasos que se indican, se instalara Android Studio y el SDK de Android Studio.
-3. Una vez instalado, se debe abrir Android Studio y se debe crear un nuevo proyecto, se debe seleccionar la opcion de Empty Activity.
+   Agrega la ubicación de los ejecutables de Flutter al PATH de tu sistema para que puedas usarlos desde cualquier ubicación en la línea de comandos.
 
-## Desarrolladores:
-- Nicolas Vergara: https://github.com/Nipicoco
-- Rodrigo Altamirano: https://github.com/NiggetChuckens
-- Roberto Nieves: https://github.com/cowerino
-- Jecar Yañez: https://github.com/Mecar7
-- Benjamin Sanchez: https://github.com/pansito2
+3. **Verificar la instalación**:
+
+   Abre una terminal y ejecuta el siguiente comando para verificar que Flutter se haya instalado correctamente:
+
+4. **Instalar extensiones de IDE**:
+
+Si estás utilizando un IDE como Visual Studio Code, asegúrate de instalar las extensiones recomendadas para Flutter y Dart. Esto facilitará la escritura y depuración de código.
+

@@ -14,19 +14,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    //initialize the date formatter using intl package
     initializeDateFormatting();
-  
-    //define the locale to be spain
     String locale = 'es';
-    //set the date time the dashboard will fetch to be the datetime of actual (now)
     DateTime now = DateTime.now();
     String dayOfWeek = DateFormat.EEEE(locale).format(now);
     String dayMonth = DateFormat.MMMMd(locale).format(now);
     String year = DateFormat.y(locale).format(now);
-    //define the year day and month to be set by a locale variable (now)
     String nombre = 'Juan';
-    //set an example name for the user logged in currently
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
