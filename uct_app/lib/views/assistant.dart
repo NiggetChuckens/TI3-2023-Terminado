@@ -8,21 +8,18 @@ class Assistant extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: 
-          Column(
-            children: [
-                Column(
-                  children: [
-                    Image.network(
-                      '$picture',
-                      width: 140,
-                      height: 140,
-                    ),
-                  Text('$username'),
-              ]
+      body: Column(
+        children: [
+          Column(children: [
+            Image.network(
+              '$picture',
+              width: 140,
+              height: 140,
             ),
-            ],
-            ),
-          );
+            Text('$username'),
+          ]),
+        ],
+      ),
+    );
   }
 }

@@ -4,7 +4,8 @@ import 'views/profile_grid.dart';
 import 'views/dashboard.dart';
 import 'views/splash.dart';
 import 'views/recursos.dart';
-
+import 'views/calendario.dart';
+import 'views/docentes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +25,9 @@ class MyApp extends StatelessWidget {
         '/dashboard': (context) => const MyHomePage(
               title: 'DTE',
             ),
+        '/calendario': (context) => const CalendarPage(),
         '/recursos': (context) => const RecursosPage(),
+        '/docentes': (context) => DocentesPage(),
       },
     );
   }

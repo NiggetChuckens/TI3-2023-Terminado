@@ -87,10 +87,24 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: const Text('Chat de Ayuda'),
+              title: const Text('Docentes'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, '/profile_grid');
+                Navigator.pushNamed(context, '/docentes');
+              },
+            ),
+            ListTile(
+              title: const Text('Calendario'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/calendario');
+              },
+            ),
+            ListTile(
+              title: const Text('About'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/about');
               },
             ),
             ListTile(
@@ -100,62 +114,69 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, '/recursos');
               },
             ),
+            ListTile(
+              title: const Text('Contacto'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/contacto');
+              },
+            ),
+            ListTile(
+              title: const Text('Foro'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/foro');
+              },
+            ),
+            ListTile(
+              title: const Text('Chat de Apoyo'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/chat');
+              },
+            ),
           ],
         ),
       ),
       body: GridView.count(
         crossAxisCount: 2,
-        padding: const EdgeInsets.all(
-            16), // Add spacing between the buttons and the screen
-        mainAxisSpacing: 16, // Add spacing between the buttons vertically
-        crossAxisSpacing: 16, // Add spacing between the buttons horizontally
+        padding: const EdgeInsets.all(16),
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 16,
         children: [
-          Center(
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(10), // strength of rounded corners
-              ),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, '/profile_grid');
-                },
-                child: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/images/Docentes.png'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          // Placeholder for the second card
-          Center(
-            child: Card(
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, '/recursos');
-                },
-                child: ClipRRect(
-                  borderRadius:
-                      BorderRadius.circular(10), // strength of round corners
-                  clipBehavior: Clip
-                      .antiAlias, // Clip the child widget with rounded corners
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('lib/images/Default.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          _buildCard('/profile_grid', 'lib/images/asesor.png'),
+          _buildCard('/docentes', 'lib/images/docentes.png'),
+          _buildCard('/calendario', 'lib/images/calendar_icon.png'),
+          _buildCard('/about', 'lib/images/uct_splash.png'),
+          _buildCard('/recursos', 'lib/images/recursos.png'),
+          _buildCard('/contacto', 'lib/images/contacto.png'),
+          _buildCard('/foro', 'lib/images/Default.jpg'),
+          _buildCard('/chat', 'lib/images/Default.jpg'),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCard(String route, String imagePath) {
+    return Center(
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, route);
+          },
+          child: Container(
+            height: 200,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(imagePath),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
