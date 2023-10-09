@@ -6,6 +6,7 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // we define the width and size of the media with the screen size
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
@@ -21,7 +22,7 @@ class LandingPage extends StatelessWidget {
         children: [
           Container(
             decoration: const BoxDecoration(
-              image: DecorationImage(
+              image: DecorationImage( //once again define the image asset we will use
                 image: AssetImage('lib/images/background_landing.png'),
                 fit: BoxFit.cover,
               ),
@@ -69,7 +70,8 @@ class LandingPage extends StatelessWidget {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                PageRouteBuilder(
+                                PageRouteBuilder(//Build the route using animations specified by pagebuilder
+                                //offset the animation to be 1 second
                                   transitionDuration: const Duration(milliseconds: 500),
                                   pageBuilder: (context, animation, secondaryAnimation) =>
                                       LoginPage(),

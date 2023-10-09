@@ -153,7 +153,7 @@ class _RecursosPageState extends State<RecursosPage> {
             if (_selectedDay == null || _selectedTime == null) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Please select a date and time'),
+                  content: Text('select a date and time'),
                 ),
               );
               return;
