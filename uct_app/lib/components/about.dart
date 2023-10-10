@@ -110,7 +110,7 @@ class _EspecialistaDetailsState extends State<EspecialistaDetails> {
                       child: ElevatedButton(
                         onPressed: () {Navigator.pushNamed(context, '/calendario');},
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.deepPurple,
+                          backgroundColor: Colors.deepPurple,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
