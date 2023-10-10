@@ -6,7 +6,7 @@ class EspecialistaDetails extends StatefulWidget {
   final String doctorName;
   final String doctorSpecialty;
 
-  const EspecialistaDetails({
+  const EspecialistaDetails({super.key, 
     required this.doctorImagePath,
     required this.rating,
     required this.doctorName,
@@ -89,18 +89,18 @@ class _EspecialistaDetailsState extends State<EspecialistaDetails> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Text(
+                    const Text(
                       'Acerca de',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
                         color: Colors.deepPurple,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
+                    const Text(
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, velit vel bibendum bibendum, elit sapien bibendum sapien, vel bibendum sapien sapien vel sapien. Sed euismod, velit vel bibendum bibendum, elit sapien bibendum sapien, vel bibendum sapien sapien vel sapien.',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.grey,
                         fontSize: 18,
                       ),
@@ -108,7 +108,7 @@ class _EspecialistaDetailsState extends State<EspecialistaDetails> {
                     const SizedBox(height: 16),
                     Center(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.pushNamed(context, '/calendario');},
                         style: ElevatedButton.styleFrom(
                           primary: Colors.deepPurple,
                           shape: RoundedRectangleBorder(

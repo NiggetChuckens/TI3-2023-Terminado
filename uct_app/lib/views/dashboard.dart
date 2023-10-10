@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:uct_app/views/dashboard2.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title, required this.username}) : super(key: key);
@@ -139,7 +140,15 @@ class _MyHomePageState extends State<MyHomePage> {
               title: const Text('Dashboard2'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, '/dash2');
+                Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Dash(
+
+                                username: widget.username,
+                              ),
+                            ),
+                          );
               },
             ),
           ],

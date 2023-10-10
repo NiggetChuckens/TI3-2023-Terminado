@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:uct_app/components/specialiscard.dart';
 import 'package:uct_app/components/categorycards.dart';
+import 'package:uct_app/components/category.dart';
+import 'package:uct_app/views/dashboard.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:uct_app/components/data.dart';
 class Dash extends StatefulWidget {
   const Dash({Key? key, required this.username}) : super(key: key);
   final String username;
@@ -13,7 +18,135 @@ class Dash extends StatefulWidget {
 class _DashState extends State<Dash> {
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting();
+    String locale = 'es';
+    DateTime now = DateTime.now();
+    String dayOfWeek = DateFormat.EEEE(locale).format(now);
+    String dayMonth = DateFormat.MMMMd(locale).format(now);
+    String year = DateFormat.y(locale).format(now);
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            SizedBox(
+              height: 150,
+              child: DrawerHeader(
+                decoration: const BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Bienvenido, ${widget.username}!',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'La fecha de hoy es $dayOfWeek, $dayMonth $year',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            ListTile(
+              title: const Text('Asesores'),
+              onTap: () {
+                Navigator.pop(context); // close the drawer
+                Navigator.pushNamed(context, '/profile_grid');
+              },
+            ),
+            ListTile(
+              title: const Text('Docentes'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/docentes');
+              },
+            ),
+            ListTile(
+              title: const Text('Calendario'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/calendario');
+              },
+            ),
+            ListTile(
+              title: const Text('About'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/about');
+              },
+            ),
+            ListTile(
+              title: const Text('Recursos'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/recursos');
+              },
+            ),
+            ListTile(
+              title: const Text('Contacto'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/contacto');
+              },
+            ),
+            ListTile(
+              title: const Text('Foro'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/foro');
+              },
+            ),
+            ListTile(
+              title: const Text('Chat de Apoyo'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/chat');
+              },
+            ),
+            ListTile(
+              title: const Text('Dashboard2'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Dash(
+                      username: widget.username,
+                    ),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Dashboard1'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyHomePage(
+                      title: 'DTE',
+                      username: widget.username,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[300],
       body: SafeArea(
           child: Column(
@@ -21,36 +154,62 @@ class _DashState extends State<Dash> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Bienvenido,',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Bienvenido,',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
                       ),
-                      Text(
-                        widget.username,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
+                    ),
+                    Text(
+                      widget.username,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ],
+                ),
+                Builder(
+                  builder: (context) => Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.menu),
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MyHomePage(
+                                title: 'DTE',
+                                username: widget.username,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.deepPurple[100],
+                          ),
+                          child: const Icon(Icons.person),
                         ),
                       ),
                     ],
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.deepPurple[100],
-                    ),
-                    child: const Icon(Icons.person),
-                  )
-                ]),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 25),
 
@@ -92,18 +251,23 @@ class _DashState extends State<Dash> {
                         const SizedBox(
                           height: 12,
                         ),
-                        Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Colors.deepPurple[300],
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Empezemos',
-                                style: TextStyle(color: Colors.white),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/calendario');
+                          },
+                          child: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Colors.deepPurple[300],
                               ),
-                            ))
+                              child: const Center(
+                                child: Text(
+                                  'Empezemos',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )),
+                        )
                       ],
                     ),
                   )
@@ -133,29 +297,79 @@ class _DashState extends State<Dash> {
 
           //LIST VIEW
           Container(
-              height: 80,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: const [
-                  Category(
+            height: 80,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SpecialistsScreen(
+                          category: 'Terapia',
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Category(
                     categoryName: 'Terapia',
                     iconImagePath: 'lib/images/terapia.png',
                   ),
-                  Category(
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SpecialistsScreen(
+                          category: 'Psicologia',
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Category(
                     categoryName: 'Psicologia',
                     iconImagePath: 'lib/images/psicologia.png',
                   ),
-                  Category(
+                ),
+                
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SpecialistsScreen(
+                          category: 'Psiquiatria',
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Category(
                     categoryName: 'Psiquiatria',
                     iconImagePath: 'lib/images/psiquiatra.png',
                   ),
-                  Category(
+                ),
+                
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SpecialistsScreen(
+                          category: 'Doctor',
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Category(
                     categoryName: 'Doctor',
                     iconImagePath: 'lib/images/doc.png',
                   ),
-                ],
-              )),
-
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 25),
 
           Padding(
@@ -183,63 +397,24 @@ class _DashState extends State<Dash> {
           const SizedBox(height: 25),
 
           Expanded(
-            child: ListView(
+            
+            child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 2.0),
-                  height: 20, // Adjust the height as needed
-                  child: const Especialista(
-                    doctorImagePath: 'lib/images/cj.png',
-                    rating: '4.2',
-                    doctorName: 'Javier Alcalde',
-                    doctorSpecialty: 'Psicologia clínica',
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(right: 2.0),
-                  height: 40, // Adjust the height as needed
-                  child: const Especialista(
-                    doctorImagePath: 'lib/images/doctor1.jpg',
-                    rating: '4.7',
-                    doctorName: 'Javier Sacristán',
-                    doctorSpecialty: 'Terapia de pareja',
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(right: 2.0),
-                  height: 40, // Adjust the height as needed
-                  child: const Especialista(
-                    doctorImagePath: 'lib/images/cj.png',
-                    rating: '4.1',
-                    doctorName: 'Luis Miguel Jurado',
-                    doctorSpecialty: 'Neuropsicología',
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(right: 2.0),
-                  height: 100, // Adjust the height as needed
-                  child: const Especialista(
-                    doctorImagePath: 'lib/images/cj.png',
-                    rating: '4.9',
-                    doctorName: 'Ismael Jurado',
-                    doctorSpecialty: 'Psicología deportiva',
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(right: 2.0),
-                  height: 40, // Adjust the height as needed
-                  child: const Especialista(
-                    doctorImagePath: 'lib/images/cj.png',
-                    rating: '4.2',
-                    doctorName: 'Diego Vázquez',
-                    doctorSpecialty: 'Pediatría',
-                  ),
-                ),
-              ],
+
+              itemCount: specialists.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Especialista(
+                  doctorImagePath: specialists[index].image,
+                  rating: specialists[index].rating.toString(),
+                  doctorName: specialists[index].name,
+                  doctorSpecialty: specialists[index].category,
+                );
+              },
             ),
           ),
-          const SizedBox(height: 100,)
+          const SizedBox(
+            height: 100,
+          )
         ],
       )),
     );

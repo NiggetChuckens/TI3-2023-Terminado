@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uct_app/components/cards.dart';
+import 'package:uct_app/components/about.dart';
 class Especialista extends StatelessWidget {
   final String doctorImagePath;
   final String rating;

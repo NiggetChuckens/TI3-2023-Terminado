@@ -126,7 +126,6 @@ class LoginPage extends StatelessWidget {
                         transitionDuration: const Duration(milliseconds: 500),
                         pageBuilder: (context, animation, secondaryAnimation) =>
                             Dash(
-                          
                           username: username,
                         ),
                         transitionsBuilder:
