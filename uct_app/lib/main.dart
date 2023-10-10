@@ -24,12 +24,12 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/profile_grid': (context) => const ProfilesGrid(),
         '/dashboard': (context) => const MyHomePage(
-              title: 'DTE',
+              title: 'DTE', username: '',
             ),
         '/calendario': (context) => const CalendarPage(),
         '/recursos': (context) => const RecursosPage(),
         '/docentes': (context) => DocentesPage(),
-        '/dash2': (context) => const Dash(),
+        '/dash2': (context) => const Dash(username: '',),
       },
     );
   }

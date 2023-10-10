@@ -3,7 +3,8 @@ import 'package:lottie/lottie.dart';
 import 'package:uct_app/components/specialiscard.dart';
 import 'package:uct_app/components/categorycards.dart';
 class Dash extends StatefulWidget {
-  const Dash({super.key});
+  const Dash({Key? key, required this.username}) : super(key: key);
+  final String username;
 
   @override
   State<Dash> createState() => _DashState();
@@ -22,7 +23,7 @@ class _DashState extends State<Dash> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -33,7 +34,7 @@ class _DashState extends State<Dash> {
                         ),
                       ),
                       Text(
-                        'Jose',
+                        widget.username,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 24,

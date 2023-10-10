@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
+  const MyHomePage({Key? key, required this.title, required this.username}) : super(key: key);
+  final String username;
   final String title;
 
   @override
@@ -20,7 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String dayOfWeek = DateFormat.EEEE(locale).format(now);
     String dayMonth = DateFormat.MMMMd(locale).format(now);
     String year = DateFormat.y(locale).format(now);
-    String nombre = 'Juan';
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Bienvenido, $nombre',
+                      'Bienvenido, ${widget.username}!',
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
