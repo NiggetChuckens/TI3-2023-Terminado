@@ -14,10 +14,10 @@ class EspecialistaDetails extends StatefulWidget {
   });
 
   @override
-  _EspecialistaDetailsState createState() => _EspecialistaDetailsState();
+  EspecialistaDetailsState createState() => EspecialistaDetailsState();
 }
 
-class _EspecialistaDetailsState extends State<EspecialistaDetails> {
+class EspecialistaDetailsState extends State<EspecialistaDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

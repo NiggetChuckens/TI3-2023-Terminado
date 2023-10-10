@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart' as calendar;
@@ -10,12 +12,13 @@ class CalendarPage extends StatefulWidget {
   const CalendarPage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _CalendarPageState createState() => _CalendarPageState();
 }
 
 class _CalendarPageState extends State<CalendarPage> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _focusedDay = DateTime.now();
+  final DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   TimeOfDay? _selectedTime;
   static const int appointmentDurationInHours =
@@ -81,6 +84,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
         // Check if a date and time are selected
         if (_selectedDay == null || _selectedTime == null) {
+          // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Please select a date and time'),
@@ -156,6 +160,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
             // Check if a date and time are selected
             if (_selectedDay == null || _selectedTime == null) {
+              // ignore: use_build_context_synchronously
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Please select a date and time'),
@@ -293,8 +298,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 ElevatedButton(
                   onPressed: signInWithGoogle,
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                    onPrimary: Colors.white,
+                    foregroundColor: Colors.white, backgroundColor: Colors.green,
                   ),
                   child: const Text('Create Appointment'),
                 ),

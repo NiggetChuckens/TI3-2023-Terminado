@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
             ),
         '/calendario': (context) => const CalendarPage(),
         '/recursos': (context) => const RecursosPage(),
-        '/docentes': (context) => DocentesPage(),
+        '/docentes': (context) => const DocentesPage(),
         '/dash2': (context) => const Dash(username: '',),
       },
     );

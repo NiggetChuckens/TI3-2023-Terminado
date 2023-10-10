@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'data.dart';
+import 'package:uct_app/components/data.dart';
 
 class SpecialistsScreen extends StatelessWidget {
   final String category;

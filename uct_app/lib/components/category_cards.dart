@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Category extends StatelessWidget {
-  final iconImagePath;
+  final String iconImagePath;
   final String categoryName;
 
-  const Category({
+  const Category({super.key, 
     required this.iconImagePath,
     required this.categoryName,
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:uct_app/components/specialistCards.dart';
-import 'package:uct_app/components/categorycards.dart';
-import 'package:uct_app/components/sortCategory.dart';
+import 'package:uct_app/components/specialist_cards.dart';
+import 'package:uct_app/components/category_cards.dart';
+import 'package:uct_app/components/sort_category.dart';
 import 'package:uct_app/views/dashboard.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -221,7 +221,7 @@ class _DashState extends State<Dash> {
                     color: Colors.pink[100],
                     borderRadius: BorderRadius.circular(12)),
                 child: Row(children: [
-                  Container(
+                  SizedBox(
                     height: 100,
                     width: 100,
                     child: Lottie.network(
@@ -296,7 +296,7 @@ class _DashState extends State<Dash> {
           const SizedBox(height: 25),
 
           //LIST VIEW
-          Container(
+          SizedBox(
             height: 80,
             child: ListView(
               scrollDirection: Axis.horizontal,
