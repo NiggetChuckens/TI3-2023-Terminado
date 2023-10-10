@@ -14,7 +14,7 @@ class Specialist {
 }
 
 final List<Specialist> specialists = [
-  const Specialist(name: 'Juan Perez', category: 'Terapia', rating: 4.5,  image: 'lib/images/doctor1.jpg'),
+  const Specialist(name: 'Juan Perez', category: 'Terapia', rating: 4.5,  image: 'lib/images/cj.png'),
   const Specialist(name: 'Maria Garcia', category: 'Terapia', rating: 4.2, image: 'lib/images/doctor2.jpg'),
   const Specialist(name: 'Pedro Rodriguez', category: 'Psicologia', rating: 4.8, image: 'lib/images/doctor1.jpg'),
   const Specialist(name: 'Ana Martinez', category: 'Psicologia', rating: 4.6, image: 'lib/images/doctor2.jpg'),
