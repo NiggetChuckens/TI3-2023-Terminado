@@ -19,21 +19,36 @@ class DocentesPage extends StatelessWidget {
           ),
           SingleChildScrollView(
             child: Container(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withOpacity(0.7),
               child: Column(
                 children: [
-                  _buildOptionCard('Validacion Compromisos de Docencia',
-                      'lib/images/virtualizacion.png'),
                   _buildOptionCard(
-                      'Canales de Apoyo', 'lib/images/canales.png'),
-                  _buildOptionCard('Programacion Regular Formacion 2023',
-                      'lib/images/programacionregular.png'),
+                      'Validacion Compromisos de Docencia',
+                      'lib/images/virtualizacion.png',
+                      context,
+                      '/compromisosacademicos'),
+                  _buildOptionCard('Canales de Apoyo', 'lib/images/canales.png',
+                      context, '/canalesDeApoyo'),
                   _buildOptionCard(
-                      'Instancias de Formacion', 'lib/images/instancias.png'),
-                  _buildOptionCard('Orientaciones para la Docencia en Linea',
-                      'lib/images/orientaciones.png'),
+                      'Programacion Regular Formacion 2023',
+                      'lib/images/programacionregular.png',
+                      context,
+                      '/programacionRegular'),
                   _buildOptionCard(
-                      'Virtualizacion', 'lib/images/virtualizacion.png'),
+                      'Instancias de Formacion',
+                      'lib/images/instancias.png',
+                      context,
+                      '/instanciasFormacion'),
+                  _buildOptionCard(
+                      'Orientaciones para la Docencia en Linea',
+                      'lib/images/orientaciones.png',
+                      context,
+                      '/orientacionesDocencia'),
+                  _buildOptionCard(
+                      'Virtualizacion',
+                      'lib/images/virtualizacion.png',
+                      context,
+                      '/virtualizacion'),
                 ],
               ),
             ),
@@ -43,14 +58,14 @@ class DocentesPage extends StatelessWidget {
     );
   }
 
-  Widget _buildOptionCard(String title, String imagePath) {
+  Widget _buildOptionCard(
+      String title, String imagePath, BuildContext context, String route) {
     return Padding(
-      padding:
-          const EdgeInsets.all(8.0), // adjust this value to change the space
+      padding: const EdgeInsets.all(8.0),
       child: Card(
         child: InkWell(
           onTap: () {
-            // Handle onTap
+            Navigator.pushNamed(context, route);
           },
           child: Container(
             height: 200,

@@ -7,6 +7,13 @@ import 'views/recursos.dart';
 import 'views/calendario.dart';
 import 'views/docentes.dart';
 
+import 'views/compromisosacademicos.dart';
+import 'views/canalesDeApoyo.dart';
+import 'views/programacionRegular.dart';
+import 'views/instanciasFormacion.dart';
+import 'views/orientacionesDocencia.dart';
+import 'views/virtualizacion.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -28,6 +35,12 @@ class MyApp extends StatelessWidget {
         '/calendario': (context) => const CalendarPage(),
         '/recursos': (context) => const RecursosPage(),
         '/docentes': (context) => DocentesPage(),
+        '/compromisosacademicos': (context) => CompromisosAcademicosPage(),
+        '/canalesDeApoyo': (context) => DocentesPage(),
+        '/programacionRegular': (context) => DocentesPage(),
+        '/instanciasFormacion': (context) => DocentesPage(),
+        '/orientacionesDocencia': (context) => DocentesPage(),
+        '/virtualizacion': (context) => DocentesPage(),
       },
     );
   }
