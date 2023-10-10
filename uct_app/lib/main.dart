@@ -4,11 +4,13 @@ import 'views/profile_grid.dart';
 import 'views/dashboard.dart';
 import 'views/splash.dart';
 import 'views/recursos.dart';
-
-
-void main() {
+import 'views/calendario.dart';
+import 'views/docentes.dart';
+import 'views/dashboard2.dart';
+void main() async {
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,7 +26,10 @@ class MyApp extends StatelessWidget {
         '/dashboard': (context) => const MyHomePage(
               title: 'DTE',
             ),
+        '/calendario': (context) => const CalendarPage(),
         '/recursos': (context) => const RecursosPage(),
+        '/docentes': (context) => DocentesPage(),
+        '/dash2': (context) => const Dash(),
       },
     );
   }

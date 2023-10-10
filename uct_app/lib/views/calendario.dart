@@ -6,14 +6,14 @@ import 'dart:convert';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
-class RecursosPage extends StatefulWidget {
-  const RecursosPage({Key? key}) : super(key: key);
+class CalendarPage extends StatefulWidget {
+  const CalendarPage({Key? key}) : super(key: key);
 
   @override
-  _RecursosPageState createState() => _RecursosPageState();
+  _CalendarPageState createState() => _CalendarPageState();
 }
 
-class _RecursosPageState extends State<RecursosPage> {
+class _CalendarPageState extends State<CalendarPage> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
@@ -229,7 +229,7 @@ class _RecursosPageState extends State<RecursosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Recursos'),
+        title: const Text('Calendario'),
       ),
       body: Container(
         decoration: const BoxDecoration(
