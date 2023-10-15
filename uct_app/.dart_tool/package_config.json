@@ -21,7 +21,7 @@
     },
     {
       "name": "archive",
-      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.4.4",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.4.6",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -242,6 +242,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "lottie",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/lottie-2.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "matcher",
       "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.16",
       "packageUri": "lib/",
@@ -452,7 +458,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-10-10T15:21:22.465701Z",
+  "generated": "2023-10-15T17:45:08.155966Z",
   "generator": "pub",
   "generatorVersion": "3.1.1"
 }
