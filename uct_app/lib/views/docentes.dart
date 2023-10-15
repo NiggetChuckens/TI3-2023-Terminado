@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 class DocentesPage extends StatelessWidget {
+  const DocentesPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Docentes'),
+        title: const Text('Docentes'),
       ),
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('lib/images/formacion_docente.jpg'),
                 fit: BoxFit.cover,

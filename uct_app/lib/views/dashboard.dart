@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:uct_app/views/dashboard2.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
+  const MyHomePage({Key? key, required this.title, required this.username})
+      : super(key: key);
+  final String username;
   final String title;
 
   @override
@@ -20,7 +22,6 @@ class _MyHomePageState extends State<MyHomePage> {
     String dayOfWeek = DateFormat.EEEE(locale).format(now);
     String dayMonth = DateFormat.MMMMd(locale).format(now);
     String year = DateFormat.y(locale).format(now);
-    String nombre = 'Juan';
 
     return Scaffold(
       appBar: AppBar(
@@ -60,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Bienvenido, $nombre',
+                      'Bienvenido, ${widget.username}!',
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -135,6 +136,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, '/chat');
               },
             ),
+            ListTile(
+              title: const Text('Dashboard2'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Dash(
+                      username: widget.username,
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -152,6 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _buildCard('/contacto', 'lib/images/contacto.png'),
           _buildCard('/foro', 'lib/images/Default.jpg'),
           _buildCard('/chat', 'lib/images/Default.jpg'),
+          _buildCard('/dash2', 'lib/images/Default.jpg'),
         ],
       ),
     );
