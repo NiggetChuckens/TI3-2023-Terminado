@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uct_app/components/textfield1.dart';
 import 'package:uct_app/components/tiles.dart';
+import 'package:uct_app/views/dashboard2.dart';
 import 'dashboard.dart';
 
 class LoginPage extends StatelessWidget {
@@ -14,6 +15,8 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, // this avoids the overflow error
+
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Center(
@@ -65,31 +68,45 @@ class LoginPage extends StatelessWidget {
 
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      transitionDuration: const Duration(milliseconds: 500),
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          const MyHomePage(
-                        title: 'DTE',
+                  final username = usernameController.text;
+                  if (username.isNotEmpty) {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 500),
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            MyHomePage(
+                          title: 'DTE',
+                          username: username,
+                        ),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(0.0, 1.0);
+                          const end = Offset.zero;
+                          const curve = Curves.ease;
+                          final tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+                          return SlideTransition(
+                            position: animation.drive(tween),
+                            child: child,
+                          );
+                        },
                       ),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        const begin = Offset(0.0, 1.0);
-                        const end = Offset.zero;
-                        const curve = Curves.ease;
-                        final tween = Tween(begin: begin, end: end)
-                            .chain(CurveTween(curve: curve));
-                        return SlideTransition(
-                          position: animation.drive(tween),
-                          child: child,
-                        );
-                      },
-                    ),
-                  );
+                    );
+                  } else {
+                    //if the username field is empty display a small red message, with a way to check if the button is pressed more than once in  a second, make the user wait
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Por favor ingrese su correo'),
+                        backgroundColor: Colors.red,
+                        duration: Duration(seconds: 1),
+                      ),
+                    );
+                  }
                 },
                 child: const Text(
-                  'Iniciar Sesión',
+                  'Dashboard antigua',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -97,7 +114,52 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  final username = usernameController.text;
+                  if (username.isNotEmpty) {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 500),
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Dash(
+                          username: username,
+                        ),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(0.0, 1.0);
+                          const end = Offset.zero;
+                          const curve = Curves.ease;
+                          final tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+                          return SlideTransition(
+                            position: animation.drive(tween),
+                            child: child,
+                          );
+                        },
+                      ),
+                    );
+                  } else {
+                    //if the username field is empty display a small red message, with a way to check if the button is pressed more than once in  a second, make the user wait
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Por favor ingrese su correo'),
+                        backgroundColor: Colors.red,
+                        duration: Duration(seconds: 1),
+                      ),
+                    );
+                  }
+                },
+                child: const Text(
+                  'Dashboard Nueva',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
 
               Divider(
                 thickness: 0.5,
