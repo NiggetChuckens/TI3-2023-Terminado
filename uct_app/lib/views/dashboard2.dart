@@ -7,6 +7,7 @@ import 'package:uct_app/views/dashboard.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:uct_app/components/data.dart';
+
 class Dash extends StatefulWidget {
   const Dash({Key? key, required this.username}) : super(key: key);
   final String username;
@@ -295,82 +296,30 @@ class _DashState extends State<Dash> {
 
           const SizedBox(height: 25),
 
-          //LIST VIEW
+//LIST VIEW
           SizedBox(
             height: 80,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SpecialistsScreen(
-                          category: 'Terapia',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Category(
-                    categoryName: 'Terapia',
-                    iconImagePath: 'lib/images/terapia.png',
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SpecialistsScreen(
-                          category: 'Psicologia',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Category(
-                    categoryName: 'Psicologia',
-                    iconImagePath: 'lib/images/psicologia.png',
-                  ),
-                ),
-                
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SpecialistsScreen(
-                          category: 'Psiquiatria',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Category(
-                    categoryName: 'Psiquiatria',
-                    iconImagePath: 'lib/images/psiquiatra.png',
-                  ),
-                ),
-                
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SpecialistsScreen(
-                          category: 'Doctor',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Category(
-                    categoryName: 'Doctor',
-                    iconImagePath: 'lib/images/doc.png',
-                  ),
-                ),
+                _buildButton(
+                    'Asesores', '/profile_grid', 'lib/images/asesor.png'),
+                _buildButton(
+                    'Docentes', '/docentes', 'lib/images/Docentes.png'),
+                _buildButton('Calendario', '/calendario',
+                    'lib/images/calendar_icon.png'),
+                _buildButton('About', '/about', 'lib/images/uct_splash.png'),
+                _buildButton(
+                    'Recursos', '/recursos', 'lib/images/recursos.png'),
+                _buildButton(
+                    'Contacto', '/contacto', 'lib/images/contacto.png'),
+                _buildButton('Foro', '/foro', 'lib/images/Default.jpg'),
+                _buildButton(
+                    'Chat de Apoyo', '/chat', 'lib/images/Default.jpg'),
+                _buildButton('Dashboard2', '/dash2', 'lib/images/Default.jpg'),
               ],
             ),
           ),
-          const SizedBox(height: 25),
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -397,10 +346,8 @@ class _DashState extends State<Dash> {
           const SizedBox(height: 25),
 
           Expanded(
-            
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-
               itemCount: specialists.length,
               itemBuilder: (BuildContext context, int index) {
                 return Especialista(
@@ -417,6 +364,18 @@ class _DashState extends State<Dash> {
           )
         ],
       )),
+    );
+  }
+
+  Widget _buildButton(String name, String route, String imagePath) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, route);
+      },
+      child: Category(
+        categoryName: name,
+        iconImagePath: imagePath,
+      ),
     );
   }
 }
