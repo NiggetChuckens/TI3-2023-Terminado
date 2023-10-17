@@ -38,9 +38,9 @@ class MyApp extends StatelessWidget {
         '/recursos': (context) => const RecursosPage(),
         '/docentes': (context) => DocentesPage(),
         '/compromisosacademicos': (context) => CompromisosAcademicosPage(),
-        '/canalesDeApoyo': (context) => DocentesPage(),
-        '/programacionRegular': (context) => DocentesPage(),
-        '/instanciasFormacion': (context) => DocentesPage(),
+        '/canalesDeApoyo': (context) => CanalesDeApoyoPage(),
+        '/programacionRegular': (context) => programacionRegularPage(),
+        '/instanciasFormacion': (context) => VistaConImagen(),
         '/orientacionesDocencia': (context) => DocentesPage(),
         '/virtualizacion': (context) => DocentesPage(),
         '/dash2': (context) => const Dash(
