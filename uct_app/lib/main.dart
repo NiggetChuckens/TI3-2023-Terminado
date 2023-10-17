@@ -8,6 +8,7 @@ import 'views/recursos.dart';
 import 'views/calendario.dart';
 import 'views/docentes.dart';
 import 'views/dashboard2.dart';
+import 'views/contacto.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -39,6 +40,8 @@ class MyApp extends StatelessWidget {
         '/dash2': (context) => const Dash(
               username: '',
             ),
+        '/contacto': (context) => ContactScreen(),
+
       },
     );
   }

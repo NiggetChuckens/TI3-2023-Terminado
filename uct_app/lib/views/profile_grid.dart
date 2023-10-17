@@ -2,8 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:uct_app/components/data.dart';
 import 'package:uct_app/components/about.dart'; // Import the about.dart file
 
-class ProfilesGrid extends StatelessWidget {
+class ProfilesGrid extends StatefulWidget {
   const ProfilesGrid({super.key});
+
+  @override
+  _ProfilesGridState createState() => _ProfilesGridState();
+}
+
+class _ProfilesGridState extends State<ProfilesGrid> {
+  String dropdownValue = 'All';
+  List<String> categories =
+      specialists.map((specialist) => specialist.category).toSet().toList();
+
+  @override
+  void initState() {
+    super.initState();
+    if (!categories.contains('All')) {
+      categories.insert(0, 'All');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +37,28 @@ class ProfilesGrid extends StatelessWidget {
         backgroundColor: Colors.deepPurple,
         elevation: 5.0,
         actions: <Widget>[
+          DropdownButton<String>(
+            value: dropdownValue,
+            icon: const Icon(Icons.arrow_downward),
+            iconSize: 24,
+            elevation: 16,
+            style: const TextStyle(color: Colors.deepPurple),
+            underline: Container(
+              height: 2,
+              color: Colors.deepPurpleAccent,
+            ),
+            onChanged: (String? newValue) {
+              setState(() {
+                dropdownValue = newValue!;
+              });
+            },
+            items: categories.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
           IconButton(
             icon: Icon(Icons.info_outline),
             onPressed: () {
@@ -31,7 +70,8 @@ class ProfilesGrid extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     title: Text('Information'),
-                    content: Text('Aqui se muestran los especialistas disponibles para ayudarte en tu proceso de aprendizaje y desarrollo'),
+                    content: Text(
+                        'Aqui se muestran los especialistas disponibles para ayudarte en tu proceso de aprendizaje y desarrollo'),
                     actions: <Widget>[
                       TextButton(
                         child: Text('Cerrar'),
@@ -67,9 +107,19 @@ class ProfilesGrid extends StatelessWidget {
                   crossAxisSpacing: 15,
                   mainAxisSpacing: 15,
                 ),
-                itemCount: specialists.length,
+                itemCount: dropdownValue == 'All'
+                    ? specialists.length
+                    : specialists
+                        .where((specialist) =>
+                            specialist.category == dropdownValue)
+                        .length,
                 itemBuilder: (BuildContext context, int index) {
-                  final specialist = specialists[index];
+                  final specialist = dropdownValue == 'All'
+                      ? specialists[index]
+                      : specialists
+                          .where((specialist) =>
+                              specialist.category == dropdownValue)
+                          .toList()[index];
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -119,6 +169,7 @@ class ProfilesGrid extends StatelessWidget {
                                         0xFFE0E0E0), // Light text color for contrast
                                   ),
                                 ),
+                                
                                 const SizedBox(height: 5),
                                 Text(
                                   specialist.category,

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:uct_app/components/specialist_cards.dart';
 import 'package:uct_app/components/category_cards.dart';
-import 'package:uct_app/components/sort_category.dart';
 import 'package:uct_app/views/dashboard.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:uct_app/components/data.dart';
-
 class Dash extends StatefulWidget {
   const Dash({Key? key, required this.username}) : super(key: key);
   final String username;
