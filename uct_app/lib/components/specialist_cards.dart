@@ -30,7 +30,7 @@ class Especialista extends StatelessWidget {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.only(left: 25.0),
+        padding: const EdgeInsets.all(20),
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
@@ -48,7 +48,7 @@ class Especialista extends StatelessWidget {
                   fit: BoxFit.fill,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
               Row(
                 children: [
                   Icon(

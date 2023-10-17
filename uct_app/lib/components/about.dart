@@ -60,7 +60,7 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
-                        color: Colors.deepPurple,
+                        color: Color.fromARGB(255, 16, 13, 20),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -94,7 +94,7 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
-                        color: Colors.deepPurple,
+                        color: Color.fromARGB(255, 16, 13, 20),
                       ),
                     ),
                     const SizedBox(height: 8),

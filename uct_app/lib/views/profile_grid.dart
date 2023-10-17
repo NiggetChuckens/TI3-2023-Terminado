@@ -1,123 +1,163 @@
 import 'package:flutter/material.dart';
-import 'package:uct_app/views/profile.dart';
+import 'package:uct_app/components/data.dart';
+import 'package:uct_app/components/about.dart'; // Import the about.dart file
 
 class ProfilesGrid extends StatelessWidget {
   const ProfilesGrid({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ayudantias disponibles'),
-        backgroundColor: Colors.transparent,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue, Colors.yellow],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+        title: const Text(
+          'Ayudantias disponibles',
+          style: TextStyle(
+            color: Color.fromARGB(255, 221, 221, 221),
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
           ),
         ),
-      ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        children: [
-          Container(
-            margin: const EdgeInsets.all(10),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Profile(
-                      username: 'Kim Yong Un',
-                      picture:
-                          'https://dte.uct.cl/wp-content/uploads/2018/06/monica_keachele.jpg',
-                      description:
-                          'this is a test description, assume this guy is good at building rockets or something lol',
-                      email: 'mrkim@northkorea.net',
-                      service:
-                          'Especializado en operaciones terroristas, relaciones sociales y amabilidad, disponible los 7 dias de la semana',
-                      experience:
-                          'Amplio trabajo con armamento militar, bombas y abrazos, capaz de ayudar a solucionar los problemas que puedas tener',
-                      schedule: 'Lunes a Domingo - 8:00 a 17:00',
-                      comment: 'Nice job',
+        backgroundColor: Colors.deepPurple,
+        elevation: 5.0,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.info_outline),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                  ),
-                );
-              },
-              child: Column(
-                children: [
-                  Image.network(
-                    'https://dte.uct.cl/wp-content/uploads/2018/06/monica_keachele.jpg',
-                    width: 140,
-                    height: 140,
-                  ),
-                  const Text('Kim Yong Un'),
-                ],
+                    title: Text('Information'),
+                    content: Text('Aqui se muestran los especialistas disponibles para ayudarte en tu proceso de aprendizaje y desarrollo'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('Cerrar'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
+      ),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("lib/images/cnfondo.jpg"),
+                fit: BoxFit.cover,
               ),
             ),
           ),
-          Container(
-            margin: const EdgeInsets.all(10),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Profile(
-                      username: 'Vladimir Putin',
-                      picture: 'https://i.imgur.com/BoN9kdC.jpeg',
-                      description:
-                          'this is a test description, assume this guy is good at programing or something else',
-                      email: 'lilputin@invadeuk.meme',
-                      service: 'a',
-                      experience: 'a',
-                      schedule: 'a',
-                      comment: 'Nice job',
-                    ),
-                  ),
-                );
-              },
-              child: Column(children: [
-                Image.network(
-                  'https://i.imgur.com/BoN9kdC.jpeg',
-                  width: 140,
-                  height: 140,
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.7,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 15,
                 ),
-                const Text('Vladimir Putin'),
-              ]),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(10),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Profile(
-                      username: 'Donald Trump',
-                      picture: 'https://i.imgur.com/BoN9kdC.jpeg',
-                      description:
-                          'this is a test description, assume this guy is good at sniffing stuff or idk',
-                      email: 'donald@cuack.lake',
-                      service: 'a',
-                      experience: 'a',
-                      schedule: 'a',
-                      comment: 'Nice job',
+                itemCount: specialists.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final specialist = specialists[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EspecialistaDetails(
+                            doctorImagePath: specialist.image,
+                            rating: specialist.rating.toString(),
+                            doctorName: specialist.name,
+                            doctorSpecialty: specialist.category,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Center(
+                      child: SizedBox(
+                        width: 150, // Set your desired width here
+                        child: Card(
+                          color: const Color.fromARGB(
+                              255, 42, 42, 42), // Dark background for the card
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          elevation: 4.0,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(
+                                      10.0), // Adjust the border radius as needed
+                                  child: Image.asset(
+                                    specialist.image,
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  specialist.name,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Color(
+                                        0xFFE0E0E0), // Light text color for contrast
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  specialist.category,
+                                  style: const TextStyle(
+                                    color: Color(
+                                        0xFF757575), // Slightly lighter grey for contrast
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      const Icon(
+                                        Icons.star, // This is the star icon
+                                        color: Color.fromARGB(255, 224, 217,
+                                            118), // Set the color of the star icon
+                                      ),
+                                      Text(
+                                        ' ${specialist.rating}', // Add a space before the rating to separate it from the star icon
+                                        style: const TextStyle(
+                                          color: Color.fromARGB(255, 224, 217,
+                                              118), // Set the color of the rating text
+                                          fontWeight: FontWeight
+                                              .bold, // Make the rating text bold
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                );
-              },
-              child: Column(children: [
-                Image.network(
-                  'https://i.imgur.com/BoN9kdC.jpeg',
-                  width: 140,
-                  height: 140,
-                ),
-                const Text('Donald Trump'),
-              ]),
+                  );
+                },
+              ),
             ),
           ),
         ],

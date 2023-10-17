@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'views/compromisosAcademicos.dart';
 import 'views/login.dart';
 import 'views/profile_grid.dart';
 import 'views/dashboard.dart';
@@ -7,10 +8,9 @@ import 'views/recursos.dart';
 import 'views/calendario.dart';
 import 'views/docentes.dart';
 import 'views/dashboard2.dart';
-void main() async {
+void main() {
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,12 +24,21 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/profile_grid': (context) => const ProfilesGrid(),
         '/dashboard': (context) => const MyHomePage(
-              title: 'DTE', username: '',
+              title: 'DTE',
+              username: '',
             ),
         '/calendario': (context) => const CalendarPage(),
         '/recursos': (context) => const RecursosPage(),
         '/docentes': (context) => const DocentesPage(),
-        '/dash2': (context) => const Dash(username: '',),
+        '/compromisosacademicos': (context) => CompromisosAcademicosPage(),
+        '/canalesDeApoyo': (context) => DocentesPage(),
+        '/programacionRegular': (context) => DocentesPage(),
+        '/instanciasFormacion': (context) => DocentesPage(),
+        '/orientacionesDocencia': (context) => DocentesPage(),
+        '/virtualizacion': (context) => DocentesPage(),
+        '/dash2': (context) => const Dash(
+              username: '',
+            ),
       },
     );
   }

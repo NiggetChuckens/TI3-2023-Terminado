@@ -43,6 +43,7 @@ dependencies:
   http: ^1.1.0
   googleapis_auth: ^1.4.1
   table_calendar: ^3.0.9
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
