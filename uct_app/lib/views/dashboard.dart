@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:uct_app/views/dashboard2.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
+  const MyHomePage({Key? key, required this.title, required this.username})
+      : super(key: key);
+  final String username;
   final String title;
 
   @override
@@ -20,7 +22,6 @@ class _MyHomePageState extends State<MyHomePage> {
     String dayOfWeek = DateFormat.EEEE(locale).format(now);
     String dayMonth = DateFormat.MMMMd(locale).format(now);
     String year = DateFormat.y(locale).format(now);
-    String nombre = 'Juan';
 
     return Scaffold(
       appBar: AppBar(
@@ -60,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Bienvenido, $nombre',
+                      'Bienvenido, ${widget.username}!',
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -87,10 +88,24 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: const Text('Chat de Ayuda'),
+              title: const Text('Docentes'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, '/profile_grid');
+                Navigator.pushNamed(context, '/docentes');
+              },
+            ),
+            ListTile(
+              title: const Text('Calendario'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/calendario');
+              },
+            ),
+            ListTile(
+              title: const Text('About'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/about');
               },
             ),
             ListTile(
@@ -100,62 +115,91 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, '/recursos');
               },
             ),
+            ListTile(
+              title: const Text('Contacto'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/contacto');
+              },
+            ),
+            ListTile(
+              title: const Text('Foro'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/foro');
+              },
+            ),
+            ListTile(
+              title: const Text('Validacion Compromisos academicos'),
+              onTap: () {
+                Navigator.pop(context); // close the drawer
+                Navigator.pushNamed(context, '/compromisosacademicos');
+              },
+            ),
+            ListTile(
+              title: const Text('Chat de Apoyo'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/chat');
+              },
+            ),
+            ListTile(
+              title: const Text('Dashboard2'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Dash(
+                      username: widget.username,
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
       body: GridView.count(
         crossAxisCount: 2,
-        padding: const EdgeInsets.all(
-            16), // Add spacing between the buttons and the screen
-        mainAxisSpacing: 16, // Add spacing between the buttons vertically
-        crossAxisSpacing: 16, // Add spacing between the buttons horizontally
+        padding: const EdgeInsets.all(16),
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 16,
         children: [
-          Center(
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(10), // strength of rounded corners
-              ),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, '/profile_grid');
-                },
-                child: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/images/Docentes.png'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          // Placeholder for the second card
-          Center(
-            child: Card(
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, '/recursos');
-                },
-                child: ClipRRect(
-                  borderRadius:
-                      BorderRadius.circular(10), // strength of round corners
-                  clipBehavior: Clip
-                      .antiAlias, // Clip the child widget with rounded corners
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('lib/images/Default.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          _buildCard('/profile_grid', 'lib/images/asesor.png'),
+          _buildCard('/docentes', 'lib/images/docentes.png'),
+          _buildCard('/calendario', 'lib/images/calendar_icon.png'),
+          _buildCard('/about', 'lib/images/uct_splash.png'),
+          _buildCard('/recursos', 'lib/images/recursos.png'),
+          _buildCard('/contacto', 'lib/images/contacto.png'),
+          _buildCard('/foro', 'lib/images/Default.jpg'),
+          _buildCard('/chat', 'lib/images/Default.jpg'),
+          _buildCard('/dash2', 'lib/images/Default.jpg'),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCard(String route, String imagePath) {
+    return Center(
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, route);
+          },
+          child: Container(
+            height: 200,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(imagePath),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
