@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
               title: const Text('Asesores'),
               onTap: () {
                 Navigator.pop(context); // close the drawer
-                Navigator.pushNamed(context, '/profile_grid');
+                Navigator.pushNamed(context, '/especialistas');
               },
             ),
             ListTile(
@@ -160,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisSpacing: 16,
         crossAxisSpacing: 16,
         children: [
-          _buildCard('/profile_grid', 'lib/images/asesor.png'),
+          _buildCard('/especialistas', 'lib/images/asesor.png'),
           _buildCard('/docentes', 'lib/images/docentes.png'),
           _buildCard('/calendario', 'lib/images/calendar_icon.png'),
           _buildCard('/about', 'lib/images/uct_splash.png'),

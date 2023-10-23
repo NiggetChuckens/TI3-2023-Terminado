@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:uct_app/views/especialistas.dart';
 import 'views/compromisosAcademicos.dart';
 import 'views/login.dart';
-import 'views/profile_grid.dart';
 import 'views/dashboard.dart';
 import 'views/splash.dart';
 import 'views/recursos.dart';
 import 'views/calendario.dart';
 import 'views/docentes.dart';
-import 'views/dashboard2.dart';
-import 'views/contacto.dart';
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -23,7 +27,7 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
       routes: {
         '/login': (context) => LoginPage(),
-        '/profile_grid': (context) => const ProfilesGrid(),
+        '/especialistas': (context) => SpecialistPage(),
         '/dashboard': (context) => const MyHomePage(
               title: 'DTE',
               username: '',
@@ -37,11 +41,6 @@ class MyApp extends StatelessWidget {
         '/instanciasFormacion': (context) => DocentesPage(),
         '/orientacionesDocencia': (context) => DocentesPage(),
         '/virtualizacion': (context) => DocentesPage(),
-        '/dash2': (context) => const Dash(
-              username: '',
-            ),
-        '/contacto': (context) => ContactScreen(),
-
       },
     );
   }

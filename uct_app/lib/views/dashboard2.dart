@@ -4,6 +4,8 @@ import 'package:uct_app/components/category_cards.dart';
 import 'package:uct_app/views/dashboard.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 class Dash extends StatefulWidget {
   const Dash({Key? key, required this.username}) : super(key: key);
   final String username;
@@ -59,7 +61,7 @@ class _DashState extends State<Dash> {
               title: const Text('Asesores'),
               onTap: () {
                 Navigator.pop(context); // close the drawer
-                Navigator.pushNamed(context, '/profile_grid');
+                Navigator.pushNamed(context, '/especialistas');
               },
             ),
             ListTile(
@@ -111,20 +113,7 @@ class _DashState extends State<Dash> {
                 Navigator.pushNamed(context, '/chat');
               },
             ),
-            ListTile(
-              title: const Text('Dashboard2'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Dash(
-                      username: widget.username,
-                    ),
-                  ),
-                );
-              },
-            ),
+           
             ListTile(
               title: const Text('Dashboard1'),
               onTap: () {
@@ -299,7 +288,7 @@ class _DashState extends State<Dash> {
               scrollDirection: Axis.horizontal,
               children: [
                 _buildButton(
-                    'Asesores', '/profile_grid', 'lib/images/asesor.png'),
+                    'Asesores', '/especialistas', 'lib/images/asesor.png'),
                 _buildButton(
                     'Docentes', '/docentes', 'lib/images/Docentes.png'),
                 _buildButton('Calendario', '/calendario',
@@ -312,7 +301,7 @@ class _DashState extends State<Dash> {
                 _buildButton('Foro', '/foro', 'lib/images/foro.png'),
                 _buildButton(
                     'Chat de Apoyo', '/chat', 'lib/images/chat.png'),
-                _buildButton('Dashboard2', '/dash2', 'lib/images/Default.jpg'),
+                
               ],
             ),
           ),
