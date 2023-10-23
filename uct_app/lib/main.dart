@@ -9,6 +9,8 @@ import 'views/calendario.dart';
 import 'views/docentes.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'views/upcoming.dart';
+
 
 
 void main() async {
@@ -41,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/instanciasFormacion': (context) => DocentesPage(),
         '/orientacionesDocencia': (context) => DocentesPage(),
         '/virtualizacion': (context) => DocentesPage(),
+        '/eventos': (context) => UpcomingEventsPage(),
       },
     );
   }

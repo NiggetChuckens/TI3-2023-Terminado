@@ -161,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
         crossAxisSpacing: 16,
         children: [
           _buildCard('/especialistas', 'lib/images/asesor.png'),
-          _buildCard('/docentes', 'lib/images/docentes.png'),
+          _buildCard('/docentes', 'lib/images/Docentes.png'),
           _buildCard('/calendario', 'lib/images/calendar_icon.png'),
           _buildCard('/about', 'lib/images/uct_splash.png'),
           _buildCard('/recursos', 'lib/images/recursos.png'),

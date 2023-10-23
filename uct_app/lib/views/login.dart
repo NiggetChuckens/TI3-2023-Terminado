@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:uct_app/components/textfield1.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dashboard2.dart';
+import 'package:googleapis/calendar/v3.dart' as gcal;
+import 'package:http/http.dart'
+    show Client, Response, BaseRequest, StreamedResponse;
+import 'package:http/http.dart' as http;
 
 String capitalize(String str) {
   if (str.isEmpty) {
@@ -10,13 +13,39 @@ String capitalize(String str) {
   }
   return str[0].toUpperCase() + str.substring(1).toLowerCase();
 }
-class LoginPage extends StatelessWidget {
+
+class LoginPage extends StatefulWidget {
   LoginPage({super.key});
 
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
-  final GoogleSignIn googleSignIn = GoogleSignIn();
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class GoogleHttpClient extends http.BaseClient {
+  Map<String, String> _headers;
+  final http.Client _client = http.Client();
+
+  GoogleHttpClient(this._headers);
+
+  Future<StreamedResponse> send(BaseRequest request) {
+    return _client.send(request..headers.addAll(_headers));
+  }
+
+  @override
+  void close() {
+    _client.close();
+  }
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final GoogleSignIn googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/calendar.events',
+    ],
+  );
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  List<gcal.Event>? events;
 
   Future<String?> signInWithGoogle() async {
     // Sign out first to ensure the account selection dialog is shown
@@ -40,7 +69,26 @@ class LoginPage extends StatelessWidget {
       if (user != null) {
         assert(!user.isAnonymous);
         assert(await user.getIdToken() != null);
+        final httpClient = GoogleHttpClient(await googleSignInAccount
+            .authentication
+            .then((auth) => {'Authorization': 'Bearer ${auth.accessToken}'}));
+        final calendar = gcal.CalendarApi(httpClient);
+        DateTime now = DateTime.now();
+        DateTime oneYearFromNow = now.add(Duration(days: 365));
 
+        events = (await calendar.events.list(
+        user.email!,
+        timeMin: now,
+        timeMax: oneYearFromNow,
+      ))
+          .items
+          ?.where((event) => event.summary?.contains('DTE') ?? false)
+          .toList() ?? [];
+        print('Fetched ${events!.length} events:');
+        for (var event in events!) {
+          print(
+              '${event.summary}: ${event.start?.dateTime?.toIso8601String()} - ${event.end?.dateTime?.toIso8601String()}');
+        }
         final User? currentUser = firebaseAuth.currentUser;
         assert(user.uid == currentUser!.uid);
 
@@ -66,7 +114,6 @@ class LoginPage extends StatelessWidget {
         }
       }
     }
-
     return null;
   }
 
@@ -90,95 +137,84 @@ class LoginPage extends StatelessWidget {
             children: [
               // logo
               const Image(
-                image: AssetImage('lib/images/Logo_UCT.png'),
+                image: AssetImage('lib/images/google.png'),
                 height: 100,
                 width: 100,
               ),
 
               const SizedBox(height: 20),
 
-              Text(
-                'Bienvenido!',
-                style: TextStyle(
-                  color: Colors.grey[700],
-                  fontSize: 16,
-                ),
-              ),
-
-              const SizedBox(height: 10),
-
-              MyTextField(
-                controller: usernameController,
-                hintText: 'Correo Institucional',
-                obscureText: false,
-              ),
-
-              const SizedBox(height: 10),
-
-              MyTextField(
-                controller: passwordController,
-                hintText: 'Contraseña',
-                obscureText: true,
-              ),
-
-              const SizedBox(height: 10),
-
-              Text(
-                'Olvidaste tu Contraseña?',
-                style: TextStyle(color: Colors.grey[600]),
-              ),
-
-              const SizedBox(height: 20),
-
-              ElevatedButton(
-                onPressed: () {
-                  signInWithGoogle().then((String? shortName) {
-                    if (shortName != null) {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          transitionDuration: const Duration(milliseconds: 500),
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  Dash(
-                            
-                            username: shortName,
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: ElevatedButton(
+                  onPressed: () {
+                    signInWithGoogle().then((String? shortName) {
+                      if (shortName != null) {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            transitionDuration:
+                                const Duration(milliseconds: 500),
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    Dash(
+                              username: shortName,
+                            ),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              const begin = Offset(0.0, 1.0);
+                              const end = Offset.zero;
+                              const curve = Curves.ease;
+                              final tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+                              return SlideTransition(
+                                position: animation.drive(tween),
+                                child: child,
+                              );
+                            },
                           ),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            const begin = Offset(0.0, 1.0);
-                            const end = Offset.zero;
-                            const curve = Curves.ease;
-                            final tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
-                        ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Failed to sign in with Google'),
-                          backgroundColor: Colors.red,
-                          duration: Duration(seconds: 1),
-                        ),
-                      );
-                    }
-                  });
-                },
-                child: const Text(
-                  'Sign in with Google',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Failed to sign in with Google'),
+                            backgroundColor: Colors.red,
+                            duration: Duration(seconds: 1),
+                          ),
+                        );
+                      }
+                    });
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.hovered))
+                          return Colors
+                              .blue; // The color when the button is hovered
+                        return Colors.white; // The default color of the button
+                      },
+                    ),
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                      EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    ),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                    side: MaterialStateProperty.all<BorderSide>(
+                      BorderSide(color: Colors.grey, width: 1),
+                    ),
+                  ),
+                  child: const Text(
+                    'Iniciar Sesion con Google',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
-
-              // ... rest of your code
             ],
           ),
         ),

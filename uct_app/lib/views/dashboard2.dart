@@ -301,7 +301,8 @@ class _DashState extends State<Dash> {
                 _buildButton('Foro', '/foro', 'lib/images/foro.png'),
                 _buildButton(
                     'Chat de Apoyo', '/chat', 'lib/images/chat.png'),
-                
+                _buildButton(
+                    'Eventos Proximos', '/eventos', 'lib/images/chat.png'),
               ],
             ),
           ),
