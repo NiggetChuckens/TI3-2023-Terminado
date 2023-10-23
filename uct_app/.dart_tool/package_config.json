@@ -14,6 +14,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "_flutterfire_internals",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/_flutterfire_internals-1.3.9",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "analyzer",
       "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/analyzer-5.13.0",
       "packageUri": "lib/",
@@ -74,6 +80,24 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "cloud_firestore",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/cloud_firestore-4.11.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "cloud_firestore_platform_interface",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/cloud_firestore_platform_interface-6.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "cloud_firestore_web",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/cloud_firestore_web-3.8.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "collection",
       "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.2",
       "packageUri": "lib/",
@@ -108,6 +132,42 @@
       "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/file-7.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "firebase_auth",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth-4.11.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_auth_platform_interface",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_platform_interface-7.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_auth_web",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_web-5.8.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_core",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core-2.19.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_core_platform_interface",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core_platform_interface-5.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "firebase_core_web",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core_web-2.8.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
     },
     {
       "name": "flutter",
@@ -153,7 +213,7 @@
     },
     {
       "name": "google_identity_services_web",
-      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/google_identity_services_web-0.2.1+1",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/google_identity_services_web-0.2.2",
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
@@ -243,9 +303,9 @@
     },
     {
       "name": "lottie",
-      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/lottie-2.6.0",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/lottie-2.7.0",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.1"
     },
     {
       "name": "matcher",
@@ -458,7 +518,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-10-15T17:45:08.155966Z",
+  "generated": "2023-10-23T12:16:27.863570Z",
   "generator": "pub",
   "generatorVersion": "3.1.1"
 }

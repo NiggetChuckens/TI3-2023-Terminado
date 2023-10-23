@@ -4,13 +4,9 @@ import 'package:uct_app/components/category_cards.dart';
 import 'package:uct_app/views/dashboard.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-<<<<<<< HEAD
-import 'package:uct_app/components/data.dart';
-
-=======
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
->>>>>>> Dev-Nico
+
 class Dash extends StatefulWidget {
   const Dash({Key? key, required this.username}) : super(key: key);
   final String username;
@@ -118,7 +114,6 @@ class _DashState extends State<Dash> {
                 Navigator.pushNamed(context, '/chat');
               },
             ),
-           
             ListTile(
               title: const Text('Dashboard1'),
               onTap: () {
@@ -286,22 +281,14 @@ class _DashState extends State<Dash> {
 
           const SizedBox(height: 25),
 
-<<<<<<< HEAD
-//LIST VIEW
-=======
-      //LIST VIEW
->>>>>>> Dev-Nico
+          //LIST VIEW
           SizedBox(
             height: 80,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
                 _buildButton(
-<<<<<<< HEAD
-                    'Asesores', '/profile_grid', 'lib/images/asesor.png'),
-=======
                     'Asesores', '/especialistas', 'lib/images/asesor.png'),
->>>>>>> Dev-Nico
                 _buildButton(
                     'Docentes', '/docentes', 'lib/images/Docentes.png'),
                 _buildButton('Calendario', '/calendario',
@@ -311,26 +298,13 @@ class _DashState extends State<Dash> {
                     'Recursos', '/recursos', 'lib/images/recursos.png'),
                 _buildButton(
                     'Contacto', '/contacto', 'lib/images/contacto.png'),
-<<<<<<< HEAD
-                _buildButton('Foro', '/foro', 'lib/images/Default.jpg'),
-                _buildButton(
-                    'Chat de Apoyo', '/chat', 'lib/images/Default.jpg'),
-                _buildButton('Dashboard2', '/dash2', 'lib/images/Default.jpg'),
-              ],
-            ),
-          ),
-
-=======
                 _buildButton('Foro', '/foro', 'lib/images/foro.png'),
-                _buildButton(
-                    'Chat de Apoyo', '/chat', 'lib/images/chat.png'),
-                
+                _buildButton('Chat de Apoyo', '/chat', 'lib/images/chat.png'),
               ],
             ),
           ),
           const SizedBox(height: 25),
-          
->>>>>>> Dev-Nico
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Row(
@@ -353,26 +327,7 @@ class _DashState extends State<Dash> {
               ],
             ),
           ),
-<<<<<<< HEAD
-          const SizedBox(height: 25),
 
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: specialists.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Especialista(
-                  doctorImagePath: specialists[index].image,
-                  rating: specialists[index].rating.toString(),
-                  doctorName: specialists[index].name,
-                  doctorSpecialty: specialists[index].category,
-                );
-              },
-            ),
-          ),
-=======
-          
->>>>>>> Dev-Nico
           const SizedBox(
             height: 100,
           )
@@ -392,8 +347,4 @@ class _DashState extends State<Dash> {
       ),
     );
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> Dev-Nico

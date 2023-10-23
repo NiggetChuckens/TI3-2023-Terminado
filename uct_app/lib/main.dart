@@ -7,26 +7,15 @@ import 'views/splash.dart';
 import 'views/recursos.dart';
 import 'views/calendario.dart';
 import 'views/docentes.dart';
-<<<<<<< HEAD
+import 'package:firebase_core/firebase_core.dart';
 
-import 'views/compromisosacademicos.dart';
 import 'views/canalesDeApoyo.dart';
 import 'views/programacionRegular.dart';
 import 'views/instanciasFormacion.dart';
-import 'views/orientacionesDocencia.dart';
-import 'views/virtualizacion.dart';
-import 'views/dashboard2.dart';
-
-void main() {
-=======
-import 'package:firebase_core/firebase_core.dart';
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
->>>>>>> Dev-Nico
   runApp(const MyApp());
 }
 
@@ -47,23 +36,13 @@ class MyApp extends StatelessWidget {
             ),
         '/calendario': (context) => const CalendarPage(),
         '/recursos': (context) => const RecursosPage(),
-<<<<<<< HEAD
-        '/docentes': (context) => DocentesPage(),
-=======
         '/docentes': (context) => const DocentesPage(),
->>>>>>> Dev-Nico
         '/compromisosacademicos': (context) => CompromisosAcademicosPage(),
-        '/canalesDeApoyo': (context) => DocentesPage(),
-        '/programacionRegular': (context) => DocentesPage(),
-        '/instanciasFormacion': (context) => DocentesPage(),
+        '/canalesDeApoyo': (context) => CanalesDeApoyoPage(),
+        '/programacionRegular': (context) => programacionRegularPage(),
+        '/instanciasFormacion': (context) => VistaConImagen(),
         '/orientacionesDocencia': (context) => DocentesPage(),
         '/virtualizacion': (context) => DocentesPage(),
-<<<<<<< HEAD
-        '/dash2': (context) => const Dash(
-              username: '',
-            ),
-=======
->>>>>>> Dev-Nico
       },
     );
   }

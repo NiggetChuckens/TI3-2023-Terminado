@@ -10,6 +10,7 @@ String capitalize(String str) {
   }
   return str[0].toUpperCase() + str.substring(1).toLowerCase();
 }
+
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
@@ -139,9 +140,7 @@ class LoginPage extends StatelessWidget {
                         PageRouteBuilder(
                           transitionDuration: const Duration(milliseconds: 500),
                           pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  Dash(
-                            
+                              (context, animation, secondaryAnimation) => Dash(
                             username: shortName,
                           ),
                           transitionsBuilder:
@@ -157,80 +156,6 @@ class LoginPage extends StatelessWidget {
                             );
                           },
                         ),
-<<<<<<< HEAD
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          const begin = Offset(0.0, 1.0);
-                          const end = Offset.zero;
-                          const curve = Curves.ease;
-                          final tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          return SlideTransition(
-                            position: animation.drive(tween),
-                            child: child,
-                          );
-                        },
-                      ),
-                    );
-                  } else {
-                    //if the username field is empty display a small red message, with a way to check if the button is pressed more than once in  a second, make the user wait
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Por favor ingrese su correo'),
-                        backgroundColor: Colors.red,
-                        duration: Duration(seconds: 1),
-                      ),
-                    );
-                  }
-                },
-                child: const Text(
-                  'Dashboard antigua',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  final username = usernameController.text;
-                  if (username.isNotEmpty) {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 500),
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            Dash(
-                          username: username,
-                        ),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          const begin = Offset(0.0, 1.0);
-                          const end = Offset.zero;
-                          const curve = Curves.ease;
-                          final tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          return SlideTransition(
-                            position: animation.drive(tween),
-                            child: child,
-                          );
-                        },
-                      ),
-                    );
-                  } else {
-                    //if the username field is empty display a small red message, with a way to check if the button is pressed more than once in  a second, make the user wait
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Por favor ingrese su correo'),
-                        backgroundColor: Colors.red,
-                        duration: Duration(seconds: 1),
-                      ),
-                    );
-                  }
-=======
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -242,7 +167,6 @@ class LoginPage extends StatelessWidget {
                       );
                     }
                   });
->>>>>>> Dev-Nico
                 },
                 child: const Text(
                   'Sign in with Google',
@@ -252,23 +176,6 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
               ),
-<<<<<<< HEAD
-
-              Divider(
-                thickness: 0.5,
-                color: Colors.grey[400],
-              ),
-
-              const SizedBox(height: 10),
-
-              Text(
-                'O iniciar sesión con',
-                style: TextStyle(color: Colors.grey[700]),
-              ),
-
-              const SizedBox(height: 10),
-=======
->>>>>>> Dev-Nico
 
               // ... rest of your code
             ],
