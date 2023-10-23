@@ -1,16 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:uct_app/components/textfield1.dart';
-import 'package:uct_app/components/tiles.dart';
-import 'package:uct_app/views/dashboard2.dart';
-import 'dashboard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'dashboard2.dart';
 
+String capitalize(String str) {
+  if (str.isEmpty) {
+    return str;
+  }
+  return str[0].toUpperCase() + str.substring(1).toLowerCase();
+}
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-  void signUserIn() {}
+  Future<String?> signInWithGoogle() async {
+    // Sign out first to ensure the account selection dialog is shown
+    await googleSignIn.signOut();
+
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      final UserCredential authResult =
+          await firebaseAuth.signInWithCredential(credential);
+      final User? user = authResult.user;
+
+      if (user != null) {
+        assert(!user.isAnonymous);
+        assert(await user.getIdToken() != null);
+
+        final User? currentUser = firebaseAuth.currentUser;
+        assert(user.uid == currentUser!.uid);
+
+        // Check if the email domain is alu.uct.cl
+        if (user.email!.endsWith('@alu.uct.cl')) {
+          print('signInWithGoogle succeeded: $user');
+
+          // Split the username on space and keep the first two parts
+          List<String> nameParts = user.displayName!.split(' ');
+          String shortName = user
+              .displayName!; // default to full name if name has less than two parts
+          if (nameParts.length > 1) {
+            shortName = capitalize(nameParts[0]) +
+                ' ' +
+                capitalize(nameParts[1]); // capitalize first and last name
+            print('shortName: $shortName');
+          }
+
+          return shortName;
+        } else {
+          print('signInWithGoogle failed: Email domain is not alu.uct.cl');
+          return null;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  void signOutGoogle() async {
+    await googleSignIn.signOut();
+
+    print("User Signed Out");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,17 +132,32 @@ class LoginPage extends StatelessWidget {
 
               ElevatedButton(
                 onPressed: () {
-                  final username = usernameController.text;
-                  if (username.isNotEmpty) {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 500),
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            MyHomePage(
-                          title: 'DTE',
-                          username: username,
+                  signInWithGoogle().then((String? shortName) {
+                    if (shortName != null) {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          transitionDuration: const Duration(milliseconds: 500),
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  Dash(
+                            
+                            username: shortName,
+                          ),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            const begin = Offset(0.0, 1.0);
+                            const end = Offset.zero;
+                            const curve = Curves.ease;
+                            final tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+                            return SlideTransition(
+                              position: animation.drive(tween),
+                              child: child,
+                            );
+                          },
                         ),
+<<<<<<< HEAD
                         transitionsBuilder:
                             (context, animation, secondaryAnimation, child) {
                           const begin = Offset(0.0, 1.0);
@@ -151,15 +230,29 @@ class LoginPage extends StatelessWidget {
                       ),
                     );
                   }
+=======
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Failed to sign in with Google'),
+                          backgroundColor: Colors.red,
+                          duration: Duration(seconds: 1),
+                        ),
+                      );
+                    }
+                  });
+>>>>>>> Dev-Nico
                 },
                 child: const Text(
-                  'Dashboard Nueva',
+                  'Sign in with Google',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
+<<<<<<< HEAD
 
               Divider(
                 thickness: 0.5,
@@ -174,39 +267,10 @@ class LoginPage extends StatelessWidget {
               ),
 
               const SizedBox(height: 10),
+=======
+>>>>>>> Dev-Nico
 
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // google button
-                  SquareTile(imagePath: 'lib/images/google.png'),
-
-                  SizedBox(width: 25),
-
-                  // apple button
-                  SquareTile(imagePath: 'lib/images/apple.png')
-                ],
-              ),
-
-              const SizedBox(height: 20),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'No tienes cuenta?',
-                    style: TextStyle(color: Colors.grey[700]),
-                  ),
-                  const SizedBox(width: 4),
-                  const Text(
-                    'Registrarse Ahora',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              )
+              // ... rest of your code
             ],
           ),
         ),
