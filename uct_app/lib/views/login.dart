@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 import 'dashboard2.dart';
 import 'package:googleapis/calendar/v3.dart' as gcal;
 import 'package:http/http.dart'
@@ -13,7 +14,16 @@ String capitalize(String str) {
   }
   return str[0].toUpperCase() + str.substring(1).toLowerCase();
 }
+class EventsModel extends ChangeNotifier {
+  List<gcal.Event>? _events;
 
+  List<gcal.Event>? get events => _events;
+
+  void setEvents(List<gcal.Event>? events) {
+    _events = events;
+    notifyListeners();
+  }
+}
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
 
@@ -47,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   List<gcal.Event>? events;
 
-  Future<String?> signInWithGoogle() async {
+Future<String?> signInWithGoogle(EventsModel eventsModel, Function(List<gcal.Event>?) callback) async {
     // Sign out first to ensure the account selection dialog is shown
     await googleSignIn.signOut();
 
@@ -77,13 +87,15 @@ class _LoginPageState extends State<LoginPage> {
         DateTime oneYearFromNow = now.add(Duration(days: 365));
 
         events = (await calendar.events.list(
-        user.email!,
-        timeMin: now,
-        timeMax: oneYearFromNow,
-      ))
-          .items
-          ?.where((event) => event.summary?.contains('DTE') ?? false)
-          .toList() ?? [];
+          user.email!,
+          timeMin: now,
+          timeMax: oneYearFromNow,
+        ))
+            .items
+            ?.where((event) => event.summary?.contains('DTE') ?? false)
+            .toList() ?? [];
+        eventsModel.setEvents(events);
+        callback(events);
         print('Fetched ${events!.length} events:');
         for (var event in events!) {
           print(
@@ -125,6 +137,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    EventsModel eventsModel = Provider.of<EventsModel>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false, // this avoids the overflow error
 
@@ -148,7 +161,9 @@ class _LoginPageState extends State<LoginPage> {
                 cursor: SystemMouseCursors.click,
                 child: ElevatedButton(
                   onPressed: () {
-                    signInWithGoogle().then((String? shortName) {
+                    signInWithGoogle(eventsModel, (events) {
+                      Provider.of<EventsModel>(context, listen: false).setEvents(events);
+                    }).then((String? shortName) {
                       if (shortName != null) {
                         Navigator.push(
                           context,

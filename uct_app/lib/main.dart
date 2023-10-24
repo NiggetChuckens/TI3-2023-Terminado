@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uct_app/views/especialistas.dart';
 import 'views/compromisosAcademicos.dart';
 import 'views/login.dart';
@@ -16,7 +17,12 @@ import 'views/upcoming.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider<EventsModel>(
+      create: (context) => EventsModel(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -43,7 +49,10 @@ class MyApp extends StatelessWidget {
         '/instanciasFormacion': (context) => DocentesPage(),
         '/orientacionesDocencia': (context) => DocentesPage(),
         '/virtualizacion': (context) => DocentesPage(),
-        '/eventos': (context) => UpcomingEventsPage(),
+        '/eventos': (context) => ChangeNotifierProvider<EventsModel>(
+              create: (context) => EventsModel(),
+              child: UpcomingEventsPage(),
+            ),
       },
     );
   }

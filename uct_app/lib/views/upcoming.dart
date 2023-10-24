@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:googleapis/calendar/v3.dart' as gcal;
+import 'package:uct_app/views/login.dart';
 
 class UpcomingEventsPage extends StatefulWidget {
   final List<gcal.Event>? events;
@@ -22,6 +24,8 @@ class _UpcomingEventsPageState extends State<UpcomingEventsPage> {
     print('Page loaded. Number of events: ${widget.events?.length ?? 0}');
   }
   Widget build(BuildContext context) {
+    List<gcal.Event>? events = Provider.of<EventsModel>(context).events;
+    print('Events: $events');
     return Scaffold(
       appBar: AppBar(
         title: Text('Upcoming Events'),
