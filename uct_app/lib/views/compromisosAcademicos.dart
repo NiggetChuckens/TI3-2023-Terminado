@@ -1,38 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:uct_app/components/download_card.dart';
 
 class CompromisosAcademicosPage extends StatelessWidget {
+  CompromisosAcademicosPage({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
-  final List<Widget> imageSliders = [
+  final List<String> titles = [
     'TRANSFORMACIÓN DE CURSO: GENERAL',
     'TRANSFORMACIÓN DE CURSO: VIRTUALIZACIÓN DE CURSOS',
     'ELABORACIÓN DE RECURSOS PARA EL APRENDIZAJE',
     'ELABORACIÓN DE RECURSOS EDUCATIVOS DIGITALES',
     'EVALUACIÓN TRABAJO COLABORATIVO: COMUNIDADES DE APRENDIZAJE',
-    'CRITERIOS DE CALIDAD PARA LA PRODUCCIÓN DE CONTENIDOS VIRTUALES',
-    'PAUTA PARA LA EVALUACIÓN DE RECURSOS EDUCATIVOS DIGITALES',
-    'VIRTUALIZACIÓN CURSOS PROGRAMAS MÓDULOS',
-    'Title9'
-  ]
-      .map((item) => Container(
-            child: Card(
-              color: Color.fromARGB(255, 169, 163, 244),
-              child: Center(
-                child: Center(
-                  child: Text(item, style: TextStyle(fontSize: 16.0)),
-                ),
-              ),
-            ),
-          ))
-      .toList();
+  ];
+  final List<String> urls = [
+    'https://dte.uct.cl/wp-content/uploads/2023/09/1-TRANSFORMACION-DE-CURSO-GENERAL-B1.docx',
+    'https://dte.uct.cl/wp-content/uploads/2023/09/2-TRANSFORMACION-DE-CURSOS-VIRTUALIZACION-DE-CURSO-vf.docx',
+    'https://dte.uct.cl/wp-content/uploads/2023/09/3-ELABORACION-DE-RECURSOS-PARA-EL-APRENDIZAJE.docx',
+    'https://dte.uct.cl/wp-content/uploads/2023/09/4-ELABORACION-DE-RECURSOS-EDUCATIVOS-DIGITALES-2.docx',
+    'https://dte.uct.cl/wp-content/uploads/2023/09/5_EVALUACION-TRABAJO-COLABORATIVO.docx',
+  ];
+  final List<String> files = [
+    'TRANSFORMACION-DE-CURSO-GENERAL-B1.docx',
+    'TRANSFORMACION-DE-CURSOS-VIRTUALIZACION-DE-CURSO-vf.docx',
+    'ELABORACION-DE-RECURSOS-PARA-EL-APRENDIZAJE.docx',
+    'ELABORACION-DE-RECURSOS-EDUCATIVOS-DIGITALES-2.docx',
+    'EVALUACION-TRABAJO-COLABORATIVO.docx',
+  ];
+  
+  List<DownloadCard> downloadCards = [];
+  
+
+  ///List<DownloadCard>.generate(
+  ///  titles.length, 
+  ///  (index) => DownloadCard(coursename: titles[index], url: urls[index], filename: files[index])
+  ///);
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Compromisos Academicos'),
+        title: const Text('Compromisos Academicos'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -135,21 +144,28 @@ class CompromisosAcademicosPage extends StatelessWidget {
                       ),
                     ),
                   // Add more Text widgets as needed
-                  SizedBox(
-                      height: MediaQuery.of(context).size.height /
-                          2), // half of the screen height
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      aspectRatio: 2.0,
-                      enlargeCenterPage: true,
-                      scrollDirection: Axis.horizontal,
-                      autoPlay: true,
+                  const SizedBox(height: 80),
+                    
+                  Container(
+                    color: const Color.fromARGB(159, 16, 105, 156), // Replace with your desired color
+                    child:  
+                    Padding(
+                      padding: const EdgeInsets.only(top: 120.0),
+                      child: CarouselSlider(
+                      options: CarouselOptions(
+                        aspectRatio: 2.0,
+                        enlargeCenterPage: true,
+                        scrollDirection: Axis.horizontal,
+                        autoPlay: true,
+                      ),
+                      items: downloadCards = List<DownloadCard>.generate(
+                                                                  titles.length, 
+                                                                  (index) => DownloadCard(coursename: titles[index], url: urls[index], filename: files[index])
+                                                                ),
+                      ),
                     ),
-                    items: imageSliders,
                   ),
-                  SizedBox(
-                      height: MediaQuery.of(context).size.height /
-                          2), // half of the screen height
+                  const SizedBox(height: 80),
                   Form(
                     key: _formKey,
                     child: Column(
