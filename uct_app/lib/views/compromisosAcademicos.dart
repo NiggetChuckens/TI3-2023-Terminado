@@ -148,8 +148,7 @@ class CompromisosAcademicosPage extends StatelessWidget {
                     
                   Container(
                     color: const Color.fromARGB(159, 16, 105, 156), // Replace with your desired color
-                    child:  
-                    Padding(
+                    child: Padding(
                       padding: const EdgeInsets.only(top: 120.0),
                       child: CarouselSlider(
                       options: CarouselOptions(
@@ -170,14 +169,21 @@ class CompromisosAcademicosPage extends StatelessWidget {
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
+                        // Add this to create a title for the form
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Formulario',
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         TextFormField(
                           decoration: const InputDecoration(
-                            labelText: 'Name',
+                            labelText: 'Nombre',
                           ),
-                          // Validation logic
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your name';
+                              return 'Este campo es obligatorio';
                             }
                             return null;
                           },
@@ -186,28 +192,30 @@ class CompromisosAcademicosPage extends StatelessWidget {
                           decoration: const InputDecoration(
                             labelText: 'Email',
                           ),
-                          // Validation logic
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
+                              return 'Este campo es obligatorio';
                             }
                             return null;
                           },
                         ),
-                        // Add more TextFormField widgets as needed
+                        // Add this to create a text field
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Comentarios',
+                          )
+                        ),
                         ElevatedButton(
                           onPressed: () {
-                            // Validate and save form
                             if (_formKey.currentState!.validate()) {
-                              // If the form is valid, display a Snackbar
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text('Form submitted'),
+                                  content: Text('Formulario enviado'),
                                 ),
                               );
                             }
                           },
-                          child: const Text('Submit'),
+                          child: const Text('Enviar'),
                         ),
                       ],
                     ),

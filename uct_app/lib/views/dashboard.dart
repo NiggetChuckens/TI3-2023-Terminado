@@ -88,6 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
+              title: const Text('Compromisos académicos'),
+              onTap: () {
+                Navigator.pop(context); // close the drawer
+                Navigator.pushNamed(context, '/compromisosacademicos');
+              },
+            ),
+            ListTile(
               title: const Text('Docentes'),
               onTap: () {
                 Navigator.pop(context);
@@ -127,13 +134,6 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/foro');
-              },
-            ),
-            ListTile(
-              title: const Text('Validacion Compromisos academicos'),
-              onTap: () {
-                Navigator.pop(context); // close the drawer
-                Navigator.pushNamed(context, '/compromisosacademicos');
               },
             ),
             ListTile(
