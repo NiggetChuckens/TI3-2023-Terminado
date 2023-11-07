@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
               username: '',
             ),
         '/calendario': (context) => const CalendarPage(),
-        '/recursos': (context) => const RecursosPage(),
+        '/recursos': (context) => RecursosPage(),
         '/docentes': (context) => const DocentesPage(),
         '/compromisosacademicos': (context) => CompromisosAcademicosPage(),
         '/canalesDeApoyo': (context) => CanalesDeApoyoPage(),
