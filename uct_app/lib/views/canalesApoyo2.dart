@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CanalesDeApoyoPage extends StatelessWidget {
@@ -29,10 +30,16 @@ class CanalesDeApoyoPage extends StatelessWidget {
               trailing: ElevatedButton(
                 child: Text('Revisar'),
                 onPressed: () {
-                  _launchURL('https://us.bbcollab.com/collab/ui/session/guest/fa4c02fa97be41588b50555f7e670cce');
+                
+                  // Navegación a la vista rdel Botón 1
+                  //Navigator.push(
+                    //context,
+                    //MaterialPageRoute(builder: (context) => Boton1Page()),
+                  //);
                 },
               ),
             ),
+            // Repite para los otros tres botornes
             ListTile(
               leading: Icon(Icons.info_outline, color: Colors.blue),
               title: Text('material de apoyo docente', style: TextStyle(color: Colors.blue)),
@@ -40,7 +47,11 @@ class CanalesDeApoyoPage extends StatelessWidget {
               trailing: ElevatedButton(
                 child: Text('Revisar'),
                 onPressed: () {
-                  _launchURL('link no disponible');
+                  // Navegación a la vista del Botón 1
+                  //Navigator.push(
+                    //context,
+                    //MaterialPageRoute(builder: (context) => Boton1Page()),
+                  //);
                 },
               ),
             ),
@@ -51,7 +62,11 @@ class CanalesDeApoyoPage extends StatelessWidget {
               trailing: ElevatedButton(
                 child: Text('Revisar'),
                 onPressed: () {
-                  _launchURL('link no disponible');
+                  // Navegación a la vista del Botón 1
+                  //Navigator.push(
+                    //context,
+                    //MaterialPageRoute(builder: (context) => Boton1Page()),
+                  //);
                 },
               ),
             ),
@@ -62,7 +77,11 @@ class CanalesDeApoyoPage extends StatelessWidget {
               trailing: ElevatedButton(
                 child: Text('Revisar'),
                 onPressed: () {
-                  _launchURL('https://inkatun.uct.cl');
+                  // Navegación a la vista del Botón 1
+                  //Navigator.push(
+                    //context,
+                    //MaterialPageRoute(builder: (context) => Boton1Page()),
+                  //);
                 },
               ),
             ),
@@ -70,13 +89,5 @@ class CanalesDeApoyoPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'No se pudo lanzar $url';
-    }
   }
 }

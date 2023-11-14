@@ -30,11 +30,10 @@ class programacionRegularPage extends StatelessWidget {
                 ElevatedButton(
                   child: Text('Revisar'),
                   onPressed: () {
-                    // Navegación a la vista del Botón 1
-                    //Navigator.push(
-                      //context,
-                      //MaterialPageRoute(builder: (context) => Boton1Page()),
-                    //);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => talleresTiclab()),
+                    );
                   },
                 ),
               ],
@@ -46,11 +45,10 @@ class programacionRegularPage extends StatelessWidget {
                 ElevatedButton(
                   child: Text('Revisar'),
                   onPressed: () {
-                    // Navegación a la vista del Botón 2
-                    //Navigator.push(
-                      //context,
-                      //MaterialPageRoute(builder: (context) => Boton2Page()),
-                    //);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CursoEduca()),
+                    );
                   },
                 ),
               ],
@@ -62,17 +60,58 @@ class programacionRegularPage extends StatelessWidget {
                 ElevatedButton(
                   child: Text('Revisar'),
                   onPressed: () {
-                    // Navegación a la vista del Botón 3
-      //              Navigator.push(
-       //               context,
-        //              MaterialPageRoute(builder: (context) => Boton3Page()),
-         //           );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Formacioninicialdocente()),
+                    );
                   },
                 ),
               ],
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class talleresTiclab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Talleres TICLAB'),
+      ),
+      body: Center(
+        child: Text('Talleres TICLAB'),
+      ),
+    );
+  }
+}
+
+class CursoEduca extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Nueva Vista 2'),
+      ),
+      body: Center(
+        child: Text('Esta es la Nueva Vista 2'),
+      ),
+    );
+  }
+}
+
+class Formacioninicialdocente extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Formacióninicialdocente '),
+      ),
+      body: Center(
+        child: Text('Formacióninicialdocente'),
       ),
     );
   }
