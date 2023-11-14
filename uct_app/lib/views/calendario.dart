@@ -269,13 +269,39 @@ class _CalendarPageState extends State<CalendarPage> {
                   return isSameDay(_selectedDay, day);
                 },
                 calendarStyle: CalendarStyle(
-                  todayDecoration: BoxDecoration(
-                    color:
-                        const Color.fromARGB(255, 22, 4, 56).withOpacity(0.5),
+                  todayDecoration: const BoxDecoration(
+                    color: Colors.orange,
+                    shape: BoxShape.circle,
                   ),
                   selectedDecoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.5),
+                    color: Colors.blue,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
+                  weekendTextStyle: const TextStyle(
+                    color: Colors.red,
+                  ),
+                  holidayTextStyle: const TextStyle(
+                    color: Colors.green,
+                  ),
+                ),
+                calendarBuilders: CalendarBuilders(
+                  markerBuilder: (context, date, events) {
+                    if (events.isNotEmpty) {
+                      return Positioned(
+                        right: 1,
+                        bottom: 1,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red,
+                          ),
+                          width: 6.0,
+                          height: 6.0,
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
               if (_selectedDay != null)
