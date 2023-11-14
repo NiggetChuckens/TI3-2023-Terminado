@@ -9,6 +9,10 @@ import 'views/docentes.dart';
 
 import 'views/compromisosAcademicos.dart';
 import 'views/canalesDeApoyo.dart';
+import 'views/talleresTiclab.dart';
+import 'views/CursoEduca.dart';
+import 'views/FormacionInicial.dart';
+import 'views/canalesDeApoyo.dart';
 import 'views/programacionRegular.dart';
 import 'views/instanciasFormacion.dart';
 import 'views/orientacionesDocencia.dart';
@@ -36,11 +40,15 @@ class MyApp extends StatelessWidget {
             ),
         '/calendario': (context) => const CalendarPage(),
         '/recursos': (context) => const RecursosPage(),
-        '/docentes': (context) => DocentesPage(),
+        '/docentes': (context) => const DocentesPage(),
         '/compromisosacademicos': (context) => CompromisosAcademicosPage(),
-        '/canalesDeApoyo': (context) => DocentesPage(),
-        '/programacionRegular': (context) => DocentesPage(),
-        '/instanciasFormacion': (context) => DocentesPage(),
+        '/canalesDeApoyo': (context) => CanalesDeApoyoPage(),
+        '/talleresticlab': (context) => TalleresTiclab(),
+        '/cursoeduca': (context) => CursoEduca(),
+        '/canalesdeapoyo': (context) => CanalesDeApoyoPage(),
+        '/formacioninicialdocente': (context) => Formacioninicialdocente(),
+        '/programacionRegular': (context) => programacionRegularPage(),
+        '/instanciasFormacion': (context) => VistaConImagen(),
         '/orientacionesDocencia': (context) => DocentesPage(),
         '/virtualizacion': (context) => DocentesPage(),
         '/dash2': (context) => const Dash(
