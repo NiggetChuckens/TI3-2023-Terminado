@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:uct_app/components/specialists.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:uct_app/views/calendario.dart';
 
 class EspecialistaDetails extends StatefulWidget {
   final Specialist specialist;
 
-  const EspecialistaDetails({Key? key, required this.specialist}) : super(key: key);
+  const EspecialistaDetails({Key? key, required this.specialist})
+      : super(key: key);
 
   @override
   EspecialistaDetailsState createState() => EspecialistaDetailsState();
@@ -13,20 +15,20 @@ class EspecialistaDetails extends StatefulWidget {
 
 class EspecialistaDetailsState extends State<EspecialistaDetails> {
   void _launchMailClient(String email) async {
-  final Uri params = Uri(
-    scheme: 'mailto',
-    path: email,
-    query: 'subject=Consulta%20DTE',
-    
-  );
+    final Uri params = Uri(
+      scheme: 'mailto',
+      path: email,
+      query: 'subject=Consulta%20DTE',
+    );
 
-  String url = params.toString();
-  if (await canLaunchUrl(params)) {
-    await launchUrl(params);
-  } else {
-    throw 'Could not launch $url';
+    String url = params.toString();
+    if (await canLaunchUrl(params)) {
+      await launchUrl(params);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
-}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +76,6 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      
                       widget.specialist.rol,
                       style: const TextStyle(
                         color: Colors.grey,
@@ -101,7 +102,17 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                     const SizedBox(height: 16),
                     Center(
                       child: ElevatedButton(
-                        onPressed: () {Navigator.pushNamed(context, '/calendario');},
+                        onPressed: () {
+                          print(
+                              "Email for attendees: ${widget.specialist.email}");
+                              "Name for attendees: ${widget.specialist.name}";
+                          Navigator.pushNamed(
+                            context,
+                            '/calendario',
+                            arguments: widget.specialist.email,
+
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.deepPurple,
                           shape: RoundedRectangleBorder(
@@ -117,10 +128,11 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 1),
                     Center(
                       child: ElevatedButton(
-                        onPressed: () => _launchMailClient(widget.specialist.email),
+                        onPressed: () =>
+                            _launchMailClient(widget.specialist.email),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.deepPurple,
                           shape: RoundedRectangleBorder(
@@ -137,9 +149,7 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                       ),
                     ),
                   ],
-                  
                 ),
-                
               ),
               const SizedBox(height: 16),
             ],

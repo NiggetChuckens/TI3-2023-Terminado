@@ -14,6 +14,7 @@ String capitalize(String str) {
   }
   return str[0].toUpperCase() + str.substring(1).toLowerCase();
 }
+
 class EventsModel extends ChangeNotifier {
   List<gcal.Event>? _events;
 
@@ -24,6 +25,7 @@ class EventsModel extends ChangeNotifier {
     notifyListeners();
   }
 }
+
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
 
@@ -57,7 +59,8 @@ class _LoginPageState extends State<LoginPage> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   List<gcal.Event>? events;
 
-Future<String?> signInWithGoogle(EventsModel eventsModel, Function(List<gcal.Event>?) callback) async {
+  Future<String?> signInWithGoogle(
+      EventsModel eventsModel, Function(List<gcal.Event>?) callback) async {
     // Sign out first to ensure the account selection dialog is shown
     await googleSignIn.signOut();
 
@@ -79,28 +82,7 @@ Future<String?> signInWithGoogle(EventsModel eventsModel, Function(List<gcal.Eve
       if (user != null) {
         assert(!user.isAnonymous);
         assert(await user.getIdToken() != null);
-        final httpClient = GoogleHttpClient(await googleSignInAccount
-            .authentication
-            .then((auth) => {'Authorization': 'Bearer ${auth.accessToken}'}));
-        final calendar = gcal.CalendarApi(httpClient);
-        DateTime now = DateTime.now();
-        DateTime oneYearFromNow = now.add(Duration(days: 365));
 
-        events = (await calendar.events.list(
-          user.email!,
-          timeMin: now,
-          timeMax: oneYearFromNow,
-        ))
-            .items
-            ?.where((event) => event.summary?.contains('DTE') ?? false)
-            .toList() ?? [];
-        eventsModel.setEvents(events);
-        callback(events);
-        print('Fetched ${events!.length} events:');
-        for (var event in events!) {
-          print(
-              '${event.summary}: ${event.start?.dateTime?.toIso8601String()} - ${event.end?.dateTime?.toIso8601String()}');
-        }
         final User? currentUser = firebaseAuth.currentUser;
         assert(user.uid == currentUser!.uid);
 
@@ -117,6 +99,7 @@ Future<String?> signInWithGoogle(EventsModel eventsModel, Function(List<gcal.Eve
                 ' ' +
                 capitalize(nameParts[1]); // capitalize first and last name
             print('shortName: $shortName');
+            print('email: ${user.email}');
           }
 
           return shortName;
@@ -161,10 +144,10 @@ Future<String?> signInWithGoogle(EventsModel eventsModel, Function(List<gcal.Eve
                 cursor: SystemMouseCursors.click,
                 child: ElevatedButton(
                   onPressed: () {
-                    signInWithGoogle(eventsModel, (events) {
-                      Provider.of<EventsModel>(context, listen: false).setEvents(events);
-                    }).then((String? shortName) {
+                    signInWithGoogle(eventsModel, (events) {})
+                        .then((String? shortName) {
                       if (shortName != null) {
+                        final User? currentUser = firebaseAuth.currentUser;
                         Navigator.push(
                           context,
                           PageRouteBuilder(
@@ -174,6 +157,8 @@ Future<String?> signInWithGoogle(EventsModel eventsModel, Function(List<gcal.Eve
                                 (context, animation, secondaryAnimation) =>
                                     Dash(
                               username: shortName,
+                              email:
+                                  currentUser!.email!, // pass the email to Dash
                             ),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {

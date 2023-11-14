@@ -12,7 +12,9 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'views/upcoming.dart';
 
-
+import 'views/canalesDeApoyo.dart';
+import 'views/programacionRegular.dart';
+import 'views/instanciasFormacion.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,22 +35,34 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
+      onGenerateRoute: (settings) {
+        if (settings.name == '/calendario') {
+          final String specialistEmail = settings.arguments as String;
+
+          return MaterialPageRoute(
+            builder: (context) {
+              return CalendarPage(specialistEmail: specialistEmail);
+            },
+          );
+        }
+        // Define your other routes here...
+        return null;
+      },
       routes: {
         '/login': (context) => LoginPage(),
-        '/especialistas': (context) => SpecialistPage(),
+        '/especialistas': (context) => const SpecialistPage(),
         '/dashboard': (context) => const MyHomePage(
               title: 'DTE',
-              username: '',
+              username: '', email: '',
             ),
-        '/calendario': (context) => const CalendarPage(),
-        '/recursos': (context) => const RecursosPage(),
+        '/recursos': (context) => RecursosPage(),
         '/docentes': (context) => const DocentesPage(),
         '/compromisosacademicos': (context) => CompromisosAcademicosPage(),
-        '/canalesDeApoyo': (context) => DocentesPage(),
-        '/programacionRegular': (context) => DocentesPage(),
-        '/instanciasFormacion': (context) => DocentesPage(),
-        '/orientacionesDocencia': (context) => DocentesPage(),
-        '/virtualizacion': (context) => DocentesPage(),
+        '/canalesDeApoyo': (context) => CanalesDeApoyoPage(),
+        '/programacionRegular': (context) => programacionRegularPage(),
+        '/instanciasFormacion': (context) => VistaConImagen(),
+        '/orientacionesDocencia': (context) => const DocentesPage(),
+        '/virtualizacion': (context) => const DocentesPage(),
         '/eventos': (context) => ChangeNotifierProvider<EventsModel>(
               create: (context) => EventsModel(),
               child: UpcomingEventsPage(),

@@ -4,9 +4,10 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:uct_app/views/dashboard2.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title, required this.username}) : super(key: key);
+  const MyHomePage({Key? key, required this.title, required this.username, required this.email}) : super(key: key);
   final String username;
   final String title;
+  final String email;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -144,6 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => Dash(
+                                email: widget.email,
 
                                 username: widget.username,
                               ),

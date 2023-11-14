@@ -30,7 +30,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
 
  Future<List<Specialist>> fetchSpecialists(String rol) async {
   CollectionReference specialists =
-      FirebaseFirestore.instance.collection('dte');
+  FirebaseFirestore.instance.collection('dte');
 
   List<Specialist> specialistList = [];
 
