@@ -249,7 +249,7 @@ class _DashState extends State<Dash> {
                           ),
                         ),
                         const Text(
-                          'Agenda tu cita si lo necesitas',
+                          'Agenda tu cita',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
@@ -266,7 +266,8 @@ class _DashState extends State<Dash> {
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                                color: Colors.deepPurple[300],
+                                //gradient: gradientSearch,
+                                color: const Color(0xFF8FB5E1),
                               ),
                               child: const Center(
                                 child: Text(
