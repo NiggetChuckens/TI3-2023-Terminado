@@ -3,7 +3,8 @@ import 'package:lottie/lottie.dart';
 import 'package:uct_app/components/category_cards.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Dash extends StatefulWidget {
   const Dash({Key? key, required this.username, required String email}) : super(key: key);
@@ -16,6 +17,22 @@ class Dash extends StatefulWidget {
 class _DashState extends State<Dash> {
   @override
   Widget build(BuildContext context) {
+    const gradient = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        Color(0xFF8FB5E1),
+        Color(0xFFD190E0),
+      ],
+    );
+    const gradientSearch = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        Color(0xFFD190E0),
+        Color(0xFF8FB5E1),
+      ],
+    );
     initializeDateFormatting();
     String locale = 'es';
     DateTime now = DateTime.now();
@@ -174,7 +191,9 @@ class _DashState extends State<Dash> {
               child: Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
+                    gradient: gradient,
                     color: Colors.pink[100],
+                    //color: Color.fromARGB(255, 169, 201, 237),
                     borderRadius: BorderRadius.circular(12)),
                 child: Row(children: [
                   SizedBox(
@@ -198,7 +217,7 @@ class _DashState extends State<Dash> {
                           ),
                         ),
                         const Text(
-                          'Agenda tu cita si lo necesitas',
+                          'Agenda tu cita',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
@@ -215,7 +234,7 @@ class _DashState extends State<Dash> {
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                                color: Colors.deepPurple[300],
+                                color: const Color(0xFF8FB5E1),
                               ),
                               child: const Center(
                                 child: Text(
@@ -272,7 +291,7 @@ class _DashState extends State<Dash> {
                 _buildButton('Foro', '/foro', 'lib/images/foro.png'),
                 _buildButton(
                     'Chat de Apoyo', '/chat', 'lib/images/chat.png'),
-                
+                _buildButton('Ticlab', '/ticlab', 'lib/images/ticlab.png'),
               ],
             ),
           ),

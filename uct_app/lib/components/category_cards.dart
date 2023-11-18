@@ -19,7 +19,7 @@ class Category extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Colors.deepPurple[100],
+          color: const Color(0xFF8FB5E1),
         ),
           child: Row(children: [
             Image.asset(iconImagePath,

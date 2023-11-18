@@ -201,19 +201,23 @@ class _CalendarPageState extends State<CalendarPage> {
         // Check the response status code
         // Check the response status code
         // Check the response status code
-if (response.statusCode == 200) {
-  print('Appointment created successfully with atendee: ${widget.specialistEmail}');          
-  print('Scheduled Time: ${selectedDateTime.toString()}');
-  // Add the event to Firestore
-  bool eventAdded = await addEventToFirestore(selectedDateTime, widget.specialistEmail, account.email);
-  if (eventAdded) {
-    _showSuccessDialog(selectedDateTime); // Show success dialog only if event was added to Firestore
-    print('Event added to Firestore with attendee: ${widget.specialistEmail}');
-  }
-} else {
-  print(
-      'Failed to create appointment. Status code: ${response.statusCode}');
-}
+        if (response.statusCode == 200) {
+          print(
+              'Appointment created successfully with atendee: ${widget.specialistEmail}');
+          print('Scheduled Time: ${selectedDateTime.toString()}');
+          // Add the event to Firestore
+          bool eventAdded = await addEventToFirestore(
+              selectedDateTime, widget.specialistEmail, account.email);
+          if (eventAdded) {
+            _showSuccessDialog(
+                selectedDateTime); // Show success dialog only if event was added to Firestore
+            print(
+                'Event added to Firestore with attendee: ${widget.specialistEmail}');
+          }
+        } else {
+          print(
+              'Failed to create appointment. Status code: ${response.statusCode}');
+        }
       }
     } catch (error) {
       if (error.toString().contains('access_token_expired')) {
@@ -287,18 +291,21 @@ if (response.statusCode == 200) {
 
             // Check the response status code
             // Check the response status code
-if (response.statusCode == 200) {
-  print('Appointment created successfully with atendee: ${widget.specialistEmail}');
-  print('Scheduled Time: ${selectedDateTime.toString()}');
-  // Add the event to Firestore
-  bool eventAdded = await addEventToFirestore(selectedDateTime, widget.specialistEmail, refreshedAccount.email);
-  if (eventAdded) {
-    _showSuccessDialog(selectedDateTime); // Show success dialog only if event was added to Firestore
-  }
-} else {
-  print(
-      'Failed to create appointment. Status code: ${response.statusCode}');
-}
+            if (response.statusCode == 200) {
+              print(
+                  'Appointment created successfully with atendee: ${widget.specialistEmail}');
+              print('Scheduled Time: ${selectedDateTime.toString()}');
+              // Add the event to Firestore
+              bool eventAdded = await addEventToFirestore(selectedDateTime,
+                  widget.specialistEmail, refreshedAccount.email);
+              if (eventAdded) {
+                _showSuccessDialog(
+                    selectedDateTime); // Show success dialog only if event was added to Firestore
+              }
+            } else {
+              print(
+                  'Failed to create appointment. Status code: ${response.statusCode}');
+            }
           }
         } catch (refreshError) {
           print('Failed to refresh access token: $refreshError');
@@ -320,85 +327,86 @@ if (response.statusCode == 200) {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color.fromARGB(255, 188, 193, 198), Color.fromARGB(255, 211, 207, 215)],
+            colors: [Colors.blue, Colors.deepPurple],
           ),
         ),
         child: Center(
           child: Column(
             children: <Widget>[
               TableCalendar(
-  firstDay: DateTime.now(),
-  lastDay: DateTime(2023, 12, 31),
-  focusedDay: _focusedDay,
-  calendarFormat: _calendarFormat,
-  onFormatChanged: (format) {
-    setState(() {
-      _calendarFormat = format;
-    });
-  },
-  onDaySelected: (selectedDay, focusedDay) {
-    setState(() {
-      _selectedDay = selectedDay;
-      _selectedTime = null; // Reset selected time when a new date is selected
-    });
-    _selectTime(context);
-  },
-  selectedDayPredicate: (day) {
-    return isSameDay(_selectedDay, day);
-  },
-  calendarStyle: const CalendarStyle(
-    todayDecoration: BoxDecoration(
-      color: Colors.orange,
-      shape: BoxShape.circle,
-    ),
-    selectedDecoration: BoxDecoration(
-      color: Colors.blue,
-      shape: BoxShape.circle,
-    ),
-    weekendTextStyle: TextStyle(
-      color: Colors.red,
-    ),
-    holidayTextStyle: TextStyle(
-      color: Colors.green,
-    ),
-  ),
-  calendarBuilders: CalendarBuilders(
-    defaultBuilder: (context, date, _) {
-      if (date.compareTo(DateTime.now()) < 0) {
-        return Container(
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-            color: Colors.red,
-            shape: BoxShape.circle,
-          ),
-          child: Text(
-            date.day.toString(),
-            style: const TextStyle(color: Colors.white),
-          ),
-        );
-      } else {
-        return null;
-      }
-    },
-    markerBuilder: (context, date, events) {
-      if (events.isNotEmpty) {
-        return Positioned(
-          right: 1,
-          bottom: 1,
-          child: Container(
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.red,
-            ),
-            width: 6.0,
-            height: 6.0,
-          ),
-        );
-      }
-      return null;
-    },
-  ),
-),
+                firstDay: DateTime.now(),
+                lastDay: DateTime(2023, 12, 31),
+                focusedDay: _focusedDay,
+                calendarFormat: _calendarFormat,
+                onFormatChanged: (format) {
+                  setState(() {
+                    _calendarFormat = format;
+                  });
+                },
+                onDaySelected: (selectedDay, focusedDay) {
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _selectedTime =
+                        null; // Reset selected time when a new date is selected
+                  });
+                  _selectTime(context);
+                },
+                selectedDayPredicate: (day) {
+                  return isSameDay(_selectedDay, day);
+                },
+                calendarStyle: const CalendarStyle(
+                  todayDecoration: BoxDecoration(
+                    color: Colors.orange,
+                    shape: BoxShape.circle,
+                  ),
+                  selectedDecoration: BoxDecoration(
+                    color: Colors.blue,
+                    shape: BoxShape.circle,
+                  ),
+                  weekendTextStyle: TextStyle(
+                    color: Colors.red,
+                  ),
+                  holidayTextStyle: TextStyle(
+                    color: Colors.green,
+                  ),
+                ),
+                calendarBuilders: CalendarBuilders(
+                  defaultBuilder: (context, date, _) {
+                    if (date.compareTo(DateTime.now()) < 0) {
+                      return Container(
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text(
+                          date.day.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      );
+                    } else {
+                      return null;
+                    }
+                  },
+                  markerBuilder: (context, date, events) {
+                    if (events.isNotEmpty) {
+                      return Positioned(
+                        right: 1,
+                        bottom: 1,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red,
+                          ),
+                          width: 6.0,
+                          height: 6.0,
+                        ),
+                      );
+                    }
+                    return null;
+                  },
+                ),
+              ),
               if (_selectedDay != null)
                 Column(
                   children: [
@@ -443,6 +451,7 @@ if (response.statusCode == 200) {
       // Check if the selected time is allowed
       if (selectedTime.hour < 8 || selectedTime.hour > 17) {
         // If it's not allowed, show a dialog
+        // ignore: use_build_context_synchronously
         showDialog(
           context: context,
           builder: (BuildContext context) {

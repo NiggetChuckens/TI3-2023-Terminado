@@ -9,7 +9,7 @@ import 'views/recursos.dart';
 import 'views/calendario.dart';
 import 'views/docentes.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'views/ticlab.dart';
 import 'views/upcoming.dart';
 
 import 'views/canalesDeApoyo.dart';
@@ -67,6 +67,7 @@ class MyApp extends StatelessWidget {
               create: (context) => EventsModel(),
               child: UpcomingEventsPage(),
             ),
+        '/ticlab': (context) => const DocentesPage(),
       },
     );
   }
