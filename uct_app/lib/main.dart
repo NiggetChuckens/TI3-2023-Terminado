@@ -9,13 +9,10 @@ import 'views/recursos.dart';
 import 'views/calendario.dart';
 import 'views/docentes.dart';
 import 'package:firebase_core/firebase_core.dart';
-<<<<<<< HEAD
 import 'views/ticlab.dart';
-=======
 
 import 'views/upcoming.dart';
 
->>>>>>> Dev-Nico
 import 'views/canalesDeApoyo.dart';
 import 'views/programacionRegular.dart';
 import 'views/instanciasFormacion.dart';
@@ -57,30 +54,27 @@ class MyApp extends StatelessWidget {
         '/especialistas': (context) => const SpecialistPage(),
         '/dashboard': (context) => const MyHomePage(
               title: 'DTE',
-              username: '', email: '',
+              username: '',
+              email: '',
             ),
-<<<<<<< HEAD
-        '/calendario': (context) => const CalendarPage(),
-=======
->>>>>>> Dev-Nico
+        '/calendario': (context) => const CalendarPage(
+              specialistEmail: '',
+            ),
         '/recursos': (context) => RecursosPage(),
         '/docentes': (context) => const DocentesPage(),
         '/compromisosacademicos': (context) => CompromisosAcademicosPage(),
         '/canalesDeApoyo': (context) => CanalesDeApoyoPage(),
         '/programacionRegular': (context) => programacionRegularPage(),
         '/instanciasFormacion': (context) => VistaConImagen(),
-<<<<<<< HEAD
         '/orientacionesDocencia': (context) => DocentesPage(),
         '/virtualizacion': (context) => DocentesPage(),
         '/ticlab': (context) => DocentesPage(),
-=======
         '/orientacionesDocencia': (context) => const DocentesPage(),
         '/virtualizacion': (context) => const DocentesPage(),
         '/eventos': (context) => ChangeNotifierProvider<EventsModel>(
               create: (context) => EventsModel(),
               child: UpcomingEventsPage(),
             ),
->>>>>>> Dev-Nico
       },
     );
   }

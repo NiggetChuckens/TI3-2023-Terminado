@@ -81,8 +81,4 @@ class programacionRegularPage extends StatelessWidget {
       ),
     );
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> Dev-Nico

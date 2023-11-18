@@ -15,9 +15,6 @@ String capitalize(String str) {
   return str[0].toUpperCase() + str.substring(1).toLowerCase();
 }
 
-<<<<<<< HEAD
-class LoginPage extends StatelessWidget {
-=======
 class EventsModel extends ChangeNotifier {
   List<gcal.Event>? _events;
 
@@ -30,7 +27,6 @@ class EventsModel extends ChangeNotifier {
 }
 
 class LoginPage extends StatefulWidget {
->>>>>>> Dev-Nico
   LoginPage({super.key});
 
   @override
@@ -144,52 +140,6 @@ class _LoginPageState extends State<LoginPage> {
 
               const SizedBox(height: 20),
 
-<<<<<<< HEAD
-              Text(
-                'Bienvenido!',
-                style: TextStyle(
-                  color: Colors.grey[700],
-                  fontSize: 16,
-                ),
-              ),
-
-              const SizedBox(height: 10),
-
-              MyTextField(
-                controller: usernameController,
-                hintText: 'Correo Institucional',
-                obscureText: false,
-              ),
-
-              const SizedBox(height: 10),
-
-              MyTextField(
-                controller: passwordController,
-                hintText: 'Contraseña',
-                obscureText: true,
-              ),
-
-              const SizedBox(height: 10),
-
-              Text(
-                'Olvidaste tu Contraseña?',
-                style: TextStyle(color: Colors.grey[600]),
-              ),
-
-              const SizedBox(height: 20),
-
-              ElevatedButton(
-                onPressed: () {
-                  signInWithGoogle().then((String? shortName) {
-                    if (shortName != null) {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          transitionDuration: const Duration(milliseconds: 500),
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) => Dash(
-                            username: shortName,
-=======
               MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: ElevatedButton(
@@ -230,7 +180,6 @@ class _LoginPageState extends State<LoginPage> {
                             content: Text('Failed to sign in with Google'),
                             backgroundColor: Colors.red,
                             duration: Duration(seconds: 1),
->>>>>>> Dev-Nico
                           ),
                         );
                       }
