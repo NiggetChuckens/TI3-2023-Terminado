@@ -8,7 +8,7 @@ import 'views/recursos.dart';
 import 'views/calendario.dart';
 import 'views/docentes.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'views/ticlab.dart';
 import 'views/canalesDeApoyo.dart';
 import 'views/programacionRegular.dart';
 import 'views/instanciasFormacion.dart';
@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/instanciasFormacion': (context) => VistaConImagen(),
         '/orientacionesDocencia': (context) => DocentesPage(),
         '/virtualizacion': (context) => DocentesPage(),
+        '/ticlab': (context) => DocentesPage(),
       },
     );
   }

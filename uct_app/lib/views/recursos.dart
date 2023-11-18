@@ -13,7 +13,7 @@ class RecursosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recursos'),
+        title: const Text('Recursos'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

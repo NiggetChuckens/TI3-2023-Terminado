@@ -108,9 +108,6 @@ class _CalendarPageState extends State<CalendarPage> {
           ..end = calendar.EventDateTime()
           ..start!.dateTime = selectedDateTime
           ..end!.dateTime = selectedDateTime.add(const Duration(hours: 1));
-        event.attendees = [
-          calendar.EventAttendee(email: "apachecow@gmail.com")
-        ];
         // Create a new http.Client instance
         final client = http.Client();
 
@@ -303,6 +300,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         ),
                       );
                     }
+                    return null;
                   },
                 ),
               ),

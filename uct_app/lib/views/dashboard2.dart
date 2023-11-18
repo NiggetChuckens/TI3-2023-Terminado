@@ -18,6 +18,24 @@ class Dash extends StatefulWidget {
 class _DashState extends State<Dash> {
   @override
   Widget build(BuildContext context) {
+    const gradient = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        Color(0xFF8FB5E1),
+        Color(0xFFD190E0),
+      ],
+    );
+
+    const gradientSearch = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        Color(0xFFD190E0),
+        Color(0xFF8FB5E1),
+      ],
+    );
+
     initializeDateFormatting();
     String locale = 'es';
     DateTime now = DateTime.now();
@@ -183,10 +201,11 @@ class _DashState extends State<Dash> {
                           );
                         },
                         child: Container(
+                          //profile box top right corner
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: Colors.deepPurple[100],
+                            color: const Color.fromARGB(225, 225, 225, 225),
                           ),
                           child: const Icon(Icons.person),
                         ),
@@ -202,9 +221,11 @@ class _DashState extends State<Dash> {
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Container(
+                //welcome message box c:
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                    color: Colors.pink[100],
+                    gradient: gradient,
+                    //color: Color.fromARGB(255, 169, 201, 237),
                     borderRadius: BorderRadius.circular(12)),
                 child: Row(children: [
                   SizedBox(
@@ -267,7 +288,8 @@ class _DashState extends State<Dash> {
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.deepPurple[100],
+                  gradient: gradientSearch,
+                  color: const Color.fromARGB(255, 232, 196, 233),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const TextField(
@@ -298,8 +320,8 @@ class _DashState extends State<Dash> {
                     'Recursos', '/recursos', 'lib/images/recursos.png'),
                 _buildButton(
                     'Contacto', '/contacto', 'lib/images/contacto.png'),
-                _buildButton('Foro', '/foro', 'lib/images/foro.png'),
-                _buildButton('Chat de Apoyo', '/chat', 'lib/images/chat.png'),
+                _buildButton('Ticlab', '/ticlab', 'lib/images/ticlab.png'),
+                _buildButton('Chat', '/chat', 'lib/images/chat.png'),
               ],
             ),
           ),
