@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:uct_app/components/category_cards.dart';
-import 'package:uct_app/views/dashboard.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+<<<<<<< HEAD
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+=======
+
+>>>>>>> Dev-Nico
 
 class Dash extends StatefulWidget {
-  const Dash({Key? key, required this.username}) : super(key: key);
+  const Dash({Key? key, required this.username, required String email}) : super(key: key);
   final String username;
-
+  
   @override
   State<Dash> createState() => _DashState();
 }
@@ -90,13 +93,7 @@ class _DashState extends State<Dash> {
                 Navigator.pushNamed(context, '/docentes');
               },
             ),
-            ListTile(
-              title: const Text('Calendario'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/calendario');
-              },
-            ),
+            
             ListTile(
               title: const Text('About'),
               onTap: () {
@@ -132,6 +129,7 @@ class _DashState extends State<Dash> {
                 Navigator.pushNamed(context, '/chat');
               },
             ),
+<<<<<<< HEAD
             ListTile(
               title: const Text('Dashboard1'),
               onTap: () {
@@ -147,6 +145,9 @@ class _DashState extends State<Dash> {
                 );
               },
             ),
+=======
+            
+>>>>>>> Dev-Nico
           ],
         ),
       ),
@@ -190,15 +191,7 @@ class _DashState extends State<Dash> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MyHomePage(
-                                title: 'DTE',
-                                username: widget.username,
-                              ),
-                            ),
-                          );
+                          Navigator.pushNamed(context, '/docentes');
                         },
                         child: Container(
                           //profile box top right corner
@@ -260,7 +253,7 @@ class _DashState extends State<Dash> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, '/calendario');
+                            Navigator.pushNamed(context, '/especialistas');
                           },
                           child: Container(
                               padding: const EdgeInsets.all(12),
@@ -314,8 +307,9 @@ class _DashState extends State<Dash> {
                     'Asesores', '/especialistas', 'lib/images/asesor.png'),
                 _buildButton(
                     'Docentes', '/docentes', 'lib/images/Docentes.png'),
-                _buildButton('Calendario', '/calendario',
-                    'lib/images/calendar_icon.png'),
+                _buildButton(
+                    'Eventos Proximos', '/eventos', 'lib/images/chat.png'),
+                
                 _buildButton('About', '/about', 'lib/images/uct_splash.png'),
                 _buildButton(
                     'Recursos', '/recursos', 'lib/images/recursos.png'),

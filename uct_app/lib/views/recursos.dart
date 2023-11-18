@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 
 class RecursosPage extends StatelessWidget {
   final List<Course> courses = List<Course>.generate(
@@ -7,13 +8,23 @@ class RecursosPage extends StatelessWidget {
         'ImageURL${i + 1}'),
   );
 
+=======
+
+class RecursosPage extends StatelessWidget {
+  final List<Course> courses = List<Course>.generate(
+    12,
+    (i) => Course('Course ${i + 1}', 'Inscription ${i + 1}', 'Date ${i + 1}',
+        'ImageURL${i + 1}'),
+  );
+
+>>>>>>> Dev-Nico
   RecursosPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Recursos'),
+        title: Text('Recursos'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -101,4 +112,8 @@ class Course {
 
   Course(
       this.name, this.inscription, this.beginningDate, this.backgroundImageUrl);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Dev-Nico
