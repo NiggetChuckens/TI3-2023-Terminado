@@ -9,8 +9,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CalendarPage extends StatefulWidget {
   final String specialistEmail;
+  final String specialistName;
 
-  const CalendarPage({Key? key, required this.specialistEmail})
+  const CalendarPage({Key? key, required this.specialistEmail, required this.specialistName})
       : super(key: key);
 
   @override
@@ -27,47 +28,47 @@ class _CalendarPageState extends State<CalendarPage> {
       1; // Set the appointment duration
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<bool> addEventToFirestore(
-      DateTime date, String attendeeEmail, String requesterEmail) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    // Fetch all events for the day
-    final QuerySnapshot result = await _firestore
-        .collection('citas')
-        .where('date',
-            isGreaterThanOrEqualTo:
-                DateTime(date.year, date.month, date.day, 0, 0))
-        .where('date',
-            isLessThan: DateTime(date.year, date.month, date.day + 1, 0, 0))
-        .get();
+    DateTime date, String attendeeEmail, String requesterEmail, String attendeeName) async {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // Fetch all events for the day
+  final QuerySnapshot result = await _firestore
+      .collection('citas')
+      .where('date',
+          isGreaterThanOrEqualTo:
+              DateTime(date.year, date.month, date.day, 0, 0))
+      .where('date',
+          isLessThan: DateTime(date.year, date.month, date.day + 1, 0, 0))
+      .get();
 
-    final List<DocumentSnapshot> documents = result.docs;
-    final DateTime newEventEndTime =
-        date.add(const Duration(hours: appointmentDurationInHours));
+  final List<DocumentSnapshot> documents = result.docs;
+  final DateTime newEventEndTime =
+      date.add(const Duration(hours: appointmentDurationInHours));
 
-    for (var doc in documents) {
-      final DateTime existingEventStartTime = doc['date'].toDate();
-      final DateTime existingEventEndTime = existingEventStartTime
-          .add(const Duration(hours: appointmentDurationInHours));
+  for (var doc in documents) {
+    final DateTime existingEventStartTime = doc['date'].toDate();
+    final DateTime existingEventEndTime = existingEventStartTime
+        .add(const Duration(hours: appointmentDurationInHours));
 
-      if ((date.isAfter(existingEventStartTime) &&
-              date.isBefore(existingEventEndTime)) ||
-          (newEventEndTime.isAfter(existingEventStartTime) &&
-              newEventEndTime.isBefore(existingEventEndTime))) {
-        print('An event already exists at this time.');
-        _showDialog('Ya hay una cita!');
-        return false;
-      }
+    if ((date.isAfter(existingEventStartTime) &&
+            date.isBefore(existingEventEndTime)) ||
+        (newEventEndTime.isAfter(existingEventStartTime) &&
+            newEventEndTime.isBefore(existingEventEndTime))) {
+      print('An event already exists at this time.');
+      _showDialog('Ya hay una cita!');
+      return false;
     }
-
-    // No overlapping event exists, add the event
-    await _firestore.collection('citas').add({
-      'date': date,
-      'attendee': attendeeEmail,
-      'requester': requesterEmail,
-    });
-
-    return true;
   }
 
+  // No overlapping event exists, add the event
+  await _firestore.collection('citas').add({
+    'date': date,
+    'attendee': attendeeEmail,
+    'requester': requesterEmail,
+    'attendeeName': attendeeName, // Add the specialist name here
+  });
+
+  return true;
+}
   void _showDialog(String message) {
     showDialog(
       context: context,
@@ -203,11 +204,11 @@ class _CalendarPageState extends State<CalendarPage> {
         // Check the response status code
         if (response.statusCode == 200) {
           print(
-              'Appointment created successfully with atendee: ${widget.specialistEmail}');
+              'Appointment created successfully with atendee: ${widget.specialistEmail} and name: ${widget.specialistName}');
           print('Scheduled Time: ${selectedDateTime.toString()}');
           // Add the event to Firestore
           bool eventAdded = await addEventToFirestore(
-              selectedDateTime, widget.specialistEmail, account.email);
+          selectedDateTime, widget.specialistEmail, account.email, widget.specialistName);
           if (eventAdded) {
             _showSuccessDialog(
                 selectedDateTime); // Show success dialog only if event was added to Firestore
@@ -296,8 +297,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   'Appointment created successfully with atendee: ${widget.specialistEmail}');
               print('Scheduled Time: ${selectedDateTime.toString()}');
               // Add the event to Firestore
-              bool eventAdded = await addEventToFirestore(selectedDateTime,
-                  widget.specialistEmail, refreshedAccount.email);
+              bool eventAdded = await addEventToFirestore(selectedDateTime, widget.specialistEmail, refreshedAccount.email, "Placeholder Name");
               if (eventAdded) {
                 _showSuccessDialog(
                     selectedDateTime); // Show success dialog only if event was added to Firestore

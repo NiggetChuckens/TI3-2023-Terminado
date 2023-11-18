@@ -3,18 +3,19 @@ import 'package:lottie/lottie.dart';
 import 'package:uct_app/components/category_cards.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-
+import 'package:uct_app/components/upcomingcalendar.dart';
 class Dash extends StatefulWidget {
-  const Dash({Key? key, required this.username, required String email}) : super(key: key);
+  const Dash({Key? key, required this.username, required String email})
+      : super(key: key);
   final String username;
-  
+
   @override
   State<Dash> createState() => _DashState();
 }
 
 class _DashState extends State<Dash> {
+  Key key = UniqueKey();
+
   @override
   Widget build(BuildContext context) {
     const gradient = LinearGradient(
@@ -25,6 +26,7 @@ class _DashState extends State<Dash> {
         Color(0xFFD190E0),
       ],
     );
+
     const gradientSearch = LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
@@ -33,6 +35,7 @@ class _DashState extends State<Dash> {
         Color(0xFF8FB5E1),
       ],
     );
+
     initializeDateFormatting();
     String locale = 'es';
     DateTime now = DateTime.now();
@@ -87,7 +90,6 @@ class _DashState extends State<Dash> {
                 Navigator.pushNamed(context, '/docentes');
               },
             ),
-            
             ListTile(
               title: const Text('About'),
               onTap: () {
@@ -123,7 +125,6 @@ class _DashState extends State<Dash> {
                 Navigator.pushNamed(context, '/chat');
               },
             ),
-            
           ],
         ),
       ),
@@ -170,10 +171,11 @@ class _DashState extends State<Dash> {
                           Navigator.pushNamed(context, '/docentes');
                         },
                         child: Container(
+                          //profile box top right corner
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: Colors.deepPurple[100],
+                            color: const Color.fromARGB(225, 225, 225, 225),
                           ),
                           child: const Icon(Icons.person),
                         ),
@@ -189,10 +191,10 @@ class _DashState extends State<Dash> {
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Container(
+                //welcome message box c:
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                     gradient: gradient,
-                    color: Colors.pink[100],
                     //color: Color.fromARGB(255, 169, 201, 237),
                     borderRadius: BorderRadius.circular(12)),
                 child: Row(children: [
@@ -234,6 +236,7 @@ class _DashState extends State<Dash> {
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
+                                //gradient: gradientSearch,
                                 color: const Color(0xFF8FB5E1),
                               ),
                               child: const Center(
@@ -256,7 +259,8 @@ class _DashState extends State<Dash> {
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.deepPurple[100],
+                  gradient: gradientSearch,
+                  color: const Color.fromARGB(255, 232, 196, 233),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const TextField(
@@ -270,7 +274,7 @@ class _DashState extends State<Dash> {
 
           const SizedBox(height: 25),
 
-      //LIST VIEW
+          //LIST VIEW
           SizedBox(
             height: 80,
             child: ListView(
@@ -282,47 +286,44 @@ class _DashState extends State<Dash> {
                     'Docentes', '/docentes', 'lib/images/Docentes.png'),
                 _buildButton(
                     'Eventos Proximos', '/eventos', 'lib/images/chat.png'),
-                
                 _buildButton('About', '/about', 'lib/images/uct_splash.png'),
                 _buildButton(
                     'Recursos', '/recursos', 'lib/images/recursos.png'),
                 _buildButton(
                     'Contacto', '/contacto', 'lib/images/contacto.png'),
-                _buildButton('Foro', '/foro', 'lib/images/foro.png'),
-                _buildButton(
-                    'Chat de Apoyo', '/chat', 'lib/images/chat.png'),
                 _buildButton('Ticlab', '/ticlab', 'lib/images/ticlab.png'),
+                _buildButton('Chat', '/chat', 'lib/images/chat.png'),
               ],
             ),
           ),
           const SizedBox(height: 25),
-          
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'En Progreso',
+                Text(
+                  'Eventos Proximos',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
                 ),
-                Text(
-                  'Ver todos',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.grey[500]),
-                ),
+                
               ],
             ),
           ),
-          
-          const SizedBox(
-            height: 100,
-          )
+
+         const SizedBox(
+              height: 10,
+            ),
+
+            // Add the upcoming events component
+            Expanded(
+      key: key,
+      child: UpcomingEventsComponent(),
+    ),
         ],
       )),
     );
