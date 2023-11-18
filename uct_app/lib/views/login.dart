@@ -95,9 +95,8 @@ class _LoginPageState extends State<LoginPage> {
           String shortName = user
               .displayName!; // default to full name if name has less than two parts
           if (nameParts.length > 1) {
-            shortName = capitalize(nameParts[0]) +
-                ' ' +
-                capitalize(nameParts[1]); // capitalize first and last name
+            shortName =
+                '${capitalize(nameParts[0])} ${capitalize(nameParts[1])}'; // capitalize first and last name
             print('shortName: $shortName');
             print('email: ${user.email}');
           }
@@ -188,14 +187,15 @@ class _LoginPageState extends State<LoginPage> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
                       (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.hovered))
+                        if (states.contains(MaterialState.hovered)) {
                           return Colors
                               .blue; // The color when the button is hovered
+                        }
                         return Colors.white; // The default color of the button
                       },
                     ),
                     padding: MaterialStateProperty.all<EdgeInsets>(
-                      EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                     ),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
@@ -203,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     side: MaterialStateProperty.all<BorderSide>(
-                      BorderSide(color: Colors.grey, width: 1),
+                      const BorderSide(color: Colors.grey, width: 1),
                     ),
                   ),
                   child: const Text(
