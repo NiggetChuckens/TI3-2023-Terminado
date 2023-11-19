@@ -69,8 +69,4 @@ class SegundaVista extends StatelessWidget {
   }
 }
 
-<<<<<<< HEAD
 // Debes definir las clases TerceraVista, CuartaVista, QuintaVista, SextaVista y SeptimaVista de manera similar```
-=======
-// Debes definir las clases TerceraVista, CuartaVista, QuintaVista, SextaVista y SeptimaVista de manera similar```
->>>>>>> Dev-Nico

@@ -9,24 +9,13 @@ import 'views/splash.dart';
 import 'views/recursos.dart';
 import 'views/calendario.dart';
 import 'views/docentes.dart';
-<<<<<<< HEAD
-=======
 import 'package:firebase_core/firebase_core.dart';
 import 'views/ticlab.dart';
 import 'views/upcoming.dart';
->>>>>>> Dev-Nico
 
 import 'views/canalesDeApoyo.dart';
 import 'views/programacionRegular.dart';
 import 'views/instanciasFormacion.dart';
-<<<<<<< HEAD
-import 'views/orientacionesDocencia.dart';
-import 'views/virtualizacion.dart';
-import 'views/dashboard2.dart';
-import 'views/contacto.dart';
-void main() {
-  runApp(const MyApp());
-=======
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +28,6 @@ void main() async {
       child: const MyApp(),
     ),
   );
->>>>>>> Dev-Nico
 }
 
 class MyApp extends StatelessWidget {
@@ -77,18 +65,11 @@ class MyApp extends StatelessWidget {
         '/canalesDeApoyo': (context) => CanalesDeApoyoPage(),
         '/programacionRegular': (context) => programacionRegularPage(),
         '/instanciasFormacion': (context) => VistaConImagen(),
-<<<<<<< HEAD
-        '/orientacionesDocencia': (context) => DocentesPage(),
-        '/virtualizacion': (context) => DocentesPage(),
-        '/dash2': (context) => const Dash(
-              username: '',
-=======
         '/orientacionesDocencia': (context) => const DocentesPage(),
         '/virtualizacion': (context) => const DocentesPage(),
         '/eventos': (context) => ChangeNotifierProvider<EventsModel>(
               create: (context) => EventsModel(),
               child: UpcomingEventsPage(),
->>>>>>> Dev-Nico
             ),
         '/ticlab': (context) => const DocentesPage(),
       },
