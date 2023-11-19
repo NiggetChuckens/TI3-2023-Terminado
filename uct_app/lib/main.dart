@@ -21,6 +21,7 @@ import 'views/canalesDeApoyo.dart';
 import 'views/talleresTiclab.dart';
 import 'views/CursoEduca.dart';
 import 'views/FormacionInicial.dart';
+import 'views/chat.dart';
 import 'views/canalesDeApoyo.dart';
 import 'views/programacionRegular.dart';
 import 'views/instanciasFormacion.dart';
@@ -73,15 +74,15 @@ class MyApp extends StatelessWidget {
         '/recursos': (context) => const RecursosPage(),
         '/docentes': (context) => const DocentesPage(),
         '/compromisosacademicos': (context) => CompromisosAcademicosPage(),
-        '/canalesDeApoyo': (context) => CanalesDeApoyoPage(),
         '/talleresticlab': (context) => TalleresTiclab(),
         '/cursoeduca': (context) => CursoEduca(),
+        '/chatbot' : (context) => const ChatPage(),
         '/canalesdeapoyo': (context) => CanalesDeApoyoPage(),
         '/formacioninicialdocente': (context) => Formacioninicialdocente(),
-        '/programacionRegular': (context) => programacionRegularPage(),
-        '/instanciasFormacion': (context) => VistaConImagen(),
-        '/orientacionesDocencia': (context) => DocentesPage(),
-        '/virtualizacion': (context) => DocentesPage(),
+        //'/programacionRegular': (context) => programacionRegularPage(),
+        //'/instanciasFormacion': (context) => VistaConImagen(),
+        '/orientacionesDocencia': (context) => const DocentesPage(),
+        '/virtualizacion': (context) => const DocentesPage(),
         '/dash2': (context) => const Dash(
               username: '',
             ),

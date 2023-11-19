@@ -591,6 +591,24 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "path_provider",
+      "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider-2.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "path_provider_android",
+      "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "path_provider_foundation",
+      "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_foundation-2.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "path_provider_linux",
 <<<<<<< HEAD
       "rootUri": "file:///C:/Users/Himee/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_linux-2.2.1",
@@ -1034,11 +1052,15 @@
       "languageVersion": "3.1"
     }
   ],
+<<<<<<< Updated upstream
 <<<<<<< HEAD
   "generated": "2023-11-14T11:55:30.681076Z",
 =======
   "generated": "2023-11-19T05:09:55.718285Z",
 >>>>>>> Dev-Rob
+=======
+  "generated": "2023-11-14T13:25:13.823500Z",
+>>>>>>> Stashed changes
   "generator": "pub",
   "generatorVersion": "3.1.1"
 }

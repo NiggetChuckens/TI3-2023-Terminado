@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "594761248144",
+    "project_id": "uct-app-836a5",
+    "storage_bucket": "uct-app-836a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594761248144:android:8524177dcfd2dacabfd715",
+        "android_client_info": {
+          "package_name": "com.example.uct_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYQDkpH9QVW2xEe7a4iPU0BxfNTfFTdzI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

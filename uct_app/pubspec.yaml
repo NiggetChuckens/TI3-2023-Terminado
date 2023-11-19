@@ -53,10 +53,11 @@ dependencies:
 >>>>>>> Dev-Rob
   http: ^1.1.0
   googleapis_auth: ^1.4.1
+  path_provider: ^2.0.5
   table_calendar: ^3.0.9
   carousel_slider: ^4.2.1
   cloud_firestore: ^4.11.0
-  firebase_core: ^2.19.0
+  firebase_core: ^2.22.0
   firebase_auth: ^4.11.1
   provider: ^6.0.5
   shared_preferences: ^2.0.8

@@ -32,7 +32,7 @@ class ProfilesGrid extends StatelessWidget {
                     builder: (context) => const Profile(
                       username: 'Kim Yong Un',
                       picture:
-                          'https://dte.uct.cl/wp-content/uploads/2018/06/monica_keachele.jpg',
+                          'https://i.imgur.com/BoN9kdC.jpeg',
                       description:
                           'this is a test description, assume this guy is good at building rockets or something lol',
                       email: 'mrkim@northkorea.net',

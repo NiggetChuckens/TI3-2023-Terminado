@@ -101,6 +101,13 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
+              title: const Text('Preguntas frecuentes'),
+              onTap: () {
+                Navigator.pop(context); // close the drawer
+                Navigator.pushNamed(context, 'chatbot');
+              },
+            ),
+            ListTile(
               title: const Text('Compromisos académicos'),
               onTap: () {
                 Navigator.pop(context); // close the drawer

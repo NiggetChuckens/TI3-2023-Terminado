@@ -114,7 +114,24 @@ class _DashState extends State<Dash> {
               },
             ),
             ListTile(
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+              title: const Text('Chat de Apoyo'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/chatbot');
+              },
+            ),
+            ListTile(
+              title: const Text('Compromisos academicos'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/compromisosacademicos');
+              },
+            ),
+            ListTile(
+>>>>>>> Stashed changes
               title: const Text('Calendario'),
               onTap: () {
                 Navigator.pop(context);
@@ -150,6 +167,7 @@ class _DashState extends State<Dash> {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/foro');
               },
+<<<<<<< Updated upstream
             ),
             ListTile(
               title: const Text('Chat de Apoyo'),
@@ -159,6 +177,9 @@ class _DashState extends State<Dash> {
               },
             ),
 <<<<<<< HEAD
+=======
+            ),           
+>>>>>>> Stashed changes
             ListTile(
               title: const Text('Dashboard2'),
               onTap: () {
@@ -301,7 +322,7 @@ class _DashState extends State<Dash> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Como te sientes hoy?',
+                          '¿Cómo te sientes hoy?',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -416,7 +437,7 @@ class _DashState extends State<Dash> {
               ],
             ),
           ),
-
+          const SizedBox(height: 25),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Row(
@@ -457,21 +478,26 @@ class _DashState extends State<Dash> {
             ),
           ),
           const SizedBox(height: 25),
-
+//Especialistas
           Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: specialists.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Especialista(
-                  doctorImagePath: specialists[index].image,
-                  rating: specialists[index].rating.toString(),
-                  doctorName: specialists[index].name,
-                  doctorSpecialty: specialists[index].category,
-                );
-              },
+            child: 
+            Container(
+              height: 100
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: specialists.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Especialista(
+                    doctorImagePath: specialists[index].image,
+                    rating: specialists[index].rating.toString(),
+                    doctorName: specialists[index].name,
+                    doctorSpecialty: specialists[index].category,
+                  );
+                },
+              ),
             ),
           ),
+<<<<<<< Updated upstream
           const SizedBox(
             height: 100,
           )
@@ -490,6 +516,9 @@ class _DashState extends State<Dash> {
             child: UpcomingEventsComponent(),
           ),
 >>>>>>> Dev-Rob
+=======
+          const SizedBox(height: 25),
+>>>>>>> Stashed changes
         ],
       )),
     );
