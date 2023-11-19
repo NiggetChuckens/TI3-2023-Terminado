@@ -35,12 +35,22 @@ dependencies:
   google_sign_in: ^6.1.5
   
   googleapis: 11.4.0
+<<<<<<< HEAD
   lottie: ^2.6.0
+=======
+
+  lottie: ^2.6.0
+  android_intent_plus: ^4.0.3  # Add this line
+>>>>>>> Dev-Rob
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   intl: ^0.18.1
+<<<<<<< HEAD
   url_launcher: ^6.1.14
+=======
+  url_launcher: ^6.0.20
+>>>>>>> Dev-Rob
   http: ^1.1.0
   googleapis_auth: ^1.4.1
   table_calendar: ^3.0.9
@@ -50,6 +60,10 @@ dependencies:
   firebase_auth: ^4.11.1
   provider: ^6.0.5
   shared_preferences: ^2.0.8
+<<<<<<< HEAD
+=======
+  uuid: ^3.0.5
+>>>>>>> Dev-Rob
 dev_dependencies:
   flutter_test:
     sdk: flutter

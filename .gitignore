@@ -2,3 +2,7 @@
 uct_app/lib/views/dashboard.dart
 
 uct_app/lib/views/dashboard2.dart
+
+uct_app/android/
+
+uct_app/.dart_tool/

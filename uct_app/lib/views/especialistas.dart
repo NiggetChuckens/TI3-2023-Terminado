@@ -28,6 +28,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
     });
   }
 
+<<<<<<< HEAD
  Future<List<Specialist>> fetchSpecialists(String rol) async {
   CollectionReference specialists =
   FirebaseFirestore.instance.collection('dte');
@@ -60,6 +61,40 @@ class _SpecialistPageState extends State<SpecialistPage> {
 
   return specialistList;
 }
+=======
+  Future<List<Specialist>> fetchSpecialists(String rol) async {
+    CollectionReference specialists =
+        FirebaseFirestore.instance.collection('dte');
+
+    List<Specialist> specialistList = [];
+
+    await specialists.get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        print('Document data: ${doc.data()}'); // Print document data
+
+        try {
+          if (rol == 'Todos' || doc['rol'] == rol) {
+            specialistList.add(
+              Specialist(
+                name: doc['nombre'],
+                email: doc['email'],
+                grado: doc['grado'],
+                rol: doc['rol'],
+                especialidad: doc['especialidad'],
+              ),
+            );
+          }
+        } catch (e) {
+          print(
+              'Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
+          print('Error: $e'); // Print the error
+        }
+      });
+    });
+
+    return specialistList;
+  }
+>>>>>>> Dev-Rob
 
   Future<List<String>> fetchRoles() async {
     CollectionReference specialists =
@@ -161,7 +196,12 @@ class _SpecialistPageState extends State<SpecialistPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
+<<<<<<< HEAD
                                   builder: (context) => EspecialistaDetails(specialist: snapshot.data![index]),
+=======
+                                  builder: (context) => EspecialistaDetails(
+                                      specialist: snapshot.data![index]),
+>>>>>>> Dev-Rob
                                 ),
                               );
                             },
@@ -169,7 +209,12 @@ class _SpecialistPageState extends State<SpecialistPage> {
                               child: SizedBox(
                                 width: 150, // Set your desired width here
                                 child: Card(
+<<<<<<< HEAD
                                   color: const Color.fromARGB(255, 42, 42, 42), // Dark background for the card
+=======
+                                  color: const Color.fromARGB(255, 42, 42,
+                                      42), // Dark background for the card
+>>>>>>> Dev-Rob
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15.0),
                                   ),
@@ -177,10 +222,19 @@ class _SpecialistPageState extends State<SpecialistPage> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
+<<<<<<< HEAD
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         ClipRRect(
                                           borderRadius: BorderRadius.circular(10.0),
+=======
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+>>>>>>> Dev-Rob
                                           child: Image.asset(
                                             "lib/images/doctor1.jpg",
                                             width: 100,
@@ -191,19 +245,37 @@ class _SpecialistPageState extends State<SpecialistPage> {
                                         const SizedBox(height: 10),
                                         Text(
                                           snapshot.data![index].name,
+<<<<<<< HEAD
                                           textAlign: TextAlign.center, // Center the names
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16,
                                             color: Color(0xFFE0E0E0), // Light text color for contrast
+=======
+                                          textAlign: TextAlign
+                                              .center, // Center the names
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                            color: Color(
+                                                0xFFE0E0E0), // Light text color for contrast
+>>>>>>> Dev-Rob
                                           ),
                                         ),
                                         const SizedBox(height: 5),
                                         Text(
                                           snapshot.data![index].rol,
+<<<<<<< HEAD
                                           textAlign: TextAlign.center, // Center the roles
                                           style: const TextStyle(
                                             color: Color(0xFF757575), // Slightly lighter grey for contrast
+=======
+                                          textAlign: TextAlign
+                                              .center, // Center the roles
+                                          style: const TextStyle(
+                                            color: Color(
+                                                0xFF757575), // Slightly lighter grey for contrast
+>>>>>>> Dev-Rob
                                           ),
                                         ),
                                       ],
@@ -227,4 +299,8 @@ class _SpecialistPageState extends State<SpecialistPage> {
       ),
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Dev-Rob

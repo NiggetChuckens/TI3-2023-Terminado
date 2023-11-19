@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+<<<<<<< HEAD
 import 'package:uct_app/components/specialist_cards.dart';
 import 'package:uct_app/components/category_cards.dart';
 import 'package:uct_app/components/sort_category.dart';
@@ -10,6 +11,16 @@ import 'package:uct_app/components/data.dart';
 
 class Dash extends StatefulWidget {
   const Dash({Key? key, required this.username}) : super(key: key);
+=======
+import 'package:uct_app/components/category_cards.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:uct_app/components/upcomingcalendar.dart';
+
+class Dash extends StatefulWidget {
+  const Dash({Key? key, required this.username, required String email})
+      : super(key: key);
+>>>>>>> Dev-Rob
   final String username;
 
   @override
@@ -17,8 +28,33 @@ class Dash extends StatefulWidget {
 }
 
 class _DashState extends State<Dash> {
+<<<<<<< HEAD
   @override
   Widget build(BuildContext context) {
+=======
+  Key key = UniqueKey();
+
+  @override
+  Widget build(BuildContext context) {
+    const gradient = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        Color(0xFF8FB5E1),
+        Color(0xFFD190E0),
+      ],
+    );
+
+    const gradientSearch = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        Color(0xFFD190E0),
+        Color(0xFF8FB5E1),
+      ],
+    );
+
+>>>>>>> Dev-Rob
     initializeDateFormatting();
     String locale = 'es';
     DateTime now = DateTime.now();
@@ -63,7 +99,11 @@ class _DashState extends State<Dash> {
               title: const Text('Asesores'),
               onTap: () {
                 Navigator.pop(context); // close the drawer
+<<<<<<< HEAD
                 Navigator.pushNamed(context, '/profile_grid');
+=======
+                Navigator.pushNamed(context, '/especialistas');
+>>>>>>> Dev-Rob
               },
             ),
             ListTile(
@@ -74,6 +114,7 @@ class _DashState extends State<Dash> {
               },
             ),
             ListTile(
+<<<<<<< HEAD
               title: const Text('Calendario'),
               onTap: () {
                 Navigator.pop(context);
@@ -81,6 +122,8 @@ class _DashState extends State<Dash> {
               },
             ),
             ListTile(
+=======
+>>>>>>> Dev-Rob
               title: const Text('About'),
               onTap: () {
                 Navigator.pop(context);
@@ -115,6 +158,7 @@ class _DashState extends State<Dash> {
                 Navigator.pushNamed(context, '/chat');
               },
             ),
+<<<<<<< HEAD
             ListTile(
               title: const Text('Dashboard2'),
               onTap: () {
@@ -144,6 +188,8 @@ class _DashState extends State<Dash> {
                 );
               },
             ),
+=======
+>>>>>>> Dev-Rob
           ],
         ),
       ),
@@ -187,6 +233,7 @@ class _DashState extends State<Dash> {
                       ),
                       GestureDetector(
                         onTap: () {
+<<<<<<< HEAD
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -202,6 +249,16 @@ class _DashState extends State<Dash> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             color: Colors.deepPurple[100],
+=======
+                          Navigator.pushNamed(context, '/docentes');
+                        },
+                        child: Container(
+                          //profile box top right corner
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: const Color.fromARGB(225, 225, 225, 225),
+>>>>>>> Dev-Rob
                           ),
                           child: const Icon(Icons.person),
                         ),
@@ -217,9 +274,17 @@ class _DashState extends State<Dash> {
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Container(
+<<<<<<< HEAD
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                     color: Colors.pink[100],
+=======
+                //welcome message box c:
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    gradient: gradient,
+                    //color: Color.fromARGB(255, 169, 201, 237),
+>>>>>>> Dev-Rob
                     borderRadius: BorderRadius.circular(12)),
                 child: Row(children: [
                   SizedBox(
@@ -243,7 +308,11 @@ class _DashState extends State<Dash> {
                           ),
                         ),
                         const Text(
+<<<<<<< HEAD
                           'Agenda tu cita si lo necesitas',
+=======
+                          'Agenda tu cita',
+>>>>>>> Dev-Rob
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
@@ -254,13 +323,22 @@ class _DashState extends State<Dash> {
                         ),
                         GestureDetector(
                           onTap: () {
+<<<<<<< HEAD
                             Navigator.pushNamed(context, '/calendario');
+=======
+                            Navigator.pushNamed(context, '/especialistas');
+>>>>>>> Dev-Rob
                           },
                           child: Container(
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
+<<<<<<< HEAD
                                 color: Colors.deepPurple[300],
+=======
+                                //gradient: gradientSearch,
+                                color: const Color(0xFF8FB5E1),
+>>>>>>> Dev-Rob
                               ),
                               child: const Center(
                                 child: Text(
@@ -282,7 +360,12 @@ class _DashState extends State<Dash> {
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
+<<<<<<< HEAD
                   color: Colors.deepPurple[100],
+=======
+                  gradient: gradientSearch,
+                  color: const Color.fromARGB(255, 232, 196, 233),
+>>>>>>> Dev-Rob
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const TextField(
@@ -296,23 +379,36 @@ class _DashState extends State<Dash> {
 
           const SizedBox(height: 25),
 
+<<<<<<< HEAD
 //LIST VIEW
+=======
+          //LIST VIEW
+>>>>>>> Dev-Rob
           SizedBox(
             height: 80,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
                 _buildButton(
+<<<<<<< HEAD
                     'Asesores', '/profile_grid', 'lib/images/asesor.png'),
                 _buildButton(
                     'Docentes', '/docentes', 'lib/images/Docentes.png'),
                 _buildButton('Calendario', '/calendario',
                     'lib/images/calendar_icon.png'),
+=======
+                    'Asesores', '/especialistas', 'lib/images/asesor.png'),
+                _buildButton(
+                    'Docentes', '/docentes', 'lib/images/Docentes.png'),
+                _buildButton(
+                    'Eventos Proximos', '/eventos', 'lib/images/chat.png'),
+>>>>>>> Dev-Rob
                 _buildButton('About', '/about', 'lib/images/uct_splash.png'),
                 _buildButton(
                     'Recursos', '/recursos', 'lib/images/recursos.png'),
                 _buildButton(
                     'Contacto', '/contacto', 'lib/images/contacto.png'),
+<<<<<<< HEAD
                 _buildButton('Foro', '/foro', 'lib/images/Default.jpg'),
                 _buildButton(
                     'Chat de Apoyo', '/chat', 'lib/images/Default.jpg'),
@@ -328,11 +424,28 @@ class _DashState extends State<Dash> {
               children: [
                 const Text(
                   'Especialistas',
+=======
+                _buildButton('Ticlab', '/ticlab', 'lib/images/ticlab.png'),
+                _buildButton('Chat', '/chat', 'lib/images/chat.png'),
+              ],
+            ),
+          ),
+          const SizedBox(height: 25),
+
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Eventos Proximos',
+>>>>>>> Dev-Rob
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
                 ),
+<<<<<<< HEAD
                 Text(
                   'Ver todos',
                   style: TextStyle(
@@ -362,6 +475,21 @@ class _DashState extends State<Dash> {
           const SizedBox(
             height: 100,
           )
+=======
+              ],
+            ),
+          ),
+
+          const SizedBox(
+            height: 10,
+          ),
+
+          // Add the upcoming events component
+          Expanded(
+            key: key,
+            child: UpcomingEventsComponent(),
+          ),
+>>>>>>> Dev-Rob
         ],
       )),
     );

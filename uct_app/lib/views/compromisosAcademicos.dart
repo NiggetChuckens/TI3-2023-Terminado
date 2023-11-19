@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+<<<<<<< HEAD
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uct_app/components/download_card.dart';
 
@@ -7,11 +8,18 @@ class CompromisosAcademicosPage extends StatelessWidget {
   CompromisosAcademicosPage({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
   final List<String> titles = [
+=======
+
+class CompromisosAcademicosPage extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+  final List<Widget> imageSliders = [
+>>>>>>> Dev-Rob
     'TRANSFORMACIÓN DE CURSO: GENERAL',
     'TRANSFORMACIÓN DE CURSO: VIRTUALIZACIÓN DE CURSOS',
     'ELABORACIÓN DE RECURSOS PARA EL APRENDIZAJE',
     'ELABORACIÓN DE RECURSOS EDUCATIVOS DIGITALES',
     'EVALUACIÓN TRABAJO COLABORATIVO: COMUNIDADES DE APRENDIZAJE',
+<<<<<<< HEAD
   ];
   final List<String> urls = [
     'https://dte.uct.cl/wp-content/uploads/2023/09/1-TRANSFORMACION-DE-CURSO-GENERAL-B1.docx',
@@ -36,16 +44,42 @@ class CompromisosAcademicosPage extends StatelessWidget {
   ///  (index) => DownloadCard(coursename: titles[index], url: urls[index], filename: files[index])
   ///);
   
+=======
+    'CRITERIOS DE CALIDAD PARA LA PRODUCCIÓN DE CONTENIDOS VIRTUALES',
+    'PAUTA PARA LA EVALUACIÓN DE RECURSOS EDUCATIVOS DIGITALES',
+    'VIRTUALIZACIÓN CURSOS PROGRAMAS MÓDULOS',
+    'Title9'
+  ]
+      .map((item) => Container(
+            child: Card(
+              color: Color.fromARGB(255, 169, 163, 244),
+              child: Center(
+                child: Center(
+                  child: Text(item, style: TextStyle(fontSize: 16.0)),
+                ),
+              ),
+            ),
+          ))
+      .toList();
+>>>>>>> Dev-Rob
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+<<<<<<< HEAD
         title: const Text('Compromisos Academicos'),
       ),
       body: SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(
+=======
+        title: Text('Compromisos Academicos'),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+>>>>>>> Dev-Rob
             image: DecorationImage(
                 image: AssetImage(
                     'lib/images/compromisos-academicos.jpg'), // replace with your image path
@@ -59,18 +93,29 @@ class CompromisosAcademicosPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: <Widget>[
+<<<<<<< HEAD
                   const Padding(
                     padding: EdgeInsets.all(10.0),
+=======
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+>>>>>>> Dev-Rob
                     child: Text('Validacion de Compromisos Academicos 2023',
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                   ),
+<<<<<<< HEAD
                   const Padding(
                     padding: EdgeInsets.all(10.0),
+=======
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+>>>>>>> Dev-Rob
                     child: Text('Compromisos academicos 2023',
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold)),
                   ),
+<<<<<<< HEAD
                   const Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Text(
@@ -165,10 +210,48 @@ class CompromisosAcademicosPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 80),
+=======
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                        'Para solicitar la validación de productos del CINAP (Centro de Innovación en Aprendizaje Docencia y Tecnología Educativa), realice los siguientes pasos:'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text('Ver tabla de compromisos académicos'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                        'Recepción de documentación: hasta 30 de noviembre 2023'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                        'Envío de constancias DTE-CeDID: entre 15  y 20 de diciembre 2023'),
+                  ),
+                  // Add more Text widgets as needed
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height /
+                          2), // half of the screen height
+                  CarouselSlider(
+                    options: CarouselOptions(
+                      aspectRatio: 2.0,
+                      enlargeCenterPage: true,
+                      scrollDirection: Axis.horizontal,
+                      autoPlay: true,
+                    ),
+                    items: imageSliders,
+                  ),
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height /
+                          2), // half of the screen height
+>>>>>>> Dev-Rob
                   Form(
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
+<<<<<<< HEAD
                         // Add this to create a title for the form
                         const Padding(
                           padding: EdgeInsets.all(8.0),
@@ -184,21 +267,42 @@ class CompromisosAcademicosPage extends StatelessWidget {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Este campo es obligatorio';
+=======
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Name',
+                          ),
+                          // Validation logic
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your name';
+>>>>>>> Dev-Rob
                             }
                             return null;
                           },
                         ),
                         TextFormField(
+<<<<<<< HEAD
                           decoration: const InputDecoration(
                             labelText: 'Email',
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Este campo es obligatorio';
+=======
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                          ),
+                          // Validation logic
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your email';
+>>>>>>> Dev-Rob
                             }
                             return null;
                           },
                         ),
+<<<<<<< HEAD
                         // Add this to create a text field
                         TextFormField(
                           decoration: const InputDecoration(
@@ -211,11 +315,26 @@ class CompromisosAcademicosPage extends StatelessWidget {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text('Formulario enviado'),
+=======
+                        // Add more TextFormField widgets as needed
+                        ElevatedButton(
+                          onPressed: () {
+                            // Validate and save form
+                            if (_formKey.currentState!.validate()) {
+                              // If the form is valid, display a Snackbar
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Form submitted'),
+>>>>>>> Dev-Rob
                                 ),
                               );
                             }
                           },
+<<<<<<< HEAD
                           child: const Text('Enviar'),
+=======
+                          child: Text('Submit'),
+>>>>>>> Dev-Rob
                         ),
                       ],
                     ),
