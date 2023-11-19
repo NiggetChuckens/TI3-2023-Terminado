@@ -36,11 +36,12 @@ dependencies:
   
   googleapis: 11.4.0
   lottie: ^2.6.0
+  android_intent_plus: ^4.0.3  # Add this line
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   intl: ^0.18.1
-  url_launcher: ^6.1.14
+  url_launcher: ^6.0.20
   http: ^1.1.0
   googleapis_auth: ^1.4.1
   table_calendar: ^3.0.9
