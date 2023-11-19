@@ -99,23 +99,35 @@ class _UpcomingEventsComponentState extends State<UpcomingEventsComponent> {
                   DateFormat('EEE d, HH:mm', 'es').format(startDate));
               String formattedEndDate =
                   capitalize(DateFormat('EEE d, HH:mm', 'es').format(endDate));
-              return Card(
-                elevation: 5,
+              return Container(
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Color(0xFF8FB5E1), Color(0xFF8FB5E1)],
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
                 child: ListTile(
                   leading:
-                      const Icon(Icons.event, color: Colors.blue, size: 40),
+                      const Icon(Icons.event, color: Colors.white, size: 40),
                   title: Text(
-                      'Cita con: ${snapshot.data![index]['attendeeName']}',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold)),
+                    'Cita con: ${snapshot.data![index]['attendeeName']}',
+                    style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Desde: $formattedStartDate',
-                          style: const TextStyle(fontSize: 14)),
+                          style: const TextStyle(
+                              fontSize: 14, color: Colors.white)),
                       Text('Hasta: $formattedEndDate',
-                          style: const TextStyle(fontSize: 14)),
+                          style: const TextStyle(
+                              fontSize: 14, color: Colors.white)),
                       InkWell(
                         child: Text('${snapshot.data![index]['meet']}',
                             style: const TextStyle(

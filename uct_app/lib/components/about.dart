@@ -105,7 +105,7 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                         onPressed: () {
                           print(
                               "Email for attendees: ${widget.specialist.email}");
-                              "Name for attendees: ${widget.specialist.name}";
+                          "Name for attendees: ${widget.specialist.name}";
                           Navigator.pushNamed(
                             context,
                             '/calendario',
