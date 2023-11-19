@@ -6,11 +6,14 @@ import 'dart:convert';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
 
 class CalendarPage extends StatefulWidget {
   final String specialistEmail;
+  final String specialistName;
 
-  const CalendarPage({Key? key, required this.specialistEmail})
+  const CalendarPage(
+      {Key? key, required this.specialistEmail, required this.specialistName})
       : super(key: key);
 
   @override
@@ -27,7 +30,12 @@ class _CalendarPageState extends State<CalendarPage> {
       1; // Set the appointment duration
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<bool> addEventToFirestore(
-      DateTime date, String attendeeEmail, String requesterEmail) async {
+    DateTime date,
+    String attendeeEmail,
+    String requesterEmail,
+    String attendeeName,
+    String googleMeetLink,
+  ) async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
     // Fetch all events for the day
     final QuerySnapshot result = await _firestore
@@ -59,10 +67,13 @@ class _CalendarPageState extends State<CalendarPage> {
     }
 
     // No overlapping event exists, add the event
+    // No overlapping event exists, add the event
     await _firestore.collection('citas').add({
       'date': date,
       'attendee': attendeeEmail,
       'requester': requesterEmail,
+      'attendeeName': attendeeName,
+      'googleMeetLink': googleMeetLink, // Add the Google Meet link here
     });
 
     return true;
@@ -170,9 +181,22 @@ class _CalendarPageState extends State<CalendarPage> {
           ..end = calendar.EventDateTime()
           ..start!.dateTime = selectedDateTime
           ..end!.dateTime = selectedDateTime.add(const Duration(hours: 1));
+
+        // Add attendees to the event
         event.attendees = [
           calendar.EventAttendee(email: widget.specialistEmail)
         ];
+
+        // Add Google Meet link to the event
+        // Add Google Meet link to the event
+        calendar.ConferenceData conferenceData = calendar.ConferenceData();
+        calendar.CreateConferenceRequest conferenceRequest =
+            calendar.CreateConferenceRequest();
+        var uuid = const Uuid();
+        conferenceRequest.requestId = uuid.v4();
+        conferenceData.createRequest = conferenceRequest;
+        event.conferenceData = conferenceData;
+
         // Create a new http.Client instance
         final client = http.Client();
 
@@ -183,7 +207,7 @@ class _CalendarPageState extends State<CalendarPage> {
         final request = http.Request(
           'POST',
           Uri.parse(
-              'https://www.googleapis.com/calendar/v3/calendars/primary/events'),
+              'https://www.googleapis.com/calendar/v3/calendars/primary/events?conferenceDataVersion=1&sendUpdates=all'),
         );
 
         // Set the access token in the request headers
@@ -194,20 +218,23 @@ class _CalendarPageState extends State<CalendarPage> {
 
         // Send the request and get the response
         final response = await client.send(request);
-
+        final responseBody = await response.stream.bytesToString();
+        final responseJson = jsonDecode(responseBody);
+        final googleMeetLink = responseJson['hangoutLink'];
         // Close the http.Client instance
         client.close();
 
-        // Check the response status code
-        // Check the response status code
-        // Check the response status code
         if (response.statusCode == 200) {
           print(
-              'Appointment created successfully with atendee: ${widget.specialistEmail}');
+              'Appointment created successfully with atendee: ${widget.specialistEmail} and name: ${widget.specialistName}');
           print('Scheduled Time: ${selectedDateTime.toString()}');
           // Add the event to Firestore
           bool eventAdded = await addEventToFirestore(
-              selectedDateTime, widget.specialistEmail, account.email);
+              selectedDateTime,
+              widget.specialistEmail,
+              account.email,
+              widget.specialistName,
+              googleMeetLink);
           if (eventAdded) {
             _showSuccessDialog(
                 selectedDateTime); // Show success dialog only if event was added to Firestore
@@ -259,9 +286,20 @@ class _CalendarPageState extends State<CalendarPage> {
               ..end = calendar.EventDateTime()
               ..start!.dateTime = selectedDateTime
               ..end!.dateTime = selectedDateTime.add(const Duration(hours: 1));
+
+            // Add attendees to the event
             event.attendees = [
               calendar.EventAttendee(email: widget.specialistEmail)
             ];
+
+            // Add Google Meet link to the event
+            calendar.ConferenceData conferenceData = calendar.ConferenceData();
+            calendar.CreateConferenceRequest conferenceRequest =
+                calendar.CreateConferenceRequest();
+            var uuid = const Uuid();
+            conferenceRequest.requestId = uuid.v4();
+            conferenceData.createRequest = conferenceRequest;
+            event.conferenceData = conferenceData;
 
             // Create a new http.Client instance
             final client = http.Client();
@@ -285,7 +323,9 @@ class _CalendarPageState extends State<CalendarPage> {
 
             // Send the request and get the response
             final response = await client.send(request);
-
+            final responseBody = await response.stream.bytesToString();
+            final responseJson = jsonDecode(responseBody);
+            final googleMeetLink = responseJson['hangoutLink'];
             // Close the http.Client instance
             client.close();
 
@@ -296,8 +336,12 @@ class _CalendarPageState extends State<CalendarPage> {
                   'Appointment created successfully with atendee: ${widget.specialistEmail}');
               print('Scheduled Time: ${selectedDateTime.toString()}');
               // Add the event to Firestore
-              bool eventAdded = await addEventToFirestore(selectedDateTime,
-                  widget.specialistEmail, refreshedAccount.email);
+              bool eventAdded = await addEventToFirestore(
+                  selectedDateTime,
+                  widget.specialistEmail,
+                  refreshedAccount.email,
+                  widget.specialistName,
+                  googleMeetLink);
               if (eventAdded) {
                 _showSuccessDialog(
                     selectedDateTime); // Show success dialog only if event was added to Firestore
@@ -327,10 +371,7 @@ class _CalendarPageState extends State<CalendarPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 188, 193, 198),
-              Color.fromARGB(255, 211, 207, 215)
-            ],
+            colors: [Colors.blue, Colors.deepPurple],
           ),
         ),
         child: Center(

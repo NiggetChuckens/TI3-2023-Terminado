@@ -26,6 +26,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "android_intent_plus",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/android_intent_plus-4.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "archive",
       "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.4.6",
       "packageUri": "lib/",
@@ -566,6 +572,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "uuid",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-3.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "vector_math",
       "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4",
       "packageUri": "lib/",
@@ -614,7 +626,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-11-18T21:47:41.846065Z",
+  "generated": "2023-11-19T03:21:30.165894Z",
   "generator": "pub",
   "generatorVersion": "3.1.1"
 }

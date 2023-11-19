@@ -109,8 +109,10 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                           Navigator.pushNamed(
                             context,
                             '/calendario',
-                            arguments: widget.specialist.email,
-
+                            arguments: {
+                              'email': widget.specialist.email,
+                              'name': widget.specialist.name,
+                            },
                           );
                         },
                         style: ElevatedButton.styleFrom(

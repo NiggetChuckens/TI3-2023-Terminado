@@ -13,7 +13,7 @@ class RecursosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recursos'),
+        title: const Text('Recursos'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -60,7 +60,7 @@ class RecursosPage extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           courses[index].name,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -68,14 +68,14 @@ class RecursosPage extends StatelessWidget {
                         ),
                         Text(
                           'Inscription: ${courses[index].inscription}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15,
                           ),
                         ),
                         Text(
                           'Beginning Date: ${courses[index].beginningDate}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15,
                           ),

@@ -3,6 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:uct_app/components/category_cards.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:uct_app/components/upcomingcalendar.dart';
 
 class Dash extends StatefulWidget {
   const Dash({Key? key, required this.username, required String email})
@@ -14,6 +15,8 @@ class Dash extends StatefulWidget {
 }
 
 class _DashState extends State<Dash> {
+  Key key = UniqueKey();
+
   @override
   Widget build(BuildContext context) {
     const gradient = LinearGradient(
@@ -296,32 +299,31 @@ class _DashState extends State<Dash> {
           ),
           const SizedBox(height: 25),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'En Progreso',
+                Text(
+                  'Eventos Proximos',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
-                ),
-                Text(
-                  'Ver todos',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.grey[500]),
                 ),
               ],
             ),
           ),
 
           const SizedBox(
-            height: 100,
-          )
+            height: 10,
+          ),
+
+          // Add the upcoming events component
+          Expanded(
+            key: key,
+            child: UpcomingEventsComponent(),
+          ),
         ],
       )),
     );

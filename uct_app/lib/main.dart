@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:uct_app/views/especialistas.dart';
 import 'views/compromisosAcademicos.dart';
@@ -10,7 +11,6 @@ import 'views/calendario.dart';
 import 'views/docentes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'views/ticlab.dart';
-
 import 'views/upcoming.dart';
 
 import 'views/canalesDeApoyo.dart';
@@ -20,6 +20,8 @@ import 'views/instanciasFormacion.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await initializeDateFormatting('es', null); // Add this line
+
   runApp(
     ChangeNotifierProvider<EventsModel>(
       create: (context) => EventsModel(),
@@ -38,13 +40,15 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
       onGenerateRoute: (settings) {
         if (settings.name == '/calendario') {
-          final String specialistEmail = settings.arguments as String;
-
-          return MaterialPageRoute(
-            builder: (context) {
-              return CalendarPage(specialistEmail: specialistEmail);
-            },
-          );
+          final Map<String, String> args =
+              settings.arguments as Map<String, String>;
+          final String specialistEmail = args['email'] ?? '';
+          final String specialistName = args['name'] ?? '';
+          return MaterialPageRoute(builder: (context) {
+            return CalendarPage(
+                specialistEmail: specialistEmail,
+                specialistName: specialistName);
+          });
         }
         // Define your other routes here...
         return null;
@@ -59,6 +63,7 @@ class MyApp extends StatelessWidget {
             ),
         '/calendario': (context) => const CalendarPage(
               specialistEmail: '',
+              specialistName: '',
             ),
         '/recursos': (context) => RecursosPage(),
         '/docentes': (context) => const DocentesPage(),
@@ -75,6 +80,7 @@ class MyApp extends StatelessWidget {
               create: (context) => EventsModel(),
               child: UpcomingEventsPage(),
             ),
+        '/ticlab': (context) => const DocentesPage(),
       },
     );
   }
