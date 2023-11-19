@@ -1,21 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:uct_app/components/textfield1.dart';
-import 'package:uct_app/components/tiles.dart';
-import 'package:uct_app/views/dashboard2.dart';
-import 'dashboard.dart';
-
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
-
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  void signUserIn() {}
-
-  @override
-  Widget build(BuildContext context) {
-=======
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
@@ -112,8 +95,9 @@ class _LoginPageState extends State<LoginPage> {
           String shortName = user
               .displayName!; // default to full name if name has less than two parts
           if (nameParts.length > 1) {
-            shortName =
-                '${capitalize(nameParts[0])} ${capitalize(nameParts[1])}'; // capitalize first and last name
+            shortName = capitalize(nameParts[0]) +
+                ' ' +
+                capitalize(nameParts[1]); // capitalize first and last name
             print('shortName: $shortName');
             print('email: ${user.email}');
           }
@@ -137,7 +121,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     EventsModel eventsModel = Provider.of<EventsModel>(context, listen: false);
->>>>>>> Dev-Rob
     return Scaffold(
       resizeToAvoidBottomInset: false, // this avoids the overflow error
 
@@ -150,193 +133,13 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               // logo
               const Image(
-<<<<<<< HEAD
-                image: AssetImage('lib/images/Logo_UCT.png'),
-=======
                 image: AssetImage('lib/images/google.png'),
->>>>>>> Dev-Rob
                 height: 100,
                 width: 100,
               ),
 
               const SizedBox(height: 20),
 
-<<<<<<< HEAD
-              Text(
-                'Bienvenido!',
-                style: TextStyle(
-                  color: Colors.grey[700],
-                  fontSize: 16,
-                ),
-              ),
-
-              const SizedBox(height: 10),
-
-              MyTextField(
-                controller: usernameController,
-                hintText: 'Correo Institucional',
-                obscureText: false,
-              ),
-
-              const SizedBox(height: 10),
-
-              MyTextField(
-                controller: passwordController,
-                hintText: 'Contraseña',
-                obscureText: true,
-              ),
-
-              const SizedBox(height: 10),
-
-              Text(
-                'Olvidaste tu Contraseña?',
-                style: TextStyle(color: Colors.grey[600]),
-              ),
-
-              const SizedBox(height: 20),
-
-              ElevatedButton(
-                onPressed: () {
-                  final username = usernameController.text;
-                  if (username.isNotEmpty) {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 500),
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            MyHomePage(
-                          title: 'DTE',
-                          username: username,
-                        ),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          const begin = Offset(0.0, 1.0);
-                          const end = Offset.zero;
-                          const curve = Curves.ease;
-                          final tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          return SlideTransition(
-                            position: animation.drive(tween),
-                            child: child,
-                          );
-                        },
-                      ),
-                    );
-                  } else {
-                    //if the username field is empty display a small red message, with a way to check if the button is pressed more than once in  a second, make the user wait
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Por favor ingrese su correo'),
-                        backgroundColor: Colors.red,
-                        duration: Duration(seconds: 1),
-                      ),
-                    );
-                  }
-                },
-                child: const Text(
-                  'Dashboard antigua',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  final username = usernameController.text;
-                  if (username.isNotEmpty) {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 500),
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            Dash(
-                          username: username,
-                        ),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          const begin = Offset(0.0, 1.0);
-                          const end = Offset.zero;
-                          const curve = Curves.ease;
-                          final tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          return SlideTransition(
-                            position: animation.drive(tween),
-                            child: child,
-                          );
-                        },
-                      ),
-                    );
-                  } else {
-                    //if the username field is empty display a small red message, with a way to check if the button is pressed more than once in  a second, make the user wait
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Por favor ingrese su correo'),
-                        backgroundColor: Colors.red,
-                        duration: Duration(seconds: 1),
-                      ),
-                    );
-                  }
-                },
-                child: const Text(
-                  'Dashboard Nueva',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-
-              Divider(
-                thickness: 0.5,
-                color: Colors.grey[400],
-              ),
-
-              const SizedBox(height: 10),
-
-              Text(
-                'O iniciar sesión con',
-                style: TextStyle(color: Colors.grey[700]),
-              ),
-
-              const SizedBox(height: 10),
-
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // google button
-                  SquareTile(imagePath: 'lib/images/google.png'),
-
-                  SizedBox(width: 25),
-
-                  // apple button
-                  SquareTile(imagePath: 'lib/images/apple.png')
-                ],
-              ),
-
-              const SizedBox(height: 20),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'No tienes cuenta?',
-                    style: TextStyle(color: Colors.grey[700]),
-                  ),
-                  const SizedBox(width: 4),
-                  const Text(
-                    'Registrarse Ahora',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              )
-=======
               MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: ElevatedButton(
@@ -385,15 +188,14 @@ class _LoginPageState extends State<LoginPage> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
                       (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.hovered)) {
+                        if (states.contains(MaterialState.hovered))
                           return Colors
                               .blue; // The color when the button is hovered
-                        }
                         return Colors.white; // The default color of the button
                       },
                     ),
                     padding: MaterialStateProperty.all<EdgeInsets>(
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                      EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                     ),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
@@ -401,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     side: MaterialStateProperty.all<BorderSide>(
-                      const BorderSide(color: Colors.grey, width: 1),
+                      BorderSide(color: Colors.grey, width: 1),
                     ),
                   ),
                   child: const Text(
@@ -413,7 +215,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
->>>>>>> Dev-Rob
             ],
           ),
         ),

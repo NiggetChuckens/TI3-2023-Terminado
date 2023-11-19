@@ -4,22 +4,10 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:uct_app/views/dashboard2.dart';
 
 class MyHomePage extends StatefulWidget {
-<<<<<<< HEAD
-  const MyHomePage({Key? key, required this.title, required this.username})
-      : super(key: key);
-  final String username;
-  final String title;
-=======
-  const MyHomePage(
-      {Key? key,
-      required this.title,
-      required this.username,
-      required this.email})
-      : super(key: key);
+  const MyHomePage({Key? key, required this.title, required this.username, required this.email}) : super(key: key);
   final String username;
   final String title;
   final String email;
->>>>>>> Dev-Rob
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -34,6 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String dayOfWeek = DateFormat.EEEE(locale).format(now);
     String dayMonth = DateFormat.MMMMd(locale).format(now);
     String year = DateFormat.y(locale).format(now);
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -96,25 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
               title: const Text('Asesores'),
               onTap: () {
                 Navigator.pop(context); // close the drawer
-<<<<<<< HEAD
-                Navigator.pushNamed(context, '/profile_grid');
-              },
-            ),
-            ListTile(
-              title: const Text('Preguntas frecuentes'),
-              onTap: () {
-                Navigator.pop(context); // close the drawer
-                Navigator.pushNamed(context, 'chatbot');
-              },
-            ),
-            ListTile(
-              title: const Text('Compromisos académicos'),
-              onTap: () {
-                Navigator.pop(context); // close the drawer
-                Navigator.pushNamed(context, '/compromisosacademicos');
-=======
                 Navigator.pushNamed(context, '/especialistas');
->>>>>>> Dev-Rob
               },
             ),
             ListTile(
@@ -171,17 +142,15 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Dash(
-<<<<<<< HEAD
-=======
-                      email: widget.email,
->>>>>>> Dev-Rob
-                      username: widget.username,
-                    ),
-                  ),
-                );
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Dash(
+                                email: widget.email,
+
+                                username: widget.username,
+                              ),
+                            ),
+                          );
               },
             ),
           ],
@@ -193,13 +162,8 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisSpacing: 16,
         crossAxisSpacing: 16,
         children: [
-<<<<<<< HEAD
-          _buildCard('/profile_grid', 'lib/images/asesor.png'),
-          _buildCard('/docentes', 'lib/images/docentes.png'),
-=======
           _buildCard('/especialistas', 'lib/images/asesor.png'),
           _buildCard('/docentes', 'lib/images/Docentes.png'),
->>>>>>> Dev-Rob
           _buildCard('/calendario', 'lib/images/calendar_icon.png'),
           _buildCard('/about', 'lib/images/uct_splash.png'),
           _buildCard('/recursos', 'lib/images/recursos.png'),
