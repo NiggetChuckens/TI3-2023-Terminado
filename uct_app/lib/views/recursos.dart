@@ -1,16 +1,13 @@
-// ignore_for_file: unused_local_variable, avoid_print, use_build_context_synchronously
-
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:googleapis/calendar/v3.dart' as calendar;
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
 
-class RecursosPage extends StatefulWidget {
-  const RecursosPage({Key? key}) : super(key: key);
+class RecursosPage extends StatelessWidget {
+  final List<Course> courses = List<Course>.generate(
+    12,
+    (i) => Course('Course ${i + 1}', 'Inscription ${i + 1}', 'Date ${i + 1}',
+        'ImageURL${i + 1}'),
+  );
 
+<<<<<<< HEAD
   @override
   // ignore: library_private_types_in_public_api
   _RecursosPageState createState() => _RecursosPageState();
@@ -227,6 +224,9 @@ class _RecursosPageState extends State<RecursosPage> {
       }
     }
   }
+=======
+  RecursosPage({Key? key}) : super(key: key);
+>>>>>>> Dev-Nico
 
   @override
   Widget build(BuildContext context) {
@@ -234,48 +234,77 @@ class _RecursosPageState extends State<RecursosPage> {
       appBar: AppBar(
         title: const Text('Recursos'),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blue, Colors.deepPurple],
-          ),
-        ),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              TableCalendar(
-                firstDay: DateTime.now(),
-                lastDay: DateTime(2023, 12, 31),
-                focusedDay: _focusedDay,
-                calendarFormat: _calendarFormat,
-                onFormatChanged: (format) {
-                  setState(() {
-                    _calendarFormat = format;
-                  });
-                },
-                onDaySelected: (selectedDay, focusedDay) {
-                  setState(() {
-                    _selectedDay = selectedDay;
-                    _selectedTime =
-                        null; // Reset selected time when a new date is selected
-                  });
-                  _selectTime(context);
-                },
-                selectedDayPredicate: (day) {
-                  return isSameDay(_selectedDay, day);
-                },
-                calendarStyle: CalendarStyle(
-                  todayDecoration: BoxDecoration(
-                    color:
-                        const Color.fromARGB(255, 22, 4, 56).withOpacity(0.5),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+          itemCount: courses.length,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: const EdgeInsets.only(bottom: 20),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    height: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      image: DecorationImage(
+                        image: NetworkImage(courses[index].backgroundImageUrl),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                  selectedDecoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.5),
+                  Positioned(
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [
+                            Colors.black.withOpacity(0.7),
+                            Colors.transparent,
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  Positioned(
+                    left: 10,
+                    bottom: 10,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          courses[index].name,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Inscription: ${courses[index].inscription}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          'Beginning Date: ${courses[index].beginningDate}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
+<<<<<<< HEAD
               if (_selectedDay != null)
                 Column(
                   children: [
@@ -303,21 +332,22 @@ class _RecursosPageState extends State<RecursosPage> {
                 ),
             ],
           ),
+=======
+            );
+          },
+>>>>>>> Dev-Nico
         ),
       ),
     );
   }
+}
 
-  Future<void> _selectTime(BuildContext context) async {
-    final selectedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
+class Course {
+  final String name;
+  final String inscription;
+  final String beginningDate;
+  final String backgroundImageUrl;
 
-    if (selectedTime != null) {
-      setState(() {
-        _selectedTime = selectedTime;
-      });
-    }
-  }
+  Course(
+      this.name, this.inscription, this.beginningDate, this.backgroundImageUrl);
 }
