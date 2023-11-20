@@ -1,11 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'dashboard2.dart';
 import 'package:googleapis/calendar/v3.dart' as gcal;
-import 'package:http/http.dart'
-    show Client, Response, BaseRequest, StreamedResponse;
+import 'package:http/http.dart' show BaseRequest, StreamedResponse;
 import 'package:http/http.dart' as http;
 
 String capitalize(String str) {
@@ -27,18 +28,19 @@ class EventsModel extends ChangeNotifier {
 }
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class GoogleHttpClient extends http.BaseClient {
-  Map<String, String> _headers;
+  final Map<String, String> _headers;
   final http.Client _client = http.Client();
 
   GoogleHttpClient(this._headers);
 
+  @override
   Future<StreamedResponse> send(BaseRequest request) {
     return _client.send(request..headers.addAll(_headers));
   }
@@ -122,7 +124,6 @@ class _LoginPageState extends State<LoginPage> {
     EventsModel eventsModel = Provider.of<EventsModel>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false, // this avoids the overflow error
-
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Center(

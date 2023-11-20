@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers, use_build_context_synchronously, duplicate_ignore, empty_catches
+
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart' as calendar;
@@ -28,42 +30,40 @@ class _CalendarPageState extends State<CalendarPage> {
   TimeOfDay? _selectedTime;
   static const int appointmentDurationInHours =
       1; // Set the appointment duration
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<bool> addEventToFirestore(
-    DateTime date,
-    String attendeeEmail,
-    String requesterEmail,
-    String attendeeName,
-    String googleMeetLink,
-  ) async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    // Fetch all events for the day
-    final QuerySnapshot result = await _firestore
-        .collection('citas')
-        .where('date',
-            isGreaterThanOrEqualTo:
-                DateTime(date.year, date.month, date.day, 0, 0))
-        .where('date',
-            isLessThan: DateTime(date.year, date.month, date.day + 1, 0, 0))
-        .get();
+  DateTime date, 
+  String attendeeEmail, 
+  String requesterEmail, 
+  String attendeeName, 
+  String googleMeetLink, 
+)
+ async {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // Fetch all events for the day
+  final QuerySnapshot result = await _firestore
+      .collection('citas')
+      .where('date',
+          isGreaterThanOrEqualTo:
+              DateTime(date.year, date.month, date.day, 0, 0))
+      .where('date',
+          isLessThan: DateTime(date.year, date.month, date.day + 1, 0, 0))
+      .get();
 
-    final List<DocumentSnapshot> documents = result.docs;
-    final DateTime newEventEndTime =
-        date.add(const Duration(hours: appointmentDurationInHours));
+  final List<DocumentSnapshot> documents = result.docs;
+  final DateTime newEventEndTime =
+      date.add(const Duration(hours: appointmentDurationInHours));
 
-    for (var doc in documents) {
-      final DateTime existingEventStartTime = doc['date'].toDate();
-      final DateTime existingEventEndTime = existingEventStartTime
-          .add(const Duration(hours: appointmentDurationInHours));
+  for (var doc in documents) {
+    final DateTime existingEventStartTime = doc['date'].toDate();
+    final DateTime existingEventEndTime = existingEventStartTime
+        .add(const Duration(hours: appointmentDurationInHours));
 
-      if ((date.isAfter(existingEventStartTime) &&
-              date.isBefore(existingEventEndTime)) ||
-          (newEventEndTime.isAfter(existingEventStartTime) &&
-              newEventEndTime.isBefore(existingEventEndTime))) {
-        print('An event already exists at this time.');
-        _showDialog('Ya hay una cita!');
-        return false;
-      }
+    if ((date.isAfter(existingEventStartTime) &&
+            date.isBefore(existingEventEndTime)) ||
+        (newEventEndTime.isAfter(existingEventStartTime) &&
+            newEventEndTime.isBefore(existingEventEndTime))) {
+      _showDialog('Ya hay una cita!');
+      return false;
     }
 
     // No overlapping event exists, add the event
@@ -86,13 +86,16 @@ class _CalendarPageState extends State<CalendarPage> {
         return AlertDialog(
           title: Text(message),
           actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () {
+              int count = 0;
+              Navigator.popUntil(context, (route) {
+                return count++ == 3;
+              });
+            },
+          ),
+        ],
         );
       },
     );
@@ -109,12 +112,12 @@ class _CalendarPageState extends State<CalendarPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Appointment Created Successfully'),
+          title: const Text('Cita agendada exitosamente'),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('Scheduled Date and Time:'),
+              const Text('Fecha y hora seleccionada:'),
               Text(DateFormat.yMd()
                   .add_jm()
                   .format(scheduledDateTime)), // Display date and time
@@ -125,13 +128,16 @@ class _CalendarPageState extends State<CalendarPage> {
             ],
           ),
           actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () {
+              int count = 0;
+              Navigator.popUntil(context, (route) {
+                return count++ == 3;
+              });
+            },
+          ),
+        ],
         );
       },
     );
@@ -154,7 +160,6 @@ class _CalendarPageState extends State<CalendarPage> {
             await account.authentication;
 
         // Now you can use googleAuth.accessToken to make authenticated API requests
-        print('Access token: ${googleAuth.accessToken}');
 
         // Check if a date and time are selected
         if (_selectedDay == null || _selectedTime == null) {
@@ -213,8 +218,7 @@ class _CalendarPageState extends State<CalendarPage> {
         // Set the access token in the request headers
         request.headers['Authorization'] = 'Bearer ${googleAuth.accessToken}';
 
-        // Set the request body as JSON
-        request.body = jsonEncode(event.toJson());
+          // Create a new calendar.CalendarApi instance
 
         // Send the request and get the response
         final response = await client.send(request);
@@ -225,9 +229,6 @@ class _CalendarPageState extends State<CalendarPage> {
         client.close();
 
         if (response.statusCode == 200) {
-          print(
-              'Appointment created successfully with atendee: ${widget.specialistEmail} and name: ${widget.specialistName}');
-          print('Scheduled Time: ${selectedDateTime.toString()}');
           // Add the event to Firestore
           bool eventAdded = await addEventToFirestore(
               selectedDateTime,
@@ -238,12 +239,8 @@ class _CalendarPageState extends State<CalendarPage> {
           if (eventAdded) {
             _showSuccessDialog(
                 selectedDateTime); // Show success dialog only if event was added to Firestore
-            print(
-                'Event added to Firestore with attendee: ${widget.specialistEmail}');
           }
         } else {
-          print(
-              'Failed to create appointment. Status code: ${response.statusCode}');
         }
       }
     } catch (error) {
@@ -258,7 +255,6 @@ class _CalendarPageState extends State<CalendarPage> {
                 await refreshedAccount.authentication;
 
             // Now you can use refreshedAuth.accessToken to make authenticated API requests
-            print('Refreshed access token: ${refreshedAuth.accessToken}');
 
             // Check if a date and time are selected
             if (_selectedDay == null || _selectedTime == null) {
@@ -305,7 +301,6 @@ class _CalendarPageState extends State<CalendarPage> {
             final client = http.Client();
 
             // Create a new calendar.CalendarApi instance
-            calendar.CalendarApi calendarApi = calendar.CalendarApi(client);
 
             // Create a new http.Request instance
             final request = http.Request(
@@ -332,9 +327,6 @@ class _CalendarPageState extends State<CalendarPage> {
             // Check the response status code
             // Check the response status code
             if (response.statusCode == 200) {
-              print(
-                  'Appointment created successfully with atendee: ${widget.specialistEmail}');
-              print('Scheduled Time: ${selectedDateTime.toString()}');
               // Add the event to Firestore
               bool eventAdded = await addEventToFirestore(
                   selectedDateTime,
@@ -347,15 +339,11 @@ class _CalendarPageState extends State<CalendarPage> {
                     selectedDateTime); // Show success dialog only if event was added to Firestore
               }
             } else {
-              print(
-                  'Failed to create appointment. Status code: ${response.statusCode}');
             }
           }
         } catch (refreshError) {
-          print('Failed to refresh access token: $refreshError');
         }
       } else {
-        print('Failed to sign in with Google: $error');
       }
     }
   }
@@ -456,13 +444,13 @@ class _CalendarPageState extends State<CalendarPage> {
                   children: [
                     ListTile(
                       title: Text(
-                          'Selected Date: ${DateFormat.yMd().format(_selectedDay!)}'), // Display only the date
+                          'Dia Seleccionado: ${DateFormat.yMd().format(_selectedDay!)}'), // Display only the date
                       subtitle: Text(
-                          'Selected Time: ${_selectedTime?.format(context) ?? 'Not selected'}'),
+                          'Hora Seleccionado: ${_selectedTime?.format(context) ?? 'Not selected'}'),
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      '1-hour time frame',
+                      'Sesion de 1 hora',
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
@@ -476,7 +464,7 @@ class _CalendarPageState extends State<CalendarPage> {
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.green,
                   ),
-                  child: const Text('Create Appointment'),
+                  child: const Text('Agendar Cita'),
                 ),
             ],
           ),

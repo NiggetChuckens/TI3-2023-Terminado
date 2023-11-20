@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -14,27 +16,27 @@ class CompromisosAcademicosPage extends StatelessWidget {
     'VIRTUALIZACIÓN CURSOS PROGRAMAS MÓDULOS',
     'Title9'
   ]
-      .map((item) => Container(
-            child: Card(
-              color: Color.fromARGB(255, 169, 163, 244),
-              child: Center(
-                child: Center(
-                  child: Text(item, style: TextStyle(fontSize: 16.0)),
-                ),
-              ),
-            ),
-          ))
+      .map((item) => Card(
+        color: const Color.fromARGB(255, 169, 163, 244),
+        child: Center(
+          child: Center(
+            child: Text(item, style: const TextStyle(fontSize: 16.0)),
+          ),
+        ),
+      ))
       .toList();
+
+  CompromisosAcademicosPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Compromisos Academicos'),
+        title: const Text('Compromisos Academicos'),
       ),
       body: SingleChildScrollView(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(
                     'lib/images/compromisos-academicos.jpg'), // replace with your image path
@@ -48,36 +50,36 @@ class CompromisosAcademicosPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
                     child: Text('Validacion de Compromisos Academicos 2023',
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
                     child: Text('Compromisos academicos 2023',
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold)),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
                     child: Text(
                         'Para solicitar la validación de productos del CINAP (Centro de Innovación en Aprendizaje Docencia y Tecnología Educativa), realice los siguientes pasos:'),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
                     child: Text('Ver tabla de compromisos académicos'),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
                     child: Text(
                         'Recepción de documentación: hasta 30 de noviembre 2023'),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
                     child: Text(
-                        'Envío de constancias DTE-CeDID: entre 15  y 20 de diciembre 2023'),
+                        'Envío de constancias Cinap-CeDID: entre 15  y 20 de diciembre 2023'),
                   ),
                   // Add more Text widgets as needed
                   SizedBox(
@@ -100,7 +102,7 @@ class CompromisosAcademicosPage extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Name',
                           ),
                           // Validation logic
@@ -112,7 +114,7 @@ class CompromisosAcademicosPage extends StatelessWidget {
                           },
                         ),
                         TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Email',
                           ),
                           // Validation logic
@@ -130,13 +132,13 @@ class CompromisosAcademicosPage extends StatelessWidget {
                             if (_formKey.currentState!.validate()) {
                               // If the form is valid, display a Snackbar
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
+                                const SnackBar(
                                   content: Text('Form submitted'),
                                 ),
                               );
                             }
                           },
-                          child: Text('Submit'),
+                          child: const Text('Submit'),
                         ),
                       ],
                     ),

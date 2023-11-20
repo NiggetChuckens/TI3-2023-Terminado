@@ -10,7 +10,6 @@ import 'views/recursos.dart';
 import 'views/calendario.dart';
 import 'views/docentes.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'views/ticlab.dart';
 import 'views/upcoming.dart';
 
 import 'views/canalesDeApoyo.dart';
@@ -54,24 +53,24 @@ class MyApp extends StatelessWidget {
         return null;
       },
       routes: {
-        '/login': (context) => LoginPage(),
+        '/login': (context) => const LoginPage(),
         '/especialistas': (context) => const SpecialistPage(),
         '/dashboard': (context) => const MyHomePage(
-              title: 'DTE',
+              title: 'Cinap',
               username: '',
               email: '',
             ),
         '/recursos': (context) => RecursosPage(),
         '/docentes': (context) => const DocentesPage(),
         '/compromisosacademicos': (context) => CompromisosAcademicosPage(),
-        '/canalesDeApoyo': (context) => CanalesDeApoyoPage(),
-        '/programacionRegular': (context) => programacionRegularPage(),
-        '/instanciasFormacion': (context) => VistaConImagen(),
+        '/canalesDeApoyo': (context) => const CanalesDeApoyoPage(),
+        '/programacionRegular': (context) => const programacionRegularPage(),
+        '/instanciasFormacion': (context) => const VistaConImagen(),
         '/orientacionesDocencia': (context) => const DocentesPage(),
         '/virtualizacion': (context) => const DocentesPage(),
         '/eventos': (context) => ChangeNotifierProvider<EventsModel>(
               create: (context) => EventsModel(),
-              child: UpcomingEventsPage(),
+              child: const UpcomingEventsPage(),
             ),
         '/ticlab': (context) => const DocentesPage(),
       },

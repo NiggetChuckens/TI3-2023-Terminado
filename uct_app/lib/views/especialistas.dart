@@ -28,32 +28,29 @@ class _SpecialistPageState extends State<SpecialistPage> {
     });
   }
 
-  Future<List<Specialist>> fetchSpecialists(String rol) async {
-    CollectionReference specialists =
-        FirebaseFirestore.instance.collection('dte');
+Future<List<Specialist>> fetchSpecialists(String rol) async {
+  CollectionReference specialists =
+  FirebaseFirestore.instance.collection('dte');
 
     List<Specialist> specialistList = [];
 
-    await specialists.get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        print('Document data: ${doc.data()}'); // Print document data
+  await specialists.get().then((QuerySnapshot querySnapshot) {
+    querySnapshot.docs.forEach((doc) {
+      Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+      print('Document data: ${data}'); // Print document data
 
-        try {
-          if (rol == 'Todos' || doc['rol'] == rol) {
-            specialistList.add(
-              Specialist(
-                name: doc['nombre'],
-                email: doc['email'],
-                grado: doc['grado'],
-                rol: doc['rol'],
-                especialidad: doc['especialidad'],
-              ),
-            );
-          }
-        } catch (e) {
-          print(
-              'Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
-          print('Error: $e'); // Print the error
+      try {
+        if (rol == 'Todos' || doc['rol'] == rol) {
+          specialistList.add(
+            Specialist(
+              name: doc['nombre'],
+              email: doc['email'],
+              grado: doc['grado'],
+              rol: doc['rol'],
+              especialidad: doc['especialidad'],
+              pfp: data != null && data.containsKey('pfp') ? doc['pfp'] : 'https://firebasestorage.googleapis.com/v0/b/flutter-app-400102.appspot.com/o/Default.jpg?alt=media&token=2e6ebc34-bee5-4c6c-b8ea-7204769c092e', // Replace with your specific link
+            ),
+          );
         }
       });
     });
@@ -183,10 +180,9 @@ class _SpecialistPageState extends State<SpecialistPage> {
                                           MainAxisAlignment.center,
                                       children: [
                                         ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          child: Image.asset(
-                                            "lib/images/doctor1.jpg",
+                                          borderRadius: BorderRadius.circular(10.0),
+                                          child: Image.network(
+                                            snapshot.data![index].pfp,
                                             width: 100,
                                             height: 100,
                                             fit: BoxFit.cover,
