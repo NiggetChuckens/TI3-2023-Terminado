@@ -1,11 +1,5 @@
 plugins {
     id "com.android.application"
-<<<<<<< HEAD
-    id "kotlin-android"
-    id "dev.flutter.flutter-gradle-plugin"
-}
-
-=======
     
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
@@ -16,7 +10,6 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 
->>>>>>> Dev-Rob
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -56,10 +49,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.uct_app"
-<<<<<<< HEAD
-=======
         multiDexEnabled true
->>>>>>> Dev-Rob
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
@@ -83,14 +73,9 @@ android {
 flutter {
     source '../..'
 }
-<<<<<<< HEAD
-
-dependencies {}
-=======
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:32.4.0')
     implementation 'com.google.firebase:firebase-analytics'
     def multidex_version = "2.0.1"
     implementation "androidx.multidex:multidex:$multidex_version"
 }
->>>>>>> Dev-Rob

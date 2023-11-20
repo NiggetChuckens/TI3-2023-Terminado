@@ -1,26 +1,44 @@
 {
   "project_info": {
-    "project_number": "594761248144",
-    "project_id": "uct-app-836a5",
-    "storage_bucket": "uct-app-836a5.appspot.com"
+    "project_number": "750789619573",
+    "project_id": "flutter-app-400102",
+    "storage_bucket": "flutter-app-400102.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:594761248144:android:8524177dcfd2dacabfd715",
+        "mobilesdk_app_id": "1:750789619573:android:e7fd20f8ae632037b46d3c",
         "android_client_info": {
           "package_name": "com.example.uct_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "750789619573-d1fqvp0l5925najmv14elvtib6pktaf7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.uct_app",
+            "certificate_hash": "7d681d8c901faaf562fab122f9aebe9fb267d230"
+          }
+        },
+        {
+          "client_id": "750789619573-9lopc0i1g3pqiccco35v83egtsgui6f2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyAYQDkpH9QVW2xEe7a4iPU0BxfNTfFTdzI"
+          "current_key": "AIzaSyAUwYaKPIgky0r2BwEk6IhH6U-fcngB3PU"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "750789619573-9lopc0i1g3pqiccco35v83egtsgui6f2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -1,38 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
-import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class DownloadCard extends StatelessWidget {
-  const DownloadCard({Key? key, 
-                      required this.url, 
-                      required this.coursename,
-                      required this.filename}) : super(key: key);
-  final String url;
-  final String filename;
   final String coursename;
+  final String url;
 
-
-  Future<void> downloadFile() async {
-    var response = await http.get(Uri.parse(url));
-    var documentDirectory = await getApplicationDocumentsDirectory();
-    var file = File('${documentDirectory.path}/');
-    await file.writeAsBytes(response.bodyBytes);
-  }
+  DownloadCard({
+    required this.coursename, 
+    required this.url, 
+    });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: <Widget>[
-          Text( coursename,
-                style: const TextStyle(fontSize: 12.0)),
-          ElevatedButton(
-            onPressed: downloadFile,
-            child: const Text('Download'),
-          ),
-        ],
+    return Card(
+      color: const Color.fromARGB(255, 164, 188, 250),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              coursename,
+              textAlign: TextAlign.center,
+              ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(94, 175, 31, 240)
+              ),
+              onPressed: () async {
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch ';
+                }
+              },
+              child: const Text('Open Link'),
+            ),
+          ],
+        ),
       ),
     );
   }

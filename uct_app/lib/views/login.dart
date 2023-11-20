@@ -97,12 +97,8 @@ class _LoginPageState extends State<LoginPage> {
           String shortName = user
               .displayName!; // default to full name if name has less than two parts
           if (nameParts.length > 1) {
-<<<<<<< HEAD
-            shortName = '${capitalize(nameParts[0])} ${capitalize(nameParts[1])}'; // capitalize first and last name
-=======
             shortName =
                 '${capitalize(nameParts[0])} ${capitalize(nameParts[1])}'; // capitalize first and last name
->>>>>>> Dev-Rob
             print('shortName: $shortName');
             print('email: ${user.email}');
           }

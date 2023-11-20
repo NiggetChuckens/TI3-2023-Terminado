@@ -76,32 +76,6 @@ class _UpcomingEventsComponentState extends State<UpcomingEventsComponent> {
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Center(child: Text('An error has occurred'));
-<<<<<<< HEAD
-<<<<<<< HEAD
-        } else if (snapshot.connectionState == ConnectionState.done) {
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (BuildContext context, int index) {
-              DateTime startDate = snapshot.data![index]['date'];
-              DateTime endDate = startDate.add(const Duration(hours: 1));
-              String formattedStartDate = capitalize(
-                  DateFormat('EEE d, HH:mm', 'es').format(startDate));
-              String formattedEndDate =
-                  capitalize(DateFormat('EEE d, HH:mm', 'es').format(endDate));
-              return Container(
-                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xFF8FB5E1), Color(0xFF8FB5E1)],
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
-                child: ListTile(
-=======
-=======
->>>>>>> Dev-Rob
         } else if (snapshot.connectionState == ConnectionState.active) {
           if (snapshot.hasData && snapshot.data!.isNotEmpty) {
             return ListView.builder(
@@ -125,43 +99,6 @@ class _UpcomingEventsComponentState extends State<UpcomingEventsComponent> {
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
                   child: ListTile(
-<<<<<<< HEAD
->>>>>>> Dev-Nico
-                  leading:
-                      const Icon(Icons.event, color: Colors.white, size: 40),
-                  title: Text(
-                    'Cita con: ${snapshot.data![index]['attendeeName']}',
-                    style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Desde: $formattedStartDate',
-                          style: const TextStyle(
-                              fontSize: 14, color: Colors.white)),
-                      Text('Hasta: $formattedEndDate',
-                          style: const TextStyle(
-                              fontSize: 14, color: Colors.white)),
-<<<<<<< HEAD
-                      InkWell(
-                        child: Text('${snapshot.data![index]['meet']}',
-                            style: const TextStyle(
-                                fontSize: 14, color: Colors.blue)),
-                        onTap: () =>
-                            openMeetLink(snapshot.data![index]['meet']),
-                      ),
-=======
->>>>>>> Dev-Nico
-                    ],
-                  ),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.video_call, color: Colors.white),
-                    onPressed: () =>
-                        openMeetLink(snapshot.data![index]['meet']),
-=======
                     leading:
                         const Icon(Icons.event, color: Colors.white, size: 40),
                     title: Text(
@@ -187,7 +124,6 @@ class _UpcomingEventsComponentState extends State<UpcomingEventsComponent> {
                       onPressed: () =>
                           openMeetLink(snapshot.data![index]['meet']),
                     ),
->>>>>>> Dev-Rob
                   ),
                 );
               },

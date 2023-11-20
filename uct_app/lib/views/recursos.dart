@@ -32,9 +32,6 @@ class RecursosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-<<<<<<< HEAD
-        title: Text('Recursos'),
-=======
         title: Text(
           'Recursos',
           style: TextStyle(
@@ -45,7 +42,6 @@ class RecursosPage extends StatelessWidget {
         ),
         backgroundColor: Colors.deepPurple,
         elevation: 5.0,
->>>>>>> Dev-Rob
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -73,36 +69,6 @@ class RecursosPage extends StatelessWidget {
                         borderRadius:
                             BorderRadius.circular(15.0), // Add rounded corners
                       ),
-<<<<<<< HEAD
-                    ),
-                  ),
-                  Positioned(
-                    left: 10,
-                    bottom: 10,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          courses[index].name,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'Inscription: ${courses[index].inscription}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
-                        ),
-                        Text(
-                          'Beginning Date: ${courses[index].beginningDate}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-=======
                       child: Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -168,7 +134,6 @@ class RecursosPage extends StatelessWidget {
                                 ],
                               ),
                             ],
->>>>>>> Dev-Rob
                           ),
                         ),
                       ),
@@ -183,16 +148,3 @@ class RecursosPage extends StatelessWidget {
     );
   }
 }
-<<<<<<< HEAD
-
-class Course {
-  final String name;
-  final String inscription;
-  final String beginningDate;
-  final String backgroundImageUrl;
-
-  Course(
-      this.name, this.inscription, this.beginningDate, this.backgroundImageUrl);
-}
-=======
->>>>>>> Dev-Rob
