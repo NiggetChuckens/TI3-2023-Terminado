@@ -128,16 +128,13 @@ class _UpcomingEventsComponentState extends State<UpcomingEventsComponent> {
                       Text('Hasta: $formattedEndDate',
                           style: const TextStyle(
                               fontSize: 14, color: Colors.white)),
-                      InkWell(
-                        child: Text('${snapshot.data![index]['meet']}',
-                            style: const TextStyle(
-                                fontSize: 14, color: Colors.blue)),
-                        onTap: () =>
-                            openMeetLink(snapshot.data![index]['meet']),
-                      ),
                     ],
                   ),
-                  isThreeLine: true,
+                  trailing: IconButton(
+                    icon: const Icon(Icons.video_call, color: Colors.white),
+                    onPressed: () =>
+                        openMeetLink(snapshot.data![index]['meet']),
+                  ),
                 ),
               );
             },

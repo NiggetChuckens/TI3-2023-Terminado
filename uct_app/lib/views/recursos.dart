@@ -1,11 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uct_app/components/curso.dart';
+import 'package:intl/intl.dart';
 
 class RecursosPage extends StatelessWidget {
-  final List<Course> courses = List<Course>.generate(
-    12,
-    (i) => Course('Course ${i + 1}', 'Inscription ${i + 1}', 'Date ${i + 1}',
-        'ImageURL${i + 1}'),
-  );
+  Future<List<Course>> fetchCourses() async {
+    CollectionReference courses =
+        FirebaseFirestore.instance.collection('cursos');
+
+    List<Course> courseList = [];
+
+    await courses.get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        courseList.add(
+          Course(
+            courseName: doc['courseName'],
+            backgroundImageUrl: doc['backgroundImageUrl'],
+            registerDate:
+                (doc['registerDate'] as Timestamp).toDate().toString(),
+          ),
+        );
+      });
+    });
+
+    return courseList;
+  }
 
   RecursosPage({Key? key}) : super(key: key);
 
@@ -13,92 +32,88 @@ class RecursosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Recursos'),
+        title: Text(
+          'Recursos',
+          style: TextStyle(
+            color: Color.fromARGB(255, 221, 221, 221),
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.deepPurple,
+        elevation: 5.0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView.builder(
-          itemCount: courses.length,
-          itemBuilder: (context, index) {
-            return Container(
-              margin: const EdgeInsets.only(bottom: 20),
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    height: 150,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
-                        image: NetworkImage(courses[index].backgroundImageUrl),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    bottom: 0,
-                    right: 0,
+        child: FutureBuilder<List<Course>>(
+          future: fetchCourses(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.all(8.0), // Add padding between cards
                     child: Container(
-                      height: 60,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: [
-                            Colors.black.withOpacity(0.7),
-                            Colors.transparent,
-                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [Color(0xFF8FB5E1), Color(0xFFD190E0)],
+                        ),
+                        borderRadius:
+                            BorderRadius.circular(15.0), // Add rounded corners
+                      ),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              15.0), // Add rounded corners to the card
+                        ),
+                        color: Colors
+                            .transparent, // Make the card transparent to show the gradient
+                        elevation: 0, // Remove shadow
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                              16.0), // Add padding inside the card
+                          child: Column(
+                            children: <Widget>[
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Image.network(
+                                    snapshot.data![index].backgroundImageUrl),
+                              ),
+                              SizedBox(height: 10), // Add space
+                              Text(
+                                snapshot.data![index].courseName,
+                                style: TextStyle(
+                                    fontSize: 20), // Increase font size
+                              ),
+                              SizedBox(height: 10), // Add space
+                              Text(
+                                DateFormat('yyyy-MM-dd').format(
+                                  DateTime.parse(
+                                      snapshot.data![index].registerDate),
+                                ),
+                                style: TextStyle(
+                                    fontSize: 16), // Increase font size
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    left: 10,
-                    bottom: 10,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          courses[index].name,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'Inscription: ${courses[index].inscription}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
-                        ),
-                        Text(
-                          'Beginning Date: ${courses[index].beginningDate}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
+                  );
+                },
+              );
+            }
           },
         ),
       ),
     );
   }
-}
-
-class Course {
-  final String name;
-  final String inscription;
-  final String beginningDate;
-  final String backgroundImageUrl;
-
-  Course(
-      this.name, this.inscription, this.beginningDate, this.backgroundImageUrl);
 }
