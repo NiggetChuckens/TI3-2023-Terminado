@@ -31,39 +31,39 @@ class _CalendarPageState extends State<CalendarPage> {
   static const int appointmentDurationInHours =
       1; // Set the appointment duration
   Future<bool> addEventToFirestore(
-  DateTime date, 
-  String attendeeEmail, 
-  String requesterEmail, 
-  String attendeeName, 
-  String googleMeetLink, 
-)
- async {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  // Fetch all events for the day
-  final QuerySnapshot result = await _firestore
-      .collection('citas')
-      .where('date',
-          isGreaterThanOrEqualTo:
-              DateTime(date.year, date.month, date.day, 0, 0))
-      .where('date',
-          isLessThan: DateTime(date.year, date.month, date.day + 1, 0, 0))
-      .get();
+    DateTime date,
+    String attendeeEmail,
+    String requesterEmail,
+    String attendeeName,
+    String googleMeetLink,
+  ) async {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    // Fetch all events for the day
+    final QuerySnapshot result = await _firestore
+        .collection('citas')
+        .where('date',
+            isGreaterThanOrEqualTo:
+                DateTime(date.year, date.month, date.day, 0, 0))
+        .where('date',
+            isLessThan: DateTime(date.year, date.month, date.day + 1, 0, 0))
+        .get();
 
-  final List<DocumentSnapshot> documents = result.docs;
-  final DateTime newEventEndTime =
-      date.add(const Duration(hours: appointmentDurationInHours));
+    final List<DocumentSnapshot> documents = result.docs;
+    final DateTime newEventEndTime =
+        date.add(const Duration(hours: appointmentDurationInHours));
 
-  for (var doc in documents) {
-    final DateTime existingEventStartTime = doc['date'].toDate();
-    final DateTime existingEventEndTime = existingEventStartTime
-        .add(const Duration(hours: appointmentDurationInHours));
+    for (var doc in documents) {
+      final DateTime existingEventStartTime = doc['date'].toDate();
+      final DateTime existingEventEndTime = existingEventStartTime
+          .add(const Duration(hours: appointmentDurationInHours));
 
-    if ((date.isAfter(existingEventStartTime) &&
-            date.isBefore(existingEventEndTime)) ||
-        (newEventEndTime.isAfter(existingEventStartTime) &&
-            newEventEndTime.isBefore(existingEventEndTime))) {
-      _showDialog('Ya hay una cita!');
-      return false;
+      if ((date.isAfter(existingEventStartTime) &&
+              date.isBefore(existingEventEndTime)) ||
+          (newEventEndTime.isAfter(existingEventStartTime) &&
+              newEventEndTime.isBefore(existingEventEndTime))) {
+        _showDialog('Ya hay una cita!');
+        return false;
+      }
     }
 
     // No overlapping event exists, add the event
@@ -86,16 +86,16 @@ class _CalendarPageState extends State<CalendarPage> {
         return AlertDialog(
           title: Text(message),
           actions: <Widget>[
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () {
-              int count = 0;
-              Navigator.popUntil(context, (route) {
-                return count++ == 3;
-              });
-            },
-          ),
-        ],
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                int count = 0;
+                Navigator.popUntil(context, (route) {
+                  return count++ == 3;
+                });
+              },
+            ),
+          ],
         );
       },
     );
@@ -128,16 +128,16 @@ class _CalendarPageState extends State<CalendarPage> {
             ],
           ),
           actions: <Widget>[
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () {
-              int count = 0;
-              Navigator.popUntil(context, (route) {
-                return count++ == 3;
-              });
-            },
-          ),
-        ],
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                int count = 0;
+                Navigator.popUntil(context, (route) {
+                  return count++ == 3;
+                });
+              },
+            ),
+          ],
         );
       },
     );
@@ -206,7 +206,6 @@ class _CalendarPageState extends State<CalendarPage> {
         final client = http.Client();
 
         // Create a new calendar.CalendarApi instance
-        calendar.CalendarApi calendarApi = calendar.CalendarApi(client);
 
         // Create a new http.Request instance
         final request = http.Request(
@@ -218,7 +217,8 @@ class _CalendarPageState extends State<CalendarPage> {
         // Set the access token in the request headers
         request.headers['Authorization'] = 'Bearer ${googleAuth.accessToken}';
 
-          // Create a new calendar.CalendarApi instance
+        // Set the request body as JSON
+        request.body = jsonEncode(event.toJson());
 
         // Send the request and get the response
         final response = await client.send(request);
@@ -240,8 +240,7 @@ class _CalendarPageState extends State<CalendarPage> {
             _showSuccessDialog(
                 selectedDateTime); // Show success dialog only if event was added to Firestore
           }
-        } else {
-        }
+        } else {}
       }
     } catch (error) {
       if (error.toString().contains('access_token_expired')) {
@@ -338,13 +337,10 @@ class _CalendarPageState extends State<CalendarPage> {
                 _showSuccessDialog(
                     selectedDateTime); // Show success dialog only if event was added to Firestore
               }
-            } else {
-            }
+            } else {}
           }
-        } catch (refreshError) {
-        }
-      } else {
-      }
+        } catch (refreshError) {}
+      } else {}
     }
   }
 
