@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, unused_label
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +40,6 @@ class TopBar extends StatelessWidget {
                   fontSize: 24,
                 ),
               ),
-              
             ],
           ),
           Builder(
@@ -62,7 +61,6 @@ class TopBar extends StatelessWidget {
                             borderRadius: BorderRadius.circular(
                                 50.0), // this rounds the dialog border
                           ),
-                          
                           child: Container(
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
@@ -79,7 +77,8 @@ class TopBar extends StatelessWidget {
                             ),
                             child: SingleChildScrollView(
                               child: ConstrainedBox(
-                                constraints: const BoxConstraints(maxHeight: 300),
+                                constraints:
+                                    const BoxConstraints(maxHeight: 300),
                                 child: Stack(
                                   alignment: Alignment.center,
                                   children: <Widget>[
@@ -94,31 +93,38 @@ class TopBar extends StatelessWidget {
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.bold)),
                                         Text(email),
-                                        if (email.endsWith('@alu.uct.cl')) const Text('Estudiante'),
-                                        if (email.endsWith('@uct.cl')) const Text('Docente'),
+                                        if (email.endsWith('@alu.uct.cl'))
+                                          const Text('Estudiante'),
+                                        if (email.endsWith('@uct.cl'))
+                                          const Text('Docente'),
                                         const SizedBox(height: 20),
-                                      
-
-                                        
                                         ElevatedButton(
-                                        style: ButtonStyle(
-                                          backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(18.0),
-                                            )
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(Colors.red),
+                                            shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18.0),
+                                              ),
+                                            ),
                                           ),
+                                          onPressed: () async {
+                                            await FirebaseAuth.instance
+                                                .signOut();
+                                            Navigator.of(context)
+                                                .pushAndRemoveUntil(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const LoginPage()),
+                                              (Route<dynamic> route) => false,
+                                            );
+                                          },
+                                          child: const Text('Cerrar sesión'),
                                         ),
-                                        onPressed: () async {
-                                          await FirebaseAuth.instance.signOut();
-                                          Navigator.of(context).pushAndRemoveUntil(
-                                            MaterialPageRoute(builder: (context) => const LoginPage()),
-                                            (Route<dynamic> route) => false,
-                                          );
-                                        },
-                                        child: const Text('Cerrar sesión'),
-                                      ),
-                                     ],
+                                      ],
                                     ),
                                     Positioned(
                                       top: 0,

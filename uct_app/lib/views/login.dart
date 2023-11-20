@@ -6,8 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'dashboard2.dart';
 import 'package:googleapis/calendar/v3.dart' as gcal;
-import 'package:http/http.dart'
-    show BaseRequest, StreamedResponse;
+import 'package:http/http.dart' show BaseRequest, StreamedResponse;
 import 'package:http/http.dart' as http;
 
 String capitalize(String str) {
@@ -98,7 +97,12 @@ class _LoginPageState extends State<LoginPage> {
           String shortName = user
               .displayName!; // default to full name if name has less than two parts
           if (nameParts.length > 1) {
+<<<<<<< HEAD
             shortName = '${capitalize(nameParts[0])} ${capitalize(nameParts[1])}'; // capitalize first and last name
+=======
+            shortName =
+                '${capitalize(nameParts[0])} ${capitalize(nameParts[1])}'; // capitalize first and last name
+>>>>>>> Dev-Rob
             print('shortName: $shortName');
             print('email: ${user.email}');
           }

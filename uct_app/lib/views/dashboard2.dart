@@ -11,7 +11,11 @@ import 'package:uct_app/components/upcomingcalendar.dart';
 import 'package:uct_app/components/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uct_app/components/busqueda.dart';
+<<<<<<< HEAD
 >>>>>>> Dev-Nico
+=======
+
+>>>>>>> Dev-Rob
 class Dash extends StatefulWidget {
   const Dash({Key? key, required this.username, required String email}) : super(key: key);
   final String username;
@@ -129,6 +133,7 @@ class _DashState extends State<Dash> {
           child: Column(
         children: [
           Padding(
+<<<<<<< HEAD
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
 <<<<<<< HEAD
             child: Row(
@@ -267,6 +272,9 @@ class _DashState extends State<Dash> {
 
       //LIST VIEW
 =======
+=======
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+>>>>>>> Dev-Rob
             child: TopBar(
                 username: widget.username,
                 photoUrl: photoUrl,
@@ -332,6 +340,7 @@ class _DashState extends State<Dash> {
               ],
             ),
           ),
+<<<<<<< HEAD
           
           const SizedBox(
             height: 100,
@@ -340,6 +349,8 @@ class _DashState extends State<Dash> {
               ],
             ),
           ),
+=======
+>>>>>>> Dev-Rob
           const SizedBox(height: 10),
           Expanded(
             key: key,

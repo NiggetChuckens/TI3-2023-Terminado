@@ -56,9 +56,13 @@ class MyApp extends StatelessWidget {
         '/especialistas': (context) => const SpecialistPage(),
         '/dashboard': (context) => const MyHomePage(
               title: 'Cinap',
+<<<<<<< HEAD
               username: '', email: '',
+=======
+              username: '',
+              email: '',
+>>>>>>> Dev-Rob
             ),
-        
         '/recursos': (context) => RecursosPage(),
         '/docentes': (context) => const DocentesPage(),
         '/compromisosacademicos': (context) => CompromisosAcademicosPage(),
