@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
 class programacionRegularPage extends StatelessWidget {
+  const programacionRegularPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 8, 123, 177), // Fondo azul claro
+      backgroundColor: const Color.fromARGB(255, 8, 123, 177), // Fondo azul claro
       appBar: AppBar(
-        title: Text('Canales de Apoyo'),
+        title: const Text('Canales de Apoyo'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               'PROGRAMACIÓN FORMATIVA',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -21,17 +23,17 @@ class programacionRegularPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             ),
-            Text(
+            const Text(
               'Te invitamos revisar y ser parte de la diversa oferta formativa que hemos preparado para ti, revise nuestra programación en marzo 2023',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14.0, color: Colors.white),
             ),
-            SizedBox(height: 16.0), // Espacio entre el subtítulo y los botones
+            const SizedBox(height: 16.0), // Espacio entre el subtítulo y los botones
             Column(
               children: <Widget>[
-                Text('Talleres TICLAB', style: TextStyle(color: Colors.white)),
+                const Text('Talleres TICLAB', style: TextStyle(color: Colors.white)),
                 ElevatedButton(
-                  child: Text('Revisar'),
+                  child: const Text('Revisar'),
                   onPressed: () {
                     // Navegación a la vista del Botón 1
                     //Navigator.push(
@@ -42,13 +44,13 @@ class programacionRegularPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 16.0), // Espacio entre los botones
+            const SizedBox(height: 16.0), // Espacio entre los botones
             Column(
               children: <Widget>[
-                Text('Curso de profundización EDUCA Blackboard',
+                const Text('Curso de profundización EDUCA Blackboard',
                     style: TextStyle(color: Colors.white)),
                 ElevatedButton(
-                  child: Text('Revisar'),
+                  child: const Text('Revisar'),
                   onPressed: () {
                     // Navegación a la vista del Botón 2
                     //Navigator.push(
@@ -59,13 +61,13 @@ class programacionRegularPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 16.0), // Espacio entre los botones
+            const SizedBox(height: 16.0), // Espacio entre los botones
             Column(
               children: <Widget>[
-                Text('Formación inicial docente',
+                const Text('Formación inicial docente',
                     style: TextStyle(color: Colors.white)),
                 ElevatedButton(
-                  child: Text('Revisar'),
+                  child: const Text('Revisar'),
                   onPressed: () {
                     // Navegación a la vista del Botón 3
                     //              Navigator.push(

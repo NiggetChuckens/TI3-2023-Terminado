@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UpcomingEventsPage extends StatefulWidget {
+  const UpcomingEventsPage({super.key});
+
   @override
   _UpcomingEventsPageState createState() => _UpcomingEventsPageState();
 }
@@ -54,14 +56,14 @@ class _UpcomingEventsPageState extends State<UpcomingEventsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Citas'),
+        title: const Text('Citas'),
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: futureCitas,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             print(snapshot.error);
-            return Center(child: Text('An error has occurred'));
+            return const Center(child: Text('An error has occurred'));
           } else if (snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(
               itemCount: snapshot.data!.length,
@@ -73,7 +75,7 @@ class _UpcomingEventsPageState extends State<UpcomingEventsPage> {
               },
             );
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),

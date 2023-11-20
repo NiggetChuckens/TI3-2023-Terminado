@@ -3,7 +3,11 @@ import 'package:lottie/lottie.dart';
 import 'package:uct_app/components/category_cards.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:uct_app/components/empezemos.dart';
 import 'package:uct_app/components/upcomingcalendar.dart';
+import 'package:uct_app/components/topbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uct_app/components/busqueda.dart';
 class Dash extends StatefulWidget {
   const Dash({Key? key, required this.username, required String email})
       : super(key: key);
@@ -15,6 +19,7 @@ class Dash extends StatefulWidget {
 
 class _DashState extends State<Dash> {
   Key key = UniqueKey();
+  String photoUrl = FirebaseAuth.instance.currentUser!.photoURL ?? '';
 
   @override
   Widget build(BuildContext context) {
@@ -135,146 +140,16 @@ class _DashState extends State<Dash> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Bienvenido,',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    Text(
-                      widget.username,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ],
-                ),
-                Builder(
-                  builder: (context) => Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.menu),
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/docentes');
-                        },
-                        child: Container(
-                          //profile box top right corner
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: const Color.fromARGB(225, 225, 225, 225),
-                          ),
-                          child: const Icon(Icons.person),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            child: TopBar(
+                username: widget.username,
+                photoUrl: photoUrl,
+                email: FirebaseAuth.instance.currentUser!.email!),
           ),
           const SizedBox(height: 25),
-
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Container(
-                //welcome message box c:
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                    gradient: gradient,
-                    //color: Color.fromARGB(255, 169, 201, 237),
-                    borderRadius: BorderRadius.circular(12)),
-                child: Row(children: [
-                  SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: Lottie.network(
-                        'https://assets10.lottiefiles.com/packages/lf20_tutvdkg0.json'),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Como te sientes hoy?',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const Text(
-                          'Agenda tu cita',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/especialistas');
-                          },
-                          child: Container(
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                //gradient: gradientSearch,
-                                color: const Color(0xFF8FB5E1),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'Empezemos',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )),
-                        )
-                      ],
-                    ),
-                  )
-                ]),
-              )),
+          const WelcomeMessageBox(gradient: gradient),
           const SizedBox(height: 25),
-
-          //SEARCH BAR
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  gradient: gradientSearch,
-                  color: const Color.fromARGB(255, 232, 196, 233),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    prefixIcon: Icon(Icons.search),
-                    hintText: 'Que estas buscando?',
-                  ),
-                ),
-              )),
-
+          const Busqueda(gradientSearch: gradientSearch),
           const SizedBox(height: 25),
-
-          //LIST VIEW
           SizedBox(
             height: 80,
             child: ListView(
@@ -297,7 +172,6 @@ class _DashState extends State<Dash> {
             ),
           ),
           const SizedBox(height: 25),
-
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 25.0),
             child: Row(
@@ -310,20 +184,14 @@ class _DashState extends State<Dash> {
                     fontSize: 20,
                   ),
                 ),
-                
               ],
             ),
           ),
-
-         const SizedBox(
-              height: 10,
-            ),
-
-            // Add the upcoming events component
-            Expanded(
-      key: key,
-      child: UpcomingEventsComponent(),
-    ),
+          const SizedBox(height: 10),
+          Expanded(
+            key: key,
+            child: const UpcomingEventsComponent(),
+          ),
         ],
       )),
     );

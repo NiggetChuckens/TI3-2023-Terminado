@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+import 'package:uct_app/views/dashboard2.dart';
 import 'package:uct_app/views/especialistas.dart';
 import 'views/compromisosAcademicos.dart';
 import 'views/login.dart';
@@ -53,23 +54,24 @@ class MyApp extends StatelessWidget {
         return null;
       },
       routes: {
-        '/login': (context) => LoginPage(),
+        '/login': (context) => const LoginPage(),
         '/especialistas': (context) => const SpecialistPage(),
         '/dashboard': (context) => const MyHomePage(
               title: 'DTE',
               username: '', email: '',
             ),
+        
         '/recursos': (context) => RecursosPage(),
         '/docentes': (context) => const DocentesPage(),
         '/compromisosacademicos': (context) => CompromisosAcademicosPage(),
-        '/canalesDeApoyo': (context) => CanalesDeApoyoPage(),
-        '/programacionRegular': (context) => programacionRegularPage(),
-        '/instanciasFormacion': (context) => VistaConImagen(),
+        '/canalesDeApoyo': (context) => const CanalesDeApoyoPage(),
+        '/programacionRegular': (context) => const programacionRegularPage(),
+        '/instanciasFormacion': (context) => const VistaConImagen(),
         '/orientacionesDocencia': (context) => const DocentesPage(),
         '/virtualizacion': (context) => const DocentesPage(),
         '/eventos': (context) => ChangeNotifierProvider<EventsModel>(
               create: (context) => EventsModel(),
-              child: UpcomingEventsPage(),
+              child: const UpcomingEventsPage(),
             ),
         '/ticlab': (context) => const DocentesPage(),
       },

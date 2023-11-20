@@ -142,7 +142,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     print(snapshot.error);
-                    return Center(child: Text('An error has occurred'));
+                    return const Center(child: Text('An error has occurred'));
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     return GridView.builder(
                       gridDelegate:
@@ -217,7 +217,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
                       },
                     );
                   } else {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                 },
               ),

@@ -84,13 +84,16 @@ class _CalendarPageState extends State<CalendarPage> {
         return AlertDialog(
           title: Text(message),
           actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () {
+              int count = 0;
+              Navigator.popUntil(context, (route) {
+                return count++ == 3;
+              });
+            },
+          ),
+        ],
         );
       },
     );
@@ -107,12 +110,12 @@ class _CalendarPageState extends State<CalendarPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Appointment Created Successfully'),
+          title: const Text('Cita agendada exitosamente'),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('Scheduled Date and Time:'),
+              const Text('Fecha y hora seleccionada:'),
               Text(DateFormat.yMd()
                   .add_jm()
                   .format(scheduledDateTime)), // Display date and time
@@ -123,13 +126,16 @@ class _CalendarPageState extends State<CalendarPage> {
             ],
           ),
           actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () {
+              int count = 0;
+              Navigator.popUntil(context, (route) {
+                return count++ == 3;
+              });
+            },
+          ),
+        ],
         );
       },
     );
@@ -457,13 +463,13 @@ final googleMeetLink = responseJson['hangoutLink'];
                   children: [
                     ListTile(
                       title: Text(
-                          'Selected Date: ${DateFormat.yMd().format(_selectedDay!)}'), // Display only the date
+                          'Dia Seleccionado: ${DateFormat.yMd().format(_selectedDay!)}'), // Display only the date
                       subtitle: Text(
-                          'Selected Time: ${_selectedTime?.format(context) ?? 'Not selected'}'),
+                          'Hora Seleccionado: ${_selectedTime?.format(context) ?? 'Not selected'}'),
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      '1-hour time frame',
+                      'Sesion de 1 hora',
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
@@ -477,7 +483,7 @@ final googleMeetLink = responseJson['hangoutLink'];
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.green,
                   ),
-                  child: const Text('Create Appointment'),
+                  child: const Text('Agendar Cita'),
                 ),
             ],
           ),
