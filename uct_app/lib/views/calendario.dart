@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers, use_build_context_synchronously, duplicate_ignore, empty_catches
+
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart' as calendar;
@@ -26,7 +28,6 @@ class _CalendarPageState extends State<CalendarPage> {
   TimeOfDay? _selectedTime;
   static const int appointmentDurationInHours =
       1; // Set the appointment duration
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<bool> addEventToFirestore(
   DateTime date, 
   String attendeeEmail, 
@@ -59,7 +60,6 @@ class _CalendarPageState extends State<CalendarPage> {
             date.isBefore(existingEventEndTime)) ||
         (newEventEndTime.isAfter(existingEventStartTime) &&
             newEventEndTime.isBefore(existingEventEndTime))) {
-      print('An event already exists at this time.');
       _showDialog('Ya hay una cita!');
       return false;
     }
@@ -159,7 +159,6 @@ class _CalendarPageState extends State<CalendarPage> {
             await account.authentication;
 
         // Now you can use googleAuth.accessToken to make authenticated API requests
-        print('Access token: ${googleAuth.accessToken}');
 
         // Check if a date and time are selected
         if (_selectedDay == null || _selectedTime == null) {
@@ -206,7 +205,6 @@ class _CalendarPageState extends State<CalendarPage> {
           final client = http.Client();
 
           // Create a new calendar.CalendarApi instance
-          calendar.CalendarApi calendarApi = calendar.CalendarApi(client);
 
           // Create a new http.Request instance
           final request = http.Request(
@@ -231,9 +229,6 @@ class _CalendarPageState extends State<CalendarPage> {
           
         
         if (response.statusCode == 200) {
-          print(
-              'Appointment created successfully with atendee: ${widget.specialistEmail} and name: ${widget.specialistName}');
-          print('Scheduled Time: ${selectedDateTime.toString()}');
           // Add the event to Firestore
           bool eventAdded = await addEventToFirestore(
   selectedDateTime, 
@@ -245,12 +240,8 @@ class _CalendarPageState extends State<CalendarPage> {
           if (eventAdded) {
             _showSuccessDialog(
                 selectedDateTime); // Show success dialog only if event was added to Firestore
-            print(
-                'Event added to Firestore with attendee: ${widget.specialistEmail}');
           }
         } else {
-          print(
-              'Failed to create appointment. Status code: ${response.statusCode}');
         }
       }
     } catch (error) {
@@ -265,7 +256,6 @@ class _CalendarPageState extends State<CalendarPage> {
                 await refreshedAccount.authentication;
 
             // Now you can use refreshedAuth.accessToken to make authenticated API requests
-            print('Refreshed access token: ${refreshedAuth.accessToken}');
 
             // Check if a date and time are selected
             if (_selectedDay == null || _selectedTime == null) {
@@ -311,7 +301,6 @@ class _CalendarPageState extends State<CalendarPage> {
             final client = http.Client();
 
             // Create a new calendar.CalendarApi instance
-            calendar.CalendarApi calendarApi = calendar.CalendarApi(client);
 
             // Create a new http.Request instance
             final request = http.Request(
@@ -338,9 +327,6 @@ final googleMeetLink = responseJson['hangoutLink'];
             // Check the response status code
             // Check the response status code
             if (response.statusCode == 200) {
-              print(
-                  'Appointment created successfully with atendee: ${widget.specialistEmail}');
-              print('Scheduled Time: ${selectedDateTime.toString()}');
               // Add the event to Firestore
               bool eventAdded = await addEventToFirestore(
               selectedDateTime, 
@@ -354,15 +340,11 @@ final googleMeetLink = responseJson['hangoutLink'];
                     selectedDateTime); // Show success dialog only if event was added to Firestore
               }
             } else {
-              print(
-                  'Failed to create appointment. Status code: ${response.statusCode}');
             }
           }
         } catch (refreshError) {
-          print('Failed to refresh access token: $refreshError');
         }
       } else {
-        print('Failed to sign in with Google: $error');
       }
     }
   }

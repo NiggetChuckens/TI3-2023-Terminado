@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -5,9 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:android_intent_plus/android_intent.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/services.dart';
 
 class UpcomingEventsComponent extends StatefulWidget {
   const UpcomingEventsComponent({super.key});
@@ -53,8 +52,8 @@ class _UpcomingEventsComponentState extends State<UpcomingEventsComponent> {
             });
           }
         } catch (e) {
-          print('Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
-          print('Error: $e'); // Print the error
+          // Print document ID if there's an error
+          // Print the error
         }
       }
 
@@ -76,7 +75,6 @@ class _UpcomingEventsComponentState extends State<UpcomingEventsComponent> {
       stream: fetchCitas(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          print(snapshot.error);
           return const Center(child: Text('An error has occurred'));
         } else if (snapshot.connectionState == ConnectionState.active) {
           if (snapshot.hasData && snapshot.data!.isNotEmpty) {

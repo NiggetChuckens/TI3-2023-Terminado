@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, duplicate_ignore, library_private_types_in_public_api
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,7 +27,8 @@ class _UpcomingEventsPageState extends State<UpcomingEventsPage> {
   List<Map<String, dynamic>> citasList = [];
 
   await citas.where('requester', isEqualTo: currentUserEmail).get().then((QuerySnapshot querySnapshot) {
-    querySnapshot.docs.forEach((doc) {
+    for (var doc in querySnapshot.docs) {
+      // ignore: avoid_print
       print('Document data: ${doc.data()}'); // Print document data
 
       try {
@@ -44,7 +47,7 @@ class _UpcomingEventsPageState extends State<UpcomingEventsPage> {
         print('Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
         print('Error: $e'); // Print the error
       }
-    });
+    }
   });
 
   print('Filtered citas for user $currentUserEmail: $citasList'); // Print filtered citas

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -14,16 +16,14 @@ class CompromisosAcademicosPage extends StatelessWidget {
     'VIRTUALIZACIÓN CURSOS PROGRAMAS MÓDULOS',
     'Title9'
   ]
-      .map((item) => Container(
-            child: Card(
-              color: const Color.fromARGB(255, 169, 163, 244),
-              child: Center(
-                child: Center(
-                  child: Text(item, style: const TextStyle(fontSize: 16.0)),
-                ),
-              ),
-            ),
-          ))
+      .map((item) => Card(
+        color: const Color.fromARGB(255, 169, 163, 244),
+        child: Center(
+          child: Center(
+            child: Text(item, style: const TextStyle(fontSize: 16.0)),
+          ),
+        ),
+      ))
       .toList();
 
   CompromisosAcademicosPage({super.key});

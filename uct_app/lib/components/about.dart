@@ -1,7 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:uct_app/components/specialists.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:uct_app/views/calendario.dart';
 
 class EspecialistaDetails extends StatefulWidget {
   final Specialist specialist;

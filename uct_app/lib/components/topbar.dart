@@ -76,6 +76,7 @@ class TopBar extends StatelessWidget {
                                       ElevatedButton(
                                         onPressed: () async {
                                           await FirebaseAuth.instance.signOut();
+                                          // ignore: use_build_context_synchronously
                                           Navigator.of(context)
                                               .pushAndRemoveUntil(
                                             MaterialPageRoute(

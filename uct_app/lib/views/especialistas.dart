@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../components/about.dart';
@@ -35,7 +37,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
   List<Specialist> specialistList = [];
 
   await specialists.get().then((QuerySnapshot querySnapshot) {
-    querySnapshot.docs.forEach((doc) {
+    for (var doc in querySnapshot.docs) {
       print('Document data: ${doc.data()}'); // Print document data
 
       try {
@@ -55,7 +57,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
             'Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
         print('Error: $e'); // Print the error
       }
-    });
+    }
   });
 
   return specialistList;
@@ -67,7 +69,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
     List<String> rolesList = [];
 
     await specialists.get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         try {
           String role = doc['rol'];
           if (!rolesList.contains(role)) {
@@ -78,7 +80,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
               'Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
           print('Error: $e'); // Print the error
         }
-      });
+      }
     });
 
     return rolesList;

@@ -76,7 +76,7 @@ class ProfilePopup extends StatelessWidget {
            ),
          ),
          const SizedBox(height: 5,),
-         Container(
+         SizedBox(
   width: 300, // Set the width as per your requirement
   child: Text(
     especialidad,

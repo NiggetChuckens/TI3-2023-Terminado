@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'package:uct_app/views/dashboard2.dart';
 import 'package:uct_app/views/especialistas.dart';
 import 'views/compromisosAcademicos.dart';
 import 'views/login.dart';
@@ -11,7 +10,6 @@ import 'views/recursos.dart';
 import 'views/calendario.dart';
 import 'views/docentes.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'views/ticlab.dart';
 import 'views/upcoming.dart';
 
 import 'views/canalesDeApoyo.dart';
