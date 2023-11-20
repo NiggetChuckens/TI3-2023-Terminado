@@ -102,6 +102,37 @@ class RecursosPage extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 16), // Increase font size
                               ),
+                              SizedBox(height: 10), // Add space
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      // Add your code for the "Registrar" button here
+                                    },
+                                    child: const Text('Registrar'),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color(
+                                          0xFF8FB5E1), // Set the button color to light blue
+                                      fixedSize:
+                                          Size(100, 50), // Set the button size
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      // Add your code for the "Ver" button here
+                                    },
+                                    child: const Text('Ver'),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color(
+                                          0xFF8FB5E1), // Set the button color to light blue
+                                      fixedSize:
+                                          Size(100, 50), // Set the button size
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
