@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -5,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'dashboard2.dart';
 import 'package:googleapis/calendar/v3.dart' as gcal;
 import 'package:http/http.dart'
-    show Client, Response, BaseRequest, StreamedResponse;
+    show BaseRequest, StreamedResponse;
 import 'package:http/http.dart' as http;
 
 String capitalize(String str) {
@@ -27,18 +29,19 @@ class EventsModel extends ChangeNotifier {
 }
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class GoogleHttpClient extends http.BaseClient {
-  Map<String, String> _headers;
+  final Map<String, String> _headers;
   final http.Client _client = http.Client();
 
   GoogleHttpClient(this._headers);
 
+  @override
   Future<StreamedResponse> send(BaseRequest request) {
     return _client.send(request..headers.addAll(_headers));
   }
@@ -95,9 +98,7 @@ class _LoginPageState extends State<LoginPage> {
           String shortName = user
               .displayName!; // default to full name if name has less than two parts
           if (nameParts.length > 1) {
-            shortName = capitalize(nameParts[0]) +
-                ' ' +
-                capitalize(nameParts[1]); // capitalize first and last name
+            shortName = '${capitalize(nameParts[0])} ${capitalize(nameParts[1])}'; // capitalize first and last name
             print('shortName: $shortName');
             print('email: ${user.email}');
           }
@@ -123,7 +124,6 @@ class _LoginPageState extends State<LoginPage> {
     EventsModel eventsModel = Provider.of<EventsModel>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false, // this avoids the overflow error
-
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Center(
@@ -188,14 +188,15 @@ class _LoginPageState extends State<LoginPage> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
                       (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.hovered))
+                        if (states.contains(MaterialState.hovered)) {
                           return Colors
                               .blue; // The color when the button is hovered
+                        }
                         return Colors.white; // The default color of the button
                       },
                     ),
                     padding: MaterialStateProperty.all<EdgeInsets>(
-                      EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                     ),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
@@ -203,7 +204,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     side: MaterialStateProperty.all<BorderSide>(
-                      BorderSide(color: Colors.grey, width: 1),
+                      const BorderSide(color: Colors.grey, width: 1),
                     ),
                   ),
                   child: const Text(

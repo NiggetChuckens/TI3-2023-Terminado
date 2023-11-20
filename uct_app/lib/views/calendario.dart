@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers, use_build_context_synchronously, duplicate_ignore, empty_catches
+
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart' as calendar;
@@ -25,8 +27,8 @@ class _CalendarPageState extends State<CalendarPage> {
   TimeOfDay? _selectedTime;
   static const int appointmentDurationInHours =
       1; // Set the appointment duration
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<bool> addEventToFirestore(
+<<<<<<< HEAD
       DateTime date, String attendeeEmail, String requesterEmail) async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
     // Fetch all events for the day
@@ -56,6 +58,41 @@ class _CalendarPageState extends State<CalendarPage> {
         _showDialog('Ya hay una cita!');
         return false;
       }
+=======
+  DateTime date, 
+  String attendeeEmail, 
+  String requesterEmail, 
+  String attendeeName, 
+  String googleMeetLink, 
+)
+ async {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // Fetch all events for the day
+  final QuerySnapshot result = await _firestore
+      .collection('citas')
+      .where('date',
+          isGreaterThanOrEqualTo:
+              DateTime(date.year, date.month, date.day, 0, 0))
+      .where('date',
+          isLessThan: DateTime(date.year, date.month, date.day + 1, 0, 0))
+      .get();
+
+  final List<DocumentSnapshot> documents = result.docs;
+  final DateTime newEventEndTime =
+      date.add(const Duration(hours: appointmentDurationInHours));
+
+  for (var doc in documents) {
+    final DateTime existingEventStartTime = doc['date'].toDate();
+    final DateTime existingEventEndTime = existingEventStartTime
+        .add(const Duration(hours: appointmentDurationInHours));
+
+    if ((date.isAfter(existingEventStartTime) &&
+            date.isBefore(existingEventEndTime)) ||
+        (newEventEndTime.isAfter(existingEventStartTime) &&
+            newEventEndTime.isBefore(existingEventEndTime))) {
+      _showDialog('Ya hay una cita!');
+      return false;
+>>>>>>> Dev-Nico
     }
 
     // No overlapping event exists, add the event
@@ -75,13 +112,16 @@ class _CalendarPageState extends State<CalendarPage> {
         return AlertDialog(
           title: Text(message),
           actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () {
+              int count = 0;
+              Navigator.popUntil(context, (route) {
+                return count++ == 3;
+              });
+            },
+          ),
+        ],
         );
       },
     );
@@ -98,12 +138,12 @@ class _CalendarPageState extends State<CalendarPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Appointment Created Successfully'),
+          title: const Text('Cita agendada exitosamente'),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('Scheduled Date and Time:'),
+              const Text('Fecha y hora seleccionada:'),
               Text(DateFormat.yMd()
                   .add_jm()
                   .format(scheduledDateTime)), // Display date and time
@@ -114,13 +154,16 @@ class _CalendarPageState extends State<CalendarPage> {
             ],
           ),
           actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () {
+              int count = 0;
+              Navigator.popUntil(context, (route) {
+                return count++ == 3;
+              });
+            },
+          ),
+        ],
         );
       },
     );
@@ -143,7 +186,6 @@ class _CalendarPageState extends State<CalendarPage> {
             await account.authentication;
 
         // Now you can use googleAuth.accessToken to make authenticated API requests
-        print('Access token: ${googleAuth.accessToken}');
 
         // Check if a date and time are selected
         if (_selectedDay == null || _selectedTime == null) {
@@ -179,6 +221,7 @@ class _CalendarPageState extends State<CalendarPage> {
         // Create a new calendar.CalendarApi instance
         calendar.CalendarApi calendarApi = calendar.CalendarApi(client);
 
+<<<<<<< HEAD
         // Create a new http.Request instance
         final request = http.Request(
           'POST',
@@ -214,6 +257,47 @@ if (response.statusCode == 200) {
   print(
       'Failed to create appointment. Status code: ${response.statusCode}');
 }
+=======
+          // Create a new calendar.CalendarApi instance
+
+          // Create a new http.Request instance
+          final request = http.Request(
+            'POST',
+            Uri.parse(
+                'https://www.googleapis.com/calendar/v3/calendars/primary/events?conferenceDataVersion=1&sendUpdates=all'),
+          );
+
+          // Set the access token in the request headers
+          request.headers['Authorization'] = 'Bearer ${googleAuth.accessToken}';
+
+          // Set the request body as JSON
+          request.body = jsonEncode(event.toJson());
+
+          // Send the request and get the response
+          final response = await client.send(request);
+          final responseBody = await response.stream.bytesToString();
+                    final responseJson = jsonDecode(responseBody);
+                    final googleMeetLink = responseJson['hangoutLink'];
+          // Close the http.Client instance
+          client.close();
+          
+        
+        if (response.statusCode == 200) {
+          // Add the event to Firestore
+          bool eventAdded = await addEventToFirestore(
+  selectedDateTime, 
+  widget.specialistEmail, 
+  account.email, 
+  widget.specialistName, 
+  googleMeetLink
+);
+          if (eventAdded) {
+            _showSuccessDialog(
+                selectedDateTime); // Show success dialog only if event was added to Firestore
+          }
+        } else {
+        }
+>>>>>>> Dev-Nico
       }
     } catch (error) {
       if (error.toString().contains('access_token_expired')) {
@@ -227,7 +311,6 @@ if (response.statusCode == 200) {
                 await refreshedAccount.authentication;
 
             // Now you can use refreshedAuth.accessToken to make authenticated API requests
-            print('Refreshed access token: ${refreshedAuth.accessToken}');
 
             // Check if a date and time are selected
             if (_selectedDay == null || _selectedTime == null) {
@@ -263,7 +346,6 @@ if (response.statusCode == 200) {
             final client = http.Client();
 
             // Create a new calendar.CalendarApi instance
-            calendar.CalendarApi calendarApi = calendar.CalendarApi(client);
 
             // Create a new http.Request instance
             final request = http.Request(
@@ -287,6 +369,7 @@ if (response.statusCode == 200) {
 
             // Check the response status code
             // Check the response status code
+<<<<<<< HEAD
 if (response.statusCode == 200) {
   print('Appointment created successfully with atendee: ${widget.specialistEmail}');
   print('Scheduled Time: ${selectedDateTime.toString()}');
@@ -299,12 +382,27 @@ if (response.statusCode == 200) {
   print(
       'Failed to create appointment. Status code: ${response.statusCode}');
 }
+=======
+            if (response.statusCode == 200) {
+              // Add the event to Firestore
+              bool eventAdded = await addEventToFirestore(
+              selectedDateTime, 
+              widget.specialistEmail, 
+              refreshedAccount.email, 
+              widget.specialistName, 
+              googleMeetLink
+            );          
+              if (eventAdded) {
+                _showSuccessDialog(
+                    selectedDateTime); // Show success dialog only if event was added to Firestore
+              }
+            } else {
+            }
+>>>>>>> Dev-Nico
           }
         } catch (refreshError) {
-          print('Failed to refresh access token: $refreshError');
         }
       } else {
-        print('Failed to sign in with Google: $error');
       }
     }
   }
@@ -404,13 +502,13 @@ if (response.statusCode == 200) {
                   children: [
                     ListTile(
                       title: Text(
-                          'Selected Date: ${DateFormat.yMd().format(_selectedDay!)}'), // Display only the date
+                          'Dia Seleccionado: ${DateFormat.yMd().format(_selectedDay!)}'), // Display only the date
                       subtitle: Text(
-                          'Selected Time: ${_selectedTime?.format(context) ?? 'Not selected'}'),
+                          'Hora Seleccionado: ${_selectedTime?.format(context) ?? 'Not selected'}'),
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      '1-hour time frame',
+                      'Sesion de 1 hora',
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
@@ -424,7 +522,7 @@ if (response.statusCode == 200) {
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.green,
                   ),
-                  child: const Text('Create Appointment'),
+                  child: const Text('Agendar Cita'),
                 ),
             ],
           ),

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:uct_app/components/category_cards.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+<<<<<<< HEAD
 
 
+=======
+import 'package:uct_app/components/empezemos.dart';
+import 'package:uct_app/components/upcomingcalendar.dart';
+import 'package:uct_app/components/topbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uct_app/components/busqueda.dart';
+>>>>>>> Dev-Nico
 class Dash extends StatefulWidget {
   const Dash({Key? key, required this.username, required String email}) : super(key: key);
   final String username;
@@ -14,6 +21,12 @@ class Dash extends StatefulWidget {
 }
 
 class _DashState extends State<Dash> {
+<<<<<<< HEAD
+=======
+  Key key = UniqueKey();
+  String photoUrl = FirebaseAuth.instance.currentUser!.photoURL ?? '';
+
+>>>>>>> Dev-Nico
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting();
@@ -117,6 +130,7 @@ class _DashState extends State<Dash> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
+<<<<<<< HEAD
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -252,6 +266,18 @@ class _DashState extends State<Dash> {
           const SizedBox(height: 25),
 
       //LIST VIEW
+=======
+            child: TopBar(
+                username: widget.username,
+                photoUrl: photoUrl,
+                email: FirebaseAuth.instance.currentUser!.email!),
+          ),
+          const SizedBox(height: 25),
+          const WelcomeMessageBox(gradient: gradient),
+          const SizedBox(height: 25),
+          const Busqueda(gradientSearch: gradientSearch),
+          const SizedBox(height: 25),
+>>>>>>> Dev-Nico
           SizedBox(
             height: 80,
             child: ListView(
@@ -277,9 +303,14 @@ class _DashState extends State<Dash> {
             ),
           ),
           const SizedBox(height: 25),
+<<<<<<< HEAD
           
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
+=======
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25.0),
+>>>>>>> Dev-Nico
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -290,6 +321,7 @@ class _DashState extends State<Dash> {
                     fontSize: 20,
                   ),
                 ),
+<<<<<<< HEAD
                 Text(
                   'Ver todos',
                   style: TextStyle(
@@ -304,6 +336,16 @@ class _DashState extends State<Dash> {
           const SizedBox(
             height: 100,
           )
+=======
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          Expanded(
+            key: key,
+            child: const UpcomingEventsComponent(),
+          ),
+>>>>>>> Dev-Nico
         ],
       )),
     );

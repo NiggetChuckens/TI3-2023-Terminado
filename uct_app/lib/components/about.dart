@@ -1,7 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:uct_app/components/specialists.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:uct_app/views/calendario.dart';
 
 class EspecialistaDetails extends StatefulWidget {
   final Specialist specialist;
@@ -18,7 +19,7 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
     final Uri params = Uri(
       scheme: 'mailto',
       path: email,
-      query: 'subject=Consulta%20DTE',
+      query: 'subject=Consulta%20Cinap',
     );
 
     String url = params.toString();
@@ -45,8 +46,8 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                       bottomLeft: Radius.circular(50),
                       bottomRight: Radius.circular(50),
                     ),
-                    child: Image.asset(
-                      'lib/images/doctor1.jpg', // replace with your static image path
+                    child: Image.network(
+                      widget.specialist.pfp,
                       height: 300,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -76,15 +77,16 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      widget.specialist.rol,
+                      widget.specialist.grado,
                       style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 18,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 25),
+                    
                     const Text(
-                      'Especialidad en:',
+                      'Especialidad',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 19,
@@ -99,7 +101,40 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                         fontSize: 18,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Rol',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 19,
+                        color: Color.fromARGB(255, 16, 13, 20),
+                      ),
+                    ),
+                    Text(
+                      widget.specialist.rol,
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Correo',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 19,
+                        color: Color.fromARGB(255, 16, 13, 20),
+                      ),
+                    ),
+                    Text(
+                      widget.specialist.email,
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 18,
+                      ),
+                    ),
+
+                    const SizedBox(height: 90),
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
@@ -140,7 +175,7 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                           ),
                         ),
                         child: const Text(
-                          'Correo',
+                          'Enviar Correo',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,

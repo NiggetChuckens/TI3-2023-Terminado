@@ -1,15 +1,19 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class VistaConImagen extends StatelessWidget {
+  const VistaConImagen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Vista con Imágenes'),
+        title: const Text('Vista con Imágenes'),
       ),
       body: GridView.builder(
         itemCount: 6,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2, // Número de columnas
         ),
         itemBuilder: (context, index) {
@@ -25,12 +29,12 @@ class VistaConImagen extends StatelessWidget {
 
           // Lista de vistas a las que redirigir
           List<Widget> vistas = [
-            SegundaVista(),
-            SegundaVista(),
-            SegundaVista(),
-            SegundaVista(),
-            SegundaVista(),
-            SegundaVista(),
+            const SegundaVista(),
+            const SegundaVista(),
+            const SegundaVista(),
+            const SegundaVista(),
+            const SegundaVista(),
+            const SegundaVista(),
           ];
 
           return _crearImagen(context, rutasImagenes[index], vistas[index]);
@@ -58,11 +62,13 @@ class VistaConImagen extends StatelessWidget {
 }
 
 class SegundaVista extends StatelessWidget {
+  const SegundaVista({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Segunda Vista'),
+        title: const Text('Segunda Vista'),
       ),
       // Aquí puedes añadir más widgets para completar tu vista
     );
