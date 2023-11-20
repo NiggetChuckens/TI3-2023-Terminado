@@ -139,7 +139,7 @@ class _DashState extends State<Dash> {
           child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: TopBar(
                 username: widget.username,
                 photoUrl: photoUrl,
