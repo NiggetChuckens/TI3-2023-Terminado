@@ -97,7 +97,7 @@ class TopBar extends StatelessWidget {
                                         if (email.endsWith('@alu.uct.cl')) const Text('Estudiante'),
                                         if (email.endsWith('@uct.cl')) const Text('Docente'),
                                         const SizedBox(height: 20),
-                                        const SizedBox(height: 20),
+                                      
 
                                         
                                         ElevatedButton(
@@ -118,7 +118,7 @@ class TopBar extends StatelessWidget {
                                         },
                                         child: const Text('Cerrar sesión'),
                                       ),
-                                      ],
+                                     ],
                                     ),
                                     Positioned(
                                       top: 0,

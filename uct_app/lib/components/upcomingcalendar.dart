@@ -98,49 +98,37 @@ class _UpcomingEventsComponentState extends State<UpcomingEventsComponent> {
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
                   child: ListTile(
-                    leading:
-                        const Padding(
-                          padding: EdgeInsets.only(top: 7.0), // adjust the value as needed
-                          child: Icon(Icons.event, color: Colors.white, size: 40),
-                        ),
-                    title: Text(
-                      'Cita con: ${snapshot.data![index]['attendeeName']}',
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 25, 25, 25)),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Desde: $formattedStartDate',
-                            style: const TextStyle(
-                                fontSize: 14, color: Color.fromARGB(255, 25, 25, 25))),
-                        Text('Hasta: $formattedEndDate',
-                            style: const TextStyle(
-                                fontSize: 14, color: Color.fromARGB(255, 25, 25, 25))),
-                        InkWell(
-                          child: Text.rich(
-                            TextSpan(
-                              text: '${snapshot.data![index]['meet']}',
-                              style: const TextStyle(
-                                decoration: TextDecoration.underline,
-                                fontSize: 14, 
-                                color: Color.fromARGB(255, 25, 25, 25)
-                              ),
-                            ),
-                          ),
-                          onTap: () => openMeetLink(snapshot.data![index]['meet']),
-                        ),
-                      ],
-                    ),
-                    isThreeLine: true,
+                  leading:
+                      const Icon(Icons.event, color: Colors.white, size: 40),
+                  title: Text(
+                    'Cita con: ${snapshot.data![index]['attendeeName']}',
+                    style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Desde: $formattedStartDate',
+                          style: const TextStyle(
+                              fontSize: 14, color: Colors.white)),
+                      Text('Hasta: $formattedEndDate',
+                          style: const TextStyle(
+                              fontSize: 14, color: Colors.white)),
+                    ],
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.video_call, color: Colors.white),
+                    onPressed: () =>
+                        openMeetLink(snapshot.data![index]['meet']),
+                  ),
+                ),
                 );
               },
             );
           } else {
-            return const Center(child: Text('No upcoming events'));
+            return const Center(child: Text('No tienes citas pendientes'));
           }
         } else {
           return const Center(child: CircularProgressIndicator());
