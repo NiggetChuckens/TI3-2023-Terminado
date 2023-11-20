@@ -79,7 +79,7 @@ class CompromisosAcademicosPage extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Text(
-                        'Envío de constancias DTE-CeDID: entre 15  y 20 de diciembre 2023'),
+                        'Envío de constancias Cinap-CeDID: entre 15  y 20 de diciembre 2023'),
                   ),
                   // Add more Text widgets as needed
                   SizedBox(

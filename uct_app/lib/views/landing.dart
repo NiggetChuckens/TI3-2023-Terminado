@@ -45,7 +45,7 @@ class LandingPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'Bienvenido a DTE',
+                        'Bienvenido a Cinap',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,

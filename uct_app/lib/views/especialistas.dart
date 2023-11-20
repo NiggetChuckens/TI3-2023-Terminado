@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../components/about.dart';
@@ -30,15 +28,16 @@ class _SpecialistPageState extends State<SpecialistPage> {
     });
   }
 
- Future<List<Specialist>> fetchSpecialists(String rol) async {
+Future<List<Specialist>> fetchSpecialists(String rol) async {
   CollectionReference specialists =
   FirebaseFirestore.instance.collection('dte');
 
   List<Specialist> specialistList = [];
 
   await specialists.get().then((QuerySnapshot querySnapshot) {
-    for (var doc in querySnapshot.docs) {
-      print('Document data: ${doc.data()}'); // Print document data
+    querySnapshot.docs.forEach((doc) {
+      Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+      print('Document data: ${data}'); // Print document data
 
       try {
         if (rol == 'Todos' || doc['rol'] == rol) {
@@ -49,6 +48,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
               grado: doc['grado'],
               rol: doc['rol'],
               especialidad: doc['especialidad'],
+              pfp: data != null && data.containsKey('pfp') ? doc['pfp'] : 'https://firebasestorage.googleapis.com/v0/b/flutter-app-400102.appspot.com/o/Default.jpg?alt=media&token=2e6ebc34-bee5-4c6c-b8ea-7204769c092e', // Replace with your specific link
             ),
           );
         }
@@ -57,7 +57,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
             'Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
         print('Error: $e'); // Print the error
       }
-    }
+    });
   });
 
   return specialistList;
@@ -69,7 +69,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
     List<String> rolesList = [];
 
     await specialists.get().then((QuerySnapshot querySnapshot) {
-      for (var doc in querySnapshot.docs) {
+      querySnapshot.docs.forEach((doc) {
         try {
           String role = doc['rol'];
           if (!rolesList.contains(role)) {
@@ -80,7 +80,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
               'Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
           print('Error: $e'); // Print the error
         }
-      }
+      });
     });
 
     return rolesList;
@@ -144,7 +144,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     print(snapshot.error);
-                    return const Center(child: Text('An error has occurred'));
+                    return Center(child: Text('An error has occurred'));
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     return GridView.builder(
                       gridDelegate:
@@ -183,8 +183,8 @@ class _SpecialistPageState extends State<SpecialistPage> {
                                       children: [
                                         ClipRRect(
                                           borderRadius: BorderRadius.circular(10.0),
-                                          child: Image.asset(
-                                            "lib/images/doctor1.jpg",
+                                          child: Image.network(
+                                            snapshot.data![index].pfp,
                                             width: 100,
                                             height: 100,
                                             fit: BoxFit.cover,
@@ -219,7 +219,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
                       },
                     );
                   } else {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator());
                   }
                 },
               ),

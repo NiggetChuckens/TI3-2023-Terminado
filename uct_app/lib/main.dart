@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/especialistas': (context) => const SpecialistPage(),
         '/dashboard': (context) => const MyHomePage(
-              title: 'DTE',
+              title: 'Cinap',
               username: '', email: '',
             ),
         

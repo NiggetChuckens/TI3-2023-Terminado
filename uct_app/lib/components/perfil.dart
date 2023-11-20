@@ -20,7 +20,7 @@ class ProfilePopup extends StatelessWidget {
  ),
  child: Dialog(
    shape: RoundedRectangleBorder(
-     borderRadius: BorderRadius.circular(20.0),
+     borderRadius: BorderRadius.circular(50.0),
    ),
    child: Container(
      decoration: BoxDecoration(

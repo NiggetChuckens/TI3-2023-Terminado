@@ -4,6 +4,7 @@ class Specialist {
   final String grado;
   final String rol;
   final String especialidad;
+  final String pfp;
 
   Specialist({
     required this.name,
@@ -11,5 +12,6 @@ class Specialist {
     required this.grado,
     required this.rol,
     required this.especialidad,
+    required this.pfp,
   });
 }
