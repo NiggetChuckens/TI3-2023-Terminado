@@ -41,6 +41,11 @@ class _SpecialistPageState extends State<SpecialistPage> {
 
         try {
           if (rol == 'Todos' || doc['rol'] == rol) {
+            String pfp = data != null &&
+                    data.containsKey('pfp') &&
+                    data['pfp'] != ''
+                ? doc['pfp']
+                : 'https://firebasestorage.googleapis.com/v0/b/flutter-app-400102.appspot.com/o/Default.jpg?alt=media&token=2e6ebc34-bee5-4c6c-b8ea-7204769c092e'; // Replace with your specific link
             specialistList.add(
               Specialist(
                 name: doc['nombre'],
@@ -48,9 +53,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
                 grado: doc['grado'],
                 rol: doc['rol'],
                 especialidad: doc['especialidad'],
-                pfp: data != null && data.containsKey('pfp')
-                    ? doc['pfp']
-                    : 'https://firebasestorage.googleapis.com/v0/b/flutter-app-400102.appspot.com/o/Default.jpg?alt=media&token=2e6ebc34-bee5-4c6c-b8ea-7204769c092e', // Replace with your specific link
+                pfp: pfp,
               ),
             );
           }
