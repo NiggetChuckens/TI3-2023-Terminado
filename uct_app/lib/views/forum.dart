@@ -82,7 +82,23 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
           ),
           actions: <Widget>[
             TextButton(
+              child: const Text('Cancelar'),
+              style: TextButton.styleFrom(
+                foregroundColor: Color.fromARGB(255, 255, 255, 255),
+                backgroundColor: const Color.fromARGB(255, 255, 0, 0),
+                disabledForegroundColor: Colors.grey.withOpacity(0.38),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
               child: const Text('Enviar'),
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.green,
+                disabledForegroundColor: Colors.grey.withOpacity(0.38),
+              ),
               onPressed: () {
                 _questions.add({
                   'title': _titleController.text,
@@ -110,8 +126,7 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
           title: const Text('Ingresar Respuesta'),
           content: TextField(
             controller: _replyController,
-            decoration:
-                const InputDecoration(hintText: "Ingresar Respuesta"),
+            decoration: const InputDecoration(hintText: "Ingresar Respuesta"),
           ),
           actions: <Widget>[
             TextButton(
@@ -272,37 +287,42 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                               (document.data()
                                   as Map<String, dynamic>)['email'])
                             IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text('Confirmar Eliminacion'),
-                                        content: const Text('Esta seguro que desea borrar su pregunta?'),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: const Text('Cancel'),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title:
+                                          const Text('Confirmar Eliminacion'),
+                                      content: const Text(
+                                          'Esta seguro que desea borrar su pregunta?'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Cancel'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: const Text('Delete'),
+                                          style: TextButton.styleFrom(
+                                            foregroundColor: Colors.white,
+                                            backgroundColor: Colors.red,
+                                            disabledForegroundColor:
+                                                Colors.grey.withOpacity(0.38),
                                           ),
-                                          TextButton(
-                                            child: const Text('Delete'),
-                                            style: TextButton.styleFrom(
-                                              foregroundColor: Colors.white, backgroundColor: Colors.red, disabledForegroundColor: Colors.grey.withOpacity(0.38),
-                                            ),
-                                            onPressed: () {
-                                              document.reference.delete();
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-  },
-),
+                                          onPressed: () {
+                                            document.reference.delete();
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
                         ],
                       ),
                     ],
