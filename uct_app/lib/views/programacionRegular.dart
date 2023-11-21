@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class programacionRegularPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+        // Lista de URLs
+    List<String> urls = [
+      'https://cinap.uct.cl/ticlab/',
+      'https://cinap.uct.cl/docentes/material-de-apoyo-docente/',
+      'https://cinap.uct.cl/organizacion/',
+      'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+      // Agregue más URLs aquí
+    ];
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 8, 123, 177), // Fondo azul claro
       appBar: AppBar(
@@ -31,13 +40,13 @@ class programacionRegularPage extends StatelessWidget {
               children: <Widget>[
                 Text('Talleres TICLAB', style: TextStyle(color: Colors.white)),
                 ElevatedButton(
-                  child: Text('Revisar'),
-                  onPressed: () {
-                    // Navegación a la vista del Botón 1
-                    //Navigator.push(
-                    //context,
-                    //MaterialPageRoute(builder: (context) => Boton1Page()),
-                    //);
+                  child: Text('>>Mas informacion'),
+                   onPressed: () async {
+                    if (await canLaunch(urls[0])) {
+                      await launch(urls[0]);
+                    } else {
+                      throw 'No se pudo abrir ${urls[3]}';
+                    }
                   },
                 ),
               ],
@@ -48,13 +57,13 @@ class programacionRegularPage extends StatelessWidget {
                 Text('Curso de profundización EDUCA Blackboard',
                     style: TextStyle(color: Colors.white)),
                 ElevatedButton(
-                  child: Text('Revisar'),
-                  onPressed: () {
-                    // Navegación a la vista del Botón 2
-                    //Navigator.push(
-                    //context,
-                    //MaterialPageRoute(builder: (context) => Boton2Page()),
-                    //);
+                  child: Text('>>Mas informacion'),
+                    onPressed: () async {
+                    if (await canLaunch(urls[1])) {
+                      await launch(urls[1]);
+                    } else {
+                      throw 'No se pudo abrir ${urls[3]}';
+                    }
                   },
                 ),
               ],
@@ -65,13 +74,13 @@ class programacionRegularPage extends StatelessWidget {
                 Text('Formación inicial docente',
                     style: TextStyle(color: Colors.white)),
                 ElevatedButton(
-                  child: Text('Revisar'),
-                  onPressed: () {
-                    // Navegación a la vista del Botón 3
-                    //              Navigator.push(
-                    //               context,
-                    //              MaterialPageRoute(builder: (context) => Boton3Page()),
-                    //           );
+                  child: Text('>>Mas informacion'),
+                   onPressed: () async {
+                    if (await canLaunch(urls[2])) {
+                      await launch(urls[2]);
+                    } else {
+                      throw 'No se pudo abrir ${urls[3]}';
+                    }
                   },
                 ),
               ],
