@@ -40,7 +40,7 @@ class _DashState extends State<Dash> {
         Color(0xFF8FB5E1),
       ],
     );
-
+    
     initializeDateFormatting();
     String locale = 'es';
     DateTime now = DateTime.now();
@@ -129,6 +129,7 @@ class _DashState extends State<Dash> {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/chat');
               },
+            
             ),
           ],
         ),
@@ -157,17 +158,21 @@ class _DashState extends State<Dash> {
               children: [
                 _buildButton(
                     'Asesores', '/especialistas', 'lib/images/asesor.png'),
+                    _buildButton('Foro de\npreguntas', '/foro', 'lib/images/preguntas.png'),
                 _buildButton(
                     'Docentes', '/docentes', 'lib/images/Docentes.png'),
                 _buildButton(
-                    'Eventos Proximos', '/eventos', 'lib/images/chat.png'),
+                    'Eventos\nProximos', '/eventos', 'lib/images/calendar.png'),
                 _buildButton('About', '/about', 'lib/images/uct_splash.png'),
                 _buildButton(
                     'Recursos', '/recursos', 'lib/images/recursos.png'),
                 _buildButton(
                     'Contacto', '/contacto', 'lib/images/contacto.png'),
                 _buildButton('Ticlab', '/ticlab', 'lib/images/ticlab.png'),
-                _buildButton('Chat', '/chat', 'lib/images/chat.png'),
+                _buildButton('Chat de\nayuda', '/chat', 'lib/images/chat.png'),
+                _buildButton('Compromisos\nAcademicos', '/compromisosacademicos', 'lib/images/foro.png'),
+                
+
               ],
             ),
           ),

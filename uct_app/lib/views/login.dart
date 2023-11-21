@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
 
         final User? currentUser = firebaseAuth.currentUser;
         assert(user.uid == currentUser!.uid);
-
+        
         // Check if the email domain is alu.uct.cl
         if (user.email!.endsWith('@alu.uct.cl')) {
           print('signInWithGoogle succeeded: $user');
