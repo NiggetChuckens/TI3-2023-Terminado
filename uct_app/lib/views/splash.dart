@@ -12,7 +12,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
-
   @override
   void initState() {
     super.initState();
@@ -30,7 +29,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       });
     });
   }
-
   @override
   void dispose() {
     _animationController.dispose();

@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
               child: const UpcomingEventsPage(),
             ),
         '/ticlab': (context) => const DocentesPage(),
-        '/foro':(context) => QuestionForumPage(),
+        '/foro': (context) => QuestionForumPage(),
       },
     );
   }
