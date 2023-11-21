@@ -119,31 +119,46 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
     final DateTime _date = DateTime.now();
 
     return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Ingresar Respuesta'),
-          content: TextField(
-            controller: _replyController,
-            decoration: const InputDecoration(hintText: "Ingresar Respuesta"),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Submit'),
-              onPressed: () {
-                questionRef.collection('replies').add({
-                  'reply': _replyController.text,
-                  'name': _shortName,
-                  'email': _email,
-                  'date': _date,
-                });
-                Navigator.of(context).pop();
-              },
+  context: context,
+  builder: (BuildContext context) {
+    return AlertDialog(
+      title: Center(child: const Text('Ingresar Respuesta')),
+
+      content: Container(
+        width: 300.0, 
+        child: TextField(
+          controller: _replyController,
+          maxLines: null,
+          decoration: InputDecoration(
+            hintText: "Ingresar Respuesta",
+            filled: true,
+            fillColor: Colors.grey[200],
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: BorderSide.none,
             ),
-          ],
-        );
-      },
+            contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+          ),
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: const Text('Enviar'),
+          onPressed: () {
+            questionRef.collection('replies').add({
+              'reply': _replyController.text,
+              'name': _shortName,
+              'email': _email,
+              'date': _date,
+            });
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
     );
+  },
+);
   }
 
   @override
@@ -182,55 +197,77 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                   final replies =
                       repliesSnapshot.docs.map((doc) => doc.data()).toList();
 
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Material(
-                          elevation: 5.0, // This adds elevation
-                          borderRadius: BorderRadius.circular(
-                              15.0), // This makes the border rounded
-                          child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
+                        // ignore: use_build_context_synchronously
+                        showDialog(
+                                  context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Material(
+                                  elevation: 5.0, // This adds elevation
+                                  borderRadius: BorderRadius.circular(15.0), // This makes the border rounded
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    child: Text(
+                                      (document.data() as Map<String, dynamic>)['title'],
+                                      style: const TextStyle(color: Colors.white),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                ),
+                                content: Container(
+                                  height: 300.0, // Set the height to your desired value
+                                  width: 300.0, // Set the width to your desired value
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey), // This adds a border
+                                    borderRadius: BorderRadius.circular(15.0), // This makes the border rounded
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: Offset(0, 3), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: StreamBuilder<QuerySnapshot>(
+                                    stream: document.reference.collection('replies').snapshots(),
+                                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (snapshot.hasError) {
+                                        return Text('Error: ${snapshot.error}');
+                                      }
+
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                        return CircularProgressIndicator();
+                                      }
+
+                          final replies = snapshot.data!.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+                                      return SingleChildScrollView(
+                                        child: Column(
+                                          children: replies
+                                              .map((reply) => Card(
+                            shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
-                            child: Text(
-                              (document.data()
-                                      as Map<String, dynamic>)['title'] ??
-                                  '',
-                              style: const TextStyle(color: Colors.white),
-                              textAlign: TextAlign.left,
+                            color: Colors.grey[200],
+                            elevation: 5.0,
+                            child: ListTile(
+                              title: Text(reply['reply'] ?? ''),
+                              subtitle: Text('${reply['name'] ?? ''}\n${DateFormat('yyyy-MM-dd HH:mm').format((reply['date'] as Timestamp?)?.toDate() ?? DateTime.now())}'),
                             ),
-                          ),
-                        ),
-                        content: SizedBox(
-                          height: 300.0, // Set the height to your desired value
-
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: replies
-                                  .map((reply) => Card(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15.0),
-                                        ),
-                                        color: Colors.grey[200],
-                                        elevation: 5.0,
-                                        child: ListTile(
-                                          title: Text(reply['reply']),
-                                          subtitle: Text(
-                                              '\n${reply['name']}\n${DateFormat('yyyy-MM-dd HH:mm').format(reply['date'].toDate())}'),
-                                        ),
-                                      ))
-                                  .toList(),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
+                          ))
+                    .toList(),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  },
+);
                   print(replies.length.toString()); // Use replies here
                 },
                 child: Container(
