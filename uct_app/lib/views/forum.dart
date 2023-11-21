@@ -3,16 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
-class QuestionForumApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Question Forum',
-      home: QuestionForumPage(),
-    );
-  }
-}
-
 class QuestionForumPage extends StatefulWidget {
   @override
   _QuestionForumPageState createState() => _QuestionForumPageState();
@@ -119,6 +109,15 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
 
   Future<void> _addReply(DocumentReference questionRef) async {
     final TextEditingController _replyController = TextEditingController();
+    final User? _currentUser = FirebaseAuth.instance.currentUser;
+    final String _email = _currentUser?.email ?? "";
+    final String _fullName = _currentUser?.displayName ?? "";
+    final List<String> _nameParts = _fullName.split(' ');
+    final String _shortName =
+        _nameParts.length > 1 ? '${_nameParts[0]} ${_nameParts[1]}' : _fullName;
+
+    final DateTime _date = DateTime.now();
+
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -134,6 +133,9 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
               onPressed: () {
                 questionRef.collection('replies').add({
                   'reply': _replyController.text,
+                  'name': _shortName,
+                  'email': _email,
+                  'date': _date,
                 });
                 Navigator.of(context).pop();
               },
@@ -148,7 +150,23 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Foro de Preguntas'),
+        title: Text('Foro de Preguntas'),
+        backgroundColor: Colors.blueGrey,
+        elevation: 0.0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new),
+          tooltip: 'Volver atras',
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            tooltip: 'Search',
+            onPressed: () {}, // Handle your functionality here
+          ),
+        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _questions.snapshots(),
@@ -161,22 +179,59 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                 onTap: () async {
                   final repliesSnapshot =
                       await document.reference.collection('replies').get();
-                  final replies = repliesSnapshot.docs
-                      .map((doc) => doc.data()['reply'])
-                      .toList();
+                  final replies =
+                      repliesSnapshot.docs.map((doc) => doc.data()).toList();
+
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text(
-                            (document.data() as Map<String, dynamic>)['title']),
-                        content: Column(
-                          children:
-                              replies.map((reply) => Text(reply)).toList(),
+                        title: Material(
+                          elevation: 5.0, // This adds elevation
+                          borderRadius: BorderRadius.circular(
+                              15.0), // This makes the border rounded
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            child: Text(
+                              (document.data()
+                                      as Map<String, dynamic>)['title'] ??
+                                  '',
+                              style: const TextStyle(color: Colors.white),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                        ),
+                        content: SizedBox(
+                          height: 300.0, // Set the height to your desired value
+
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: replies
+                                  .map((reply) => Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        color: Colors.grey[200],
+                                        elevation: 5.0,
+                                        child: ListTile(
+                                          title: Text(reply['reply']),
+                                          subtitle: Text(
+                                              '\n${reply['name']}\n${DateFormat('yyyy-MM-dd HH:mm').format(reply['date'].toDate())}'),
+                                        ),
+                                      ))
+                                  .toList(),
+                            ),
+                          ),
                         ),
                       );
                     },
                   );
+                  print(replies.length.toString()); // Use replies here
                 },
                 child: Container(
                   margin: const EdgeInsets.all(8.0),
@@ -211,7 +266,7 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                               height: 50.0,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                               width:
                                   10), // Add some space between the picture and the name
                           Text(
@@ -223,7 +278,7 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Container(
                         padding: const EdgeInsets.all(8.0),
                         decoration: BoxDecoration(
@@ -273,6 +328,20 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                               _addReply(document.reference);
                             },
                           ),
+                          StreamBuilder<QuerySnapshot>(
+                            stream: document.reference
+                                .collection('replies')
+                                .snapshots(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasData) {
+                                return Text('${snapshot.data!.docs.length}');
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              }
+                              return CircularProgressIndicator();
+                            },
+                          ),
                           IconButton(
                             icon: const Icon(Icons.thumb_up),
                             onPressed: () {},
@@ -309,8 +378,6 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                                           style: TextButton.styleFrom(
                                             foregroundColor: Colors.white,
                                             backgroundColor: Colors.red,
-                                            disabledForegroundColor:
-                                                Colors.grey.withOpacity(0.38),
                                           ),
                                           onPressed: () {
                                             document.reference.delete();
@@ -335,7 +402,7 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addQuestion,
-        tooltip: 'Add Question',
+        tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
     );
