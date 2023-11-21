@@ -39,7 +39,7 @@ class _DashState extends State<Dash> {
         Color(0xFF8FB5E1),
       ],
     );
-
+    
     initializeDateFormatting();
     String locale = 'es';
     DateTime now = DateTime.now();
@@ -128,6 +128,7 @@ class _DashState extends State<Dash> {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/chat');
               },
+            
             ),
           ],
         ),
@@ -167,6 +168,9 @@ class _DashState extends State<Dash> {
                     'Contacto', '/contacto', 'lib/images/contacto.png'),
                 _buildButton('Ticlab', '/ticlab', 'lib/images/ticlab.png'),
                 _buildButton('Chat', '/chat', 'lib/images/chat.png'),
+                _buildButton('Compromisos\nAcademicos', '/compromisosacademicos', 'lib/images/foro.png'),
+                _buildButton('Foro', '/foro', 'lib/images/foro.png'),
+
               ],
             ),
           ),
