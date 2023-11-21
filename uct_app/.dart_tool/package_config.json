@@ -356,6 +356,24 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "path_provider",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider-2.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "path_provider_android",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "path_provider_foundation",
+      "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_foundation-2.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "path_provider_linux",
       "rootUri": "file:///C:/Users/giant/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_linux-2.2.1",
       "packageUri": "lib/",
@@ -626,7 +644,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-11-21T15:53:54.746002Z",
+  "generated": "2023-11-21T17:05:25.924930Z",
   "generator": "pub",
   "generatorVersion": "3.1.1"
 }
