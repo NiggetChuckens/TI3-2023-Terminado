@@ -1,323 +1,150 @@
-// ignore_for_file: unused_local_variable, avoid_print, use_build_context_synchronously
-
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:googleapis/calendar/v3.dart' as calendar;
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uct_app/components/curso.dart';
 import 'package:intl/intl.dart';
 
-class RecursosPage extends StatefulWidget {
-  const RecursosPage({Key? key}) : super(key: key);
+class RecursosPage extends StatelessWidget {
+  Future<List<Course>> fetchCourses() async {
+    CollectionReference courses =
+        FirebaseFirestore.instance.collection('cursos');
 
-  @override
-  // ignore: library_private_types_in_public_api
-  _RecursosPageState createState() => _RecursosPageState();
-}
+    List<Course> courseList = [];
 
-class _RecursosPageState extends State<RecursosPage> {
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-  final DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
-  TimeOfDay? _selectedTime;
-  static const int appointmentDurationInHours =
-      1; // Set the appointment duration
-
-  // Function to show a success dialog
-  void _showSuccessDialog(DateTime scheduledDateTime) {
-    final endTime = scheduledDateTime
-        .add(const Duration(hours: appointmentDurationInHours));
-    final formattedStartTime = DateFormat.jm().format(scheduledDateTime);
-    final formattedEndTime = DateFormat.jm().format(endTime);
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Appointment Created Successfully'),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text('Scheduled Date and Time:'),
-              Text(DateFormat.yMd()
-                  .add_jm()
-                  .format(scheduledDateTime)), // Display date and time
-              const SizedBox(height: 10),
-              const Text('Time Frame:'),
-              Text(
-                  '$formattedStartTime - $formattedEndTime'), // Display the time frame
-            ],
+    await courses.get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        courseList.add(
+          Course(
+            courseName: doc['courseName'],
+            backgroundImageUrl: doc['backgroundImageUrl'],
+            registerDate:
+                (doc['registerDate'] as Timestamp).toDate().toString(),
           ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
         );
-      },
-    );
+      });
+    });
+
+    return courseList;
   }
 
-  Future<void> signInWithGoogle() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-      scopes: [
-        'email',
-        calendar.CalendarApi.calendarScope,
-        'https://www.googleapis.com/auth/calendar',
-      ],
-    );
-
-    try {
-      final GoogleSignInAccount? account = await googleSignIn.signIn();
-
-      if (account != null) {
-        final GoogleSignInAuthentication googleAuth =
-            await account.authentication;
-
-        // Now you can use googleAuth.accessToken to make authenticated API requests
-        print('Access token: ${googleAuth.accessToken}');
-
-        // Check if a date and time are selected
-        if (_selectedDay == null || _selectedTime == null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Please select a date and time'),
-            ),
-          );
-          return;
-        }
-
-        final DateTime selectedDateTime = DateTime(
-          _selectedDay!.year,
-          _selectedDay!.month,
-          _selectedDay!.day,
-          _selectedTime!.hour,
-          _selectedTime!.minute,
-        );
-
-        // Create an appointment on the user's Google Calendar
-        calendar.Event event = calendar.Event()
-          ..summary = 'Appointment'
-          ..start = calendar.EventDateTime()
-          ..end = calendar.EventDateTime()
-          ..start!.dateTime = selectedDateTime
-          ..end!.dateTime = selectedDateTime.add(const Duration(hours: 1));
-
-        // Create a new http.Client instance
-        final client = http.Client();
-
-        // Create a new calendar.CalendarApi instance
-        calendar.CalendarApi calendarApi = calendar.CalendarApi(client);
-
-        // Create a new http.Request instance
-        final request = http.Request(
-          'POST',
-          Uri.parse(
-              'https://www.googleapis.com/calendar/v3/calendars/primary/events'),
-        );
-
-        // Set the access token in the request headers
-        request.headers['Authorization'] = 'Bearer ${googleAuth.accessToken}';
-
-        // Set the request body as JSON
-        request.body = jsonEncode(event.toJson());
-
-        // Send the request and get the response
-        final response = await client.send(request);
-
-        // Close the http.Client instance
-        client.close();
-
-        // Check the response status code
-        if (response.statusCode == 200) {
-          print('Appointment created successfully');
-          print('Scheduled Time: ${selectedDateTime.toString()}');
-          _showSuccessDialog(selectedDateTime); // Show success dialog
-        } else {
-          print(
-              'Failed to create appointment. Status code: ${response.statusCode}');
-        }
-      }
-    } catch (error) {
-      if (error.toString().contains('access_token_expired')) {
-        // Access token expired, refresh the authentication token
-        try {
-          final GoogleSignInAccount? refreshedAccount =
-              await googleSignIn.signInSilently();
-
-          if (refreshedAccount != null) {
-            final GoogleSignInAuthentication refreshedAuth =
-                await refreshedAccount.authentication;
-
-            // Now you can use refreshedAuth.accessToken to make authenticated API requests
-            print('Refreshed access token: ${refreshedAuth.accessToken}');
-
-            // Check if a date and time are selected
-            if (_selectedDay == null || _selectedTime == null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Please select a date and time'),
-                ),
-              );
-              return;
-            }
-
-            final DateTime selectedDateTime = DateTime(
-              _selectedDay!.year,
-              _selectedDay!.month,
-              _selectedDay!.day,
-              _selectedTime!.hour,
-              _selectedTime!.minute,
-            );
-
-            // Create an appointment on the user's Google Calendar
-            calendar.Event event = calendar.Event()
-              ..summary = 'Appointment'
-              ..start = calendar.EventDateTime()
-              ..end = calendar.EventDateTime()
-              ..start!.dateTime = selectedDateTime
-              ..end!.dateTime = selectedDateTime.add(const Duration(hours: 1));
-
-            // Create a new http.Client instance
-            final client = http.Client();
-
-            // Create a new calendar.CalendarApi instance
-            calendar.CalendarApi calendarApi = calendar.CalendarApi(client);
-
-            // Create a new http.Request instance
-            final request = http.Request(
-              'POST',
-              Uri.parse(
-                  'https://www.googleapis.com/calendar/v3/calendars/primary/events'),
-            );
-
-            // Set the access token in the request headers
-            request.headers['Authorization'] =
-                'Bearer ${refreshedAuth.accessToken}';
-
-            // Set the request body as JSON
-            request.body = jsonEncode(event.toJson());
-
-            // Send the request and get the response
-            final response = await client.send(request);
-
-            // Close the http.Client instance
-            client.close();
-
-            // Check the response status code
-            if (response.statusCode == 200) {
-              print('Appointment created successfully');
-              print('Scheduled Time: ${selectedDateTime.toString()}');
-              _showSuccessDialog(selectedDateTime); // Show success dialog
-            } else {
-              print(
-                  'Failed to create appointment. Status code: ${response.statusCode}');
-            }
-          }
-        } catch (refreshError) {
-          print('Failed to refresh access token: $refreshError');
-        }
-      } else {
-        print('Failed to sign in with Google: $error');
-      }
-    }
-  }
+  RecursosPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Recursos'),
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blue, Colors.deepPurple],
+        title: Text(
+          'Recursos',
+          style: TextStyle(
+            color: Color.fromARGB(255, 221, 221, 221),
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              TableCalendar(
-                firstDay: DateTime.now(),
-                lastDay: DateTime(2023, 12, 31),
-                focusedDay: _focusedDay,
-                calendarFormat: _calendarFormat,
-                onFormatChanged: (format) {
-                  setState(() {
-                    _calendarFormat = format;
-                  });
-                },
-                onDaySelected: (selectedDay, focusedDay) {
-                  setState(() {
-                    _selectedDay = selectedDay;
-                    _selectedTime =
-                        null; // Reset selected time when a new date is selected
-                  });
-                  _selectTime(context);
-                },
-                selectedDayPredicate: (day) {
-                  return isSameDay(_selectedDay, day);
-                },
-                calendarStyle: CalendarStyle(
-                  todayDecoration: BoxDecoration(
-                    color:
-                        const Color.fromARGB(255, 22, 4, 56).withOpacity(0.5),
-                  ),
-                  selectedDecoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.5),
-                  ),
-                ),
-              ),
-              if (_selectedDay != null)
-                Column(
-                  children: [
-                    ListTile(
-                      title: Text(
-                          'Selected Date: ${DateFormat.yMd().format(_selectedDay!)}'), // Display only the date
-                      subtitle: Text(
-                          'Selected Time: ${_selectedTime?.format(context) ?? 'Not selected'}'),
+        backgroundColor: Colors.deepPurple,
+        elevation: 5.0,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FutureBuilder<List<Course>>(
+          future: fetchCourses(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.all(8.0), // Add padding between cards
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [Color(0xFF8FB5E1), Color(0xFFD190E0)],
+                        ),
+                        borderRadius:
+                            BorderRadius.circular(15.0), // Add rounded corners
+                      ),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              15.0), // Add rounded corners to the card
+                        ),
+                        color: Colors
+                            .transparent, // Make the card transparent to show the gradient
+                        elevation: 0, // Remove shadow
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                              16.0), // Add padding inside the card
+                          child: Column(
+                            children: <Widget>[
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Image.network(
+                                    snapshot.data![index].backgroundImageUrl),
+                              ),
+                              SizedBox(height: 10), // Add space
+                              Text(
+                                snapshot.data![index].courseName,
+                                style: TextStyle(
+                                    fontSize: 20), // Increase font size
+                              ),
+                              SizedBox(height: 10), // Add space
+                              Text(
+                                DateFormat('yyyy-MM-dd').format(
+                                  DateTime.parse(
+                                      snapshot.data![index].registerDate),
+                                ),
+                                style: TextStyle(
+                                    fontSize: 16), // Increase font size
+                              ),
+                              SizedBox(height: 10), // Add space
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      // Add your code for the "Registrar" button here
+                                    },
+                                    child: const Text('Registrar'),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color(
+                                          0xFF8FB5E1), // Set the button color to light blue
+                                      fixedSize:
+                                          Size(100, 50), // Set the button size
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      // Add your code for the "Ver" button here
+                                    },
+                                    child: const Text('Ver'),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color(
+                                          0xFF8FB5E1), // Set the button color to light blue
+                                      fixedSize:
+                                          Size(100, 50), // Set the button size
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      '1-hour time frame',
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
-                    ),
-                  ],
-                ),
-              if (_selectedDay != null && _selectedTime != null)
-                ElevatedButton(
-                  onPressed: signInWithGoogle,
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.green,
-                  ),
-                  child: const Text('Create Appointment'),
-                ),
-            ],
-          ),
+                  );
+                },
+              );
+            }
+          },
         ),
       ),
     );
-  }
-
-  Future<void> _selectTime(BuildContext context) async {
-    final selectedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-
-    if (selectedTime != null) {
-      setState(() {
-        _selectedTime = selectedTime;
-      });
-    }
   }
 }

@@ -28,38 +28,45 @@ class _SpecialistPageState extends State<SpecialistPage> {
     });
   }
 
- Future<List<Specialist>> fetchSpecialists(String rol) async {
-  CollectionReference specialists =
-      FirebaseFirestore.instance.collection('dte');
+  Future<List<Specialist>> fetchSpecialists(String rol) async {
+    CollectionReference specialists =
+        FirebaseFirestore.instance.collection('dte');
 
-  List<Specialist> specialistList = [];
+    List<Specialist> specialistList = [];
 
-  await specialists.get().then((QuerySnapshot querySnapshot) {
-    querySnapshot.docs.forEach((doc) {
-      print('Document data: ${doc.data()}'); // Print document data
+    await specialists.get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+        print('Document data: ${data}'); // Print document data
 
-      try {
-        if (rol == 'Todos' || doc['rol'] == rol) {
-          specialistList.add(
-            Specialist(
-              name: doc['nombre'],
-              email: doc['email'],
-              grado: doc['grado'],
-              rol: doc['rol'],
-              especialidad: doc['especialidad'],
-            ),
-          );
+        try {
+          if (rol == 'Todos' || doc['rol'] == rol) {
+            String pfp = data != null &&
+                    data.containsKey('pfp') &&
+                    data['pfp'] != ''
+                ? doc['pfp']
+                : 'https://firebasestorage.googleapis.com/v0/b/flutter-app-400102.appspot.com/o/Default.jpg?alt=media&token=2e6ebc34-bee5-4c6c-b8ea-7204769c092e'; // Replace with your specific link
+            specialistList.add(
+              Specialist(
+                name: doc['nombre'],
+                email: doc['email'],
+                grado: doc['grado'],
+                rol: doc['rol'],
+                especialidad: doc['especialidad'],
+                pfp: pfp,
+              ),
+            );
+          }
+        } catch (e) {
+          print(
+              'Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
+          print('Error: $e'); // Print the error
         }
-      } catch (e) {
-        print(
-            'Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
-        print('Error: $e'); // Print the error
-      }
+      });
     });
-  });
 
-  return specialistList;
-}
+    return specialistList;
+  }
 
   Future<List<String>> fetchRoles() async {
     CollectionReference specialists =
@@ -161,7 +168,8 @@ class _SpecialistPageState extends State<SpecialistPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => EspecialistaDetails(specialist: snapshot.data![index]),
+                                  builder: (context) => EspecialistaDetails(
+                                      specialist: snapshot.data![index]),
                                 ),
                               );
                             },
@@ -169,7 +177,8 @@ class _SpecialistPageState extends State<SpecialistPage> {
                               child: SizedBox(
                                 width: 150, // Set your desired width here
                                 child: Card(
-                                  color: const Color.fromARGB(255, 42, 42, 42), // Dark background for the card
+                                  color: const Color.fromARGB(255, 42, 42,
+                                      42), // Dark background for the card
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15.0),
                                   ),
@@ -177,12 +186,14 @@ class _SpecialistPageState extends State<SpecialistPage> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                          child: Image.asset(
-                                            "lib/images/doctor1.jpg",
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          child: Image.network(
+                                            snapshot.data![index].pfp,
                                             width: 100,
                                             height: 100,
                                             fit: BoxFit.cover,
@@ -191,19 +202,23 @@ class _SpecialistPageState extends State<SpecialistPage> {
                                         const SizedBox(height: 10),
                                         Text(
                                           snapshot.data![index].name,
-                                          textAlign: TextAlign.center, // Center the names
+                                          textAlign: TextAlign
+                                              .center, // Center the names
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16,
-                                            color: Color(0xFFE0E0E0), // Light text color for contrast
+                                            color: Color(
+                                                0xFFE0E0E0), // Light text color for contrast
                                           ),
                                         ),
                                         const SizedBox(height: 5),
                                         Text(
                                           snapshot.data![index].rol,
-                                          textAlign: TextAlign.center, // Center the roles
+                                          textAlign: TextAlign
+                                              .center, // Center the roles
                                           style: const TextStyle(
-                                            color: Color(0xFF757575), // Slightly lighter grey for contrast
+                                            color: Color(
+                                                0xFF757575), // Slightly lighter grey for contrast
                                           ),
                                         ),
                                       ],

@@ -4,10 +4,15 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:uct_app/views/dashboard2.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title, required this.username})
+  const MyHomePage(
+      {Key? key,
+      required this.title,
+      required this.username,
+      required this.email})
       : super(key: key);
   final String username;
   final String title;
+  final String email;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -144,6 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => Dash(
+                      email: widget.email,
                       username: widget.username,
                     ),
                   ),
@@ -160,7 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
         crossAxisSpacing: 16,
         children: [
           _buildCard('/especialistas', 'lib/images/asesor.png'),
-          _buildCard('/docentes', 'lib/images/docentes.png'),
+          _buildCard('/docentes', 'lib/images/Docentes.png'),
           _buildCard('/calendario', 'lib/images/calendar_icon.png'),
           _buildCard('/about', 'lib/images/uct_splash.png'),
           _buildCard('/recursos', 'lib/images/recursos.png'),

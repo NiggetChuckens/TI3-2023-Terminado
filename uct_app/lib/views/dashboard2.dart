@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:uct_app/components/category_cards.dart';
-import 'package:uct_app/views/dashboard.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:uct_app/components/empezemos.dart';
+import 'package:uct_app/components/upcomingcalendar.dart';
+import 'package:uct_app/components/topbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:uct_app/components/busqueda.dart';
 
 class Dash extends StatefulWidget {
-  const Dash({Key? key, required this.username}) : super(key: key);
+  const Dash({Key? key, required this.username, required String email})
+      : super(key: key);
   final String username;
 
   @override
@@ -16,8 +18,29 @@ class Dash extends StatefulWidget {
 }
 
 class _DashState extends State<Dash> {
+  Key key = UniqueKey();
+  String photoUrl = FirebaseAuth.instance.currentUser!.photoURL ?? '';
+
   @override
   Widget build(BuildContext context) {
+    const gradient = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        Color(0xFF8FB5E1),
+        Color(0xFFD190E0),
+      ],
+    );
+
+    const gradientSearch = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        Color(0xFFD190E0),
+        Color(0xFF8FB5E1),
+      ],
+    );
+
     initializeDateFormatting();
     String locale = 'es';
     DateTime now = DateTime.now();
@@ -73,13 +96,6 @@ class _DashState extends State<Dash> {
               },
             ),
             ListTile(
-              title: const Text('Calendario'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/calendario');
-              },
-            ),
-            ListTile(
               title: const Text('About'),
               onTap: () {
                 Navigator.pop(context);
@@ -114,21 +130,6 @@ class _DashState extends State<Dash> {
                 Navigator.pushNamed(context, '/chat');
               },
             ),
-            ListTile(
-              title: const Text('Dashboard1'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyHomePage(
-                      title: 'DTE',
-                      username: widget.username,
-                    ),
-                  ),
-                );
-              },
-            ),
           ],
         ),
       ),
@@ -138,150 +139,17 @@ class _DashState extends State<Dash> {
           child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Bienvenido,',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    Text(
-                      widget.username,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ],
-                ),
-                Builder(
-                  builder: (context) => Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.menu),
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MyHomePage(
-                                title: 'DTE',
-                                username: widget.username,
-                              ),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.deepPurple[100],
-                          ),
-                          child: const Icon(Icons.person),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: TopBar(
+                username: widget.username,
+                photoUrl: photoUrl,
+                email: FirebaseAuth.instance.currentUser!.email!),
           ),
           const SizedBox(height: 25),
-
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                    color: Colors.pink[100],
-                    borderRadius: BorderRadius.circular(12)),
-                child: Row(children: [
-                  SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: Lottie.network(
-                        'https://assets10.lottiefiles.com/packages/lf20_tutvdkg0.json'),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Como te sientes hoy?',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const Text(
-                          'Agenda tu cita si lo necesitas',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/calendario');
-                          },
-                          child: Container(
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: Colors.deepPurple[300],
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'Empezemos',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )),
-                        )
-                      ],
-                    ),
-                  )
-                ]),
-              )),
+          const WelcomeMessageBox(gradient: gradient),
           const SizedBox(height: 25),
-
-          //SEARCH BAR
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.deepPurple[100],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    prefixIcon: Icon(Icons.search),
-                    hintText: 'Que estas buscando?',
-                  ),
-                ),
-              )),
-
+          const Busqueda(gradientSearch: gradientSearch),
           const SizedBox(height: 25),
-
-          //LIST VIEW
           SizedBox(
             height: 80,
             child: ListView(
@@ -290,47 +158,40 @@ class _DashState extends State<Dash> {
                 _buildButton(
                     'Asesores', '/especialistas', 'lib/images/asesor.png'),
                 _buildButton(
+                    'Foro de\npreguntas', '/foro', 'lib/images/chat.png'),
+                _buildButton(
                     'Docentes', '/docentes', 'lib/images/Docentes.png'),
-                _buildButton('Calendario', '/calendario',
-                    'lib/images/calendar_icon.png'),
+                _buildButton(
+                    'Eventos\nProximos', '/eventos', 'lib/images/calendar.png'),
                 _buildButton('About', '/about', 'lib/images/uct_splash.png'),
                 _buildButton(
                     'Recursos', '/recursos', 'lib/images/recursos.png'),
                 _buildButton(
                     'Contacto', '/contacto', 'lib/images/contacto.png'),
-                _buildButton('Foro', '/foro', 'lib/images/foro.png'),
-                _buildButton('Chat de Apoyo', '/chat', 'lib/images/chat.png'),
               ],
             ),
           ),
           const SizedBox(height: 25),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'En Progreso',
+                Text(
+                  'Eventos Proximos',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
                 ),
-                Text(
-                  'Ver todos',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.grey[500]),
-                ),
               ],
             ),
           ),
-
-          const SizedBox(
-            height: 100,
-          )
+          const SizedBox(height: 10),
+          Expanded(
+            key: key,
+            child: const UpcomingEventsComponent(),
+          ),
         ],
       )),
     );

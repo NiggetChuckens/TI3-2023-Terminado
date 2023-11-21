@@ -45,7 +45,7 @@ class LandingPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'Bienvenido a DTE',
+                        'Bienvenido a Cinap',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
@@ -72,7 +72,7 @@ class LandingPage extends StatelessWidget {
                                 PageRouteBuilder(
                                   transitionDuration: const Duration(milliseconds: 500),
                                   pageBuilder: (context, animation, secondaryAnimation) =>
-                                      LoginPage(),
+                                      const LoginPage(),
                                   transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                     const begin = Offset(0.0, 1.0);
                                     const end = Offset.zero;

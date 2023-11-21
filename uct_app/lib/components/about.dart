@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:uct_app/components/specialists.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -5,7 +7,8 @@ import 'package:url_launcher/url_launcher.dart';
 class EspecialistaDetails extends StatefulWidget {
   final Specialist specialist;
 
-  const EspecialistaDetails({Key? key, required this.specialist}) : super(key: key);
+  const EspecialistaDetails({Key? key, required this.specialist})
+      : super(key: key);
 
   @override
   EspecialistaDetailsState createState() => EspecialistaDetailsState();
@@ -13,20 +16,20 @@ class EspecialistaDetails extends StatefulWidget {
 
 class EspecialistaDetailsState extends State<EspecialistaDetails> {
   void _launchMailClient(String email) async {
-  final Uri params = Uri(
-    scheme: 'mailto',
-    path: email,
-    query: 'subject=Consulta%20DTE',
-    
-  );
+    final Uri params = Uri(
+      scheme: 'mailto',
+      path: email,
+      query: 'subject=Consulta%20Cinap',
+    );
 
-  String url = params.toString();
-  if (await canLaunchUrl(params)) {
-    await launchUrl(params);
-  } else {
-    throw 'Could not launch $url';
+    String url = params.toString();
+    if (await canLaunchUrl(params)) {
+      await launchUrl(params);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
-}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,8 +46,8 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                       bottomLeft: Radius.circular(50),
                       bottomRight: Radius.circular(50),
                     ),
-                    child: Image.asset(
-                      'lib/images/doctor1.jpg', // replace with your static image path
+                    child: Image.network(
+                      widget.specialist.pfp,
                       height: 300,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -74,16 +77,16 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      
-                      widget.specialist.rol,
+                      widget.specialist.grado,
                       style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 18,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 25),
+                    
                     const Text(
-                      'Especialidad en:',
+                      'Especialidad',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 19,
@@ -98,10 +101,55 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                         fontSize: 18,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Rol',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 19,
+                        color: Color.fromARGB(255, 16, 13, 20),
+                      ),
+                    ),
+                    Text(
+                      widget.specialist.rol,
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Correo',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 19,
+                        color: Color.fromARGB(255, 16, 13, 20),
+                      ),
+                    ),
+                    Text(
+                      widget.specialist.email,
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 18,
+                      ),
+                    ),
+
+                    const SizedBox(height: 90),
                     Center(
                       child: ElevatedButton(
-                        onPressed: () {Navigator.pushNamed(context, '/calendario');},
+                        onPressed: () {
+                          print(
+                              "Email for attendees: ${widget.specialist.email}");
+                          "Name for attendees: ${widget.specialist.name}";
+                          Navigator.pushNamed(
+                            context,
+                            '/calendario',
+                            arguments: {
+                              'email': widget.specialist.email,
+                              'name': widget.specialist.name,
+                            },
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.deepPurple,
                           shape: RoundedRectangleBorder(
@@ -117,10 +165,11 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 1),
                     Center(
                       child: ElevatedButton(
-                        onPressed: () => _launchMailClient(widget.specialist.email),
+                        onPressed: () =>
+                            _launchMailClient(widget.specialist.email),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.deepPurple,
                           shape: RoundedRectangleBorder(
@@ -128,7 +177,7 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                           ),
                         ),
                         child: const Text(
-                          'Correo',
+                          'Enviar Correo',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -137,9 +186,7 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                       ),
                     ),
                   ],
-                  
                 ),
-                
               ),
               const SizedBox(height: 16),
             ],

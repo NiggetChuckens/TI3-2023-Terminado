@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'landing.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -9,10 +9,10 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
-
   @override
   void initState() {
     super.initState();
@@ -20,8 +20,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    _animation = Tween<double>(begin: 1.0, end: 0.0).animate(_animationController);
-    Future.delayed(const Duration(seconds: 1), () {
+    _animation =
+        Tween<double>(begin: 1.0, end: 0.0).animate(_animationController);
+    Future.delayed(const Duration(seconds: 2), () {
       _animationController.forward().then((_) {
         Navigator.pushReplacement(
           context,
@@ -39,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
+    return Scaffold(
       backgroundColor: Colors.blue,
       body: Center(
         child: FadeTransition(
@@ -48,12 +49,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.asset(
-                'lib/images/uct_splash.png',
-                width: MediaQuery.of(context).size.width * 0.5, 
-              ), 
+                'lib/images/Logo_CINAP.png',
+                width: MediaQuery.of(context).size.width * 0.5,
+              ),
               const SizedBox(height: 30.0),
               const Text(
-                'DTE',
+                'CINAP',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
