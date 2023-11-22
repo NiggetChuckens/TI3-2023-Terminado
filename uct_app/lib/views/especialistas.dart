@@ -35,9 +35,9 @@ Future<List<Specialist>> fetchSpecialists(String rol) async {
   List<Specialist> specialistList = [];
 
   await specialists.get().then((QuerySnapshot querySnapshot) {
-    querySnapshot.docs.forEach((doc) {
+    for (var doc in querySnapshot.docs) {
       Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
-      print('Document data: ${data}'); // Print document data
+      print('Document data: $data'); // Print document data
 
       try {
         if (rol == 'Todos' || doc['rol'] == rol) {
@@ -57,7 +57,7 @@ Future<List<Specialist>> fetchSpecialists(String rol) async {
             'Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
         print('Error: $e'); // Print the error
       }
-    });
+    }
   });
 
   return specialistList;
@@ -69,7 +69,7 @@ Future<List<Specialist>> fetchSpecialists(String rol) async {
     List<String> rolesList = [];
 
     await specialists.get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         try {
           String role = doc['rol'];
           if (!rolesList.contains(role)) {
@@ -80,7 +80,7 @@ Future<List<Specialist>> fetchSpecialists(String rol) async {
               'Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
           print('Error: $e'); // Print the error
         }
-      });
+      }
     });
 
     return rolesList;
@@ -144,7 +144,7 @@ Future<List<Specialist>> fetchSpecialists(String rol) async {
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     print(snapshot.error);
-                    return Center(child: Text('An error has occurred'));
+                    return const Center(child: Text('An error has occurred'));
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     return GridView.builder(
                       gridDelegate:
@@ -219,7 +219,7 @@ Future<List<Specialist>> fetchSpecialists(String rol) async {
                       },
                     );
                   } else {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                 },
               ),

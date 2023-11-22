@@ -9,7 +9,13 @@ import 'package:googleapis/calendar/v3.dart' as gcal;
 import 'package:http/http.dart'
     show BaseRequest, StreamedResponse;
 import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+final FirebaseFirestore firestore = FirebaseFirestore.instance;
+Future<List<String>> getAllowedDomains() async {
+  final QuerySnapshot querySnapshot = await firestore.collection('dominiospermitidos').get();
+  return querySnapshot.docs.map((doc) => doc.id).toList();
+}
 String capitalize(String str) {
   if (str.isEmpty) {
     return str;
@@ -63,55 +69,59 @@ class _LoginPageState extends State<LoginPage> {
   List<gcal.Event>? events;
 
   Future<String?> signInWithGoogle(
-      EventsModel eventsModel, Function(List<gcal.Event>?) callback) async {
-    // Sign out first to ensure the account selection dialog is shown
-    await googleSignIn.signOut();
+    EventsModel eventsModel, Function(List<gcal.Event>?) callback) async {
+  // Sign out first to ensure the account selection dialog is shown
+  await googleSignIn.signOut();
 
-    final GoogleSignInAccount? googleSignInAccount =
-        await googleSignIn.signIn();
-    if (googleSignInAccount != null) {
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
+  final GoogleSignInAccount? googleSignInAccount =
+      await googleSignIn.signIn();
+  if (googleSignInAccount != null) {
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
 
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
 
-      final UserCredential authResult =
-          await firebaseAuth.signInWithCredential(credential);
-      final User? user = authResult.user;
+    final UserCredential authResult =
+        await firebaseAuth.signInWithCredential(credential);
+    final User? user = authResult.user;
 
-      if (user != null) {
-        assert(!user.isAnonymous);
-        assert(await user.getIdToken() != null);
+    if (user != null) {
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
 
-        final User? currentUser = firebaseAuth.currentUser;
-        assert(user.uid == currentUser!.uid);
-        
-        // Check if the email domain is alu.uct.cl
-        if (user.email!.endsWith('@alu.uct.cl')) {
-          print('signInWithGoogle succeeded: $user');
+      final User? currentUser = firebaseAuth.currentUser;
+      assert(user.uid == currentUser!.uid);
+      
+      // Fetch the allowed domains
+      List<String> allowedDomains = await getAllowedDomains();
 
-          // Split the username on space and keep the first two parts
-          List<String> nameParts = user.displayName!.split(' ');
-          String shortName = user
-              .displayName!; // default to full name if name has less than two parts
-          if (nameParts.length > 1) {
-            shortName = '${capitalize(nameParts[0])} ${capitalize(nameParts[1])}'; // capitalize first and last name
-            print('shortName: $shortName');
-            print('email: ${user.email}');
-          }
+      // Check if the email domain is in the allowed domains
+      String domain = user.email!.split('@').last;
+      if (allowedDomains.contains(domain)) {
+        print('signInWithGoogle succeeded: $user');
 
-          return shortName;
-        } else {
-          print('signInWithGoogle failed: Email domain is not alu.uct.cl');
-          return null;
+        // Split the username on space and keep the first two parts
+        List<String> nameParts = user.displayName!.split(' ');
+        String shortName = user
+            .displayName!; // default to full name if name has less than two parts
+        if (nameParts.length > 1) {
+          shortName = '${capitalize(nameParts[0])} ${capitalize(nameParts[1])}'; // capitalize first and last name
+          print('shortName: $shortName');
+          print('email: ${user.email}');
         }
+
+        return shortName;
+      } else {
+        print('signInWithGoogle failed: Email domain is not in the allowed domains');
+        return null;
       }
     }
-    return null;
   }
+  return null;
+}
 
   void signOutGoogle() async {
     await googleSignIn.signOut();
@@ -177,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('Failed to sign in with Google'),
+                            content: Text('Solo permitidos correo institucionales!'),
                             backgroundColor: Colors.red,
                             duration: Duration(seconds: 1),
                           ),
