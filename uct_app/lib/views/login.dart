@@ -8,6 +8,14 @@ import 'dashboard2.dart';
 import 'package:googleapis/calendar/v3.dart' as gcal;
 import 'package:http/http.dart' show BaseRequest, StreamedResponse;
 import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+final FirebaseFirestore firestore = FirebaseFirestore.instance;
+Future<List<String>> getAllowedDomains() async {
+  final QuerySnapshot querySnapshot =
+      await firestore.collection('dominiospermitidos').get();
+  return querySnapshot.docs.map((doc) => doc.id).toList();
+}
 
 String capitalize(String str) {
   if (str.isEmpty) {
@@ -87,9 +95,13 @@ class _LoginPageState extends State<LoginPage> {
 
         final User? currentUser = firebaseAuth.currentUser;
         assert(user.uid == currentUser!.uid);
-        
-        // Check if the email domain is alu.uct.cl
-        if (user.email!.endsWith('@alu.uct.cl')) {
+
+        // Fetch the allowed domains
+        List<String> allowedDomains = await getAllowedDomains();
+
+        // Check if the email domain is in the allowed domains
+        String domain = user.email!.split('@').last;
+        if (allowedDomains.contains(domain)) {
           print('signInWithGoogle succeeded: $user');
 
           // Split the username on space and keep the first two parts
@@ -105,7 +117,8 @@ class _LoginPageState extends State<LoginPage> {
 
           return shortName;
         } else {
-          print('signInWithGoogle failed: Email domain is not alu.uct.cl');
+          print(
+              'signInWithGoogle failed: Email domain is not in the allowed domains');
           return null;
         }
       }
@@ -177,7 +190,8 @@ class _LoginPageState extends State<LoginPage> {
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('Failed to sign in with Google'),
+                            content:
+                                Text('Solo permitidos correo institucionales!'),
                             backgroundColor: Colors.red,
                             duration: Duration(seconds: 1),
                           ),

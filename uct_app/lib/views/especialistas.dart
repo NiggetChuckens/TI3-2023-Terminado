@@ -35,17 +35,12 @@ class _SpecialistPageState extends State<SpecialistPage> {
     List<Specialist> specialistList = [];
 
     await specialists.get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
-        print('Document data: ${data}'); // Print document data
+        print('Document data: $data'); // Print document data
 
         try {
           if (rol == 'Todos' || doc['rol'] == rol) {
-            String pfp = data != null &&
-                    data.containsKey('pfp') &&
-                    data['pfp'] != ''
-                ? doc['pfp']
-                : 'https://firebasestorage.googleapis.com/v0/b/flutter-app-400102.appspot.com/o/Default.jpg?alt=media&token=2e6ebc34-bee5-4c6c-b8ea-7204769c092e'; // Replace with your specific link
             specialistList.add(
               Specialist(
                 name: doc['nombre'],
@@ -53,7 +48,9 @@ class _SpecialistPageState extends State<SpecialistPage> {
                 grado: doc['grado'],
                 rol: doc['rol'],
                 especialidad: doc['especialidad'],
-                pfp: pfp,
+                pfp: data != null && data.containsKey('pfp')
+                    ? doc['pfp']
+                    : 'https://firebasestorage.googleapis.com/v0/b/flutter-app-400102.appspot.com/o/Default.jpg?alt=media&token=2e6ebc34-bee5-4c6c-b8ea-7204769c092e', // Replace with your specific link
               ),
             );
           }
@@ -62,7 +59,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
               'Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
           print('Error: $e'); // Print the error
         }
-      });
+      }
     });
 
     return specialistList;
@@ -74,7 +71,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
     List<String> rolesList = [];
 
     await specialists.get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         try {
           String role = doc['rol'];
           if (!rolesList.contains(role)) {
@@ -85,7 +82,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
               'Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
           print('Error: $e'); // Print the error
         }
-      });
+      }
     });
 
     return rolesList;
@@ -149,7 +146,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     print(snapshot.error);
-                    return Center(child: Text('An error has occurred'));
+                    return const Center(child: Text('An error has occurred'));
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     return GridView.builder(
                       gridDelegate:
@@ -232,7 +229,7 @@ class _SpecialistPageState extends State<SpecialistPage> {
                       },
                     );
                   } else {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                 },
               ),

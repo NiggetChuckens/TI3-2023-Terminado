@@ -1,10 +1,9 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:googleapis/adsense/v2.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -43,9 +42,9 @@ class _UpcomingEventsComponentState extends State<UpcomingEventsComponent> {
           // Check if the event date is in the future
           if (date.isAfter(DateTime.now())) {
             citasList.add({
+              'id': doc.id, // Add the document ID here
               'requester': doc['requester'],
               'attendee': doc['attendee'],
-
               'attendeeName': doc['attendeeName'], // Add the attendee name here
               'date': date,
               'meet': doc['googleMeetLink'],
@@ -98,31 +97,185 @@ class _UpcomingEventsComponentState extends State<UpcomingEventsComponent> {
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
-                  child: ListTile(
-                    leading:
-                        const Icon(Icons.event, color: Colors.white, size: 40),
-                    title: Text(
-                      'Cita con: ${snapshot.data![index]['attendeeName']}',
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Desde: $formattedStartDate',
-                            style: const TextStyle(
-                                fontSize: 14, color: Colors.white)),
-                        Text('Hasta: $formattedEndDate',
-                            style: const TextStyle(
-                                fontSize: 14, color: Colors.white)),
-                      ],
-                    ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.video_call, color: Colors.white),
-                      onPressed: () =>
-                          openMeetLink(snapshot.data![index]['meet']),
+                  child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Choose an option'),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  GestureDetector(
+                                    child: const Text("Reschedule"),
+                                    // Reschedule logic
+                                    onTap: () {
+                                      showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime.now(),
+                                        lastDate: DateTime(2100),
+                                      ).then((date) {
+                                        if (date != null) {
+                                          showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.now(),
+                                          ).then((time) {
+                                            if (time != null) {
+                                              DateTime chosenDateTime =
+                                                  DateTime(
+                                                      date.year,
+                                                      date.month,
+                                                      date.day,
+                                                      time.hour,
+                                                      time.minute);
+
+                                              // Check if the chosen time is within working hours
+                                              DateTime startOfWorkingHours =
+                                                  DateTime(date.year,
+                                                      date.month, date.day, 8);
+                                              DateTime endOfWorkingHours =
+                                                  DateTime(date.year,
+                                                      date.month, date.day, 17);
+                                              if (chosenDateTime.isBefore(
+                                                      startOfWorkingHours) ||
+                                                  chosenDateTime.isAfter(
+                                                      endOfWorkingHours)) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(const SnackBar(
+                                                        content: Text(
+                                                            'The chosen time is outside of working hours')));
+                                                return;
+                                              }
+
+                                              // Fetch the events for the chosen date
+                                              FirebaseFirestore.instance
+                                                  .collection('citas')
+                                                  .where('date',
+                                                      isGreaterThanOrEqualTo:
+                                                          DateTime(
+                                                              date.year,
+                                                              date.month,
+                                                              date.day))
+                                                  .where('date',
+                                                      isLessThan: DateTime(
+                                                          date.year,
+                                                          date.month,
+                                                          date.day + 1))
+                                                  .get()
+                                                  .then((querySnapshot) {
+                                                for (var doc
+                                                    in querySnapshot.docs) {
+                                                  DateTime eventDateTime =
+                                                      doc['date'].toDate();
+
+                                                  // Check if there's an event at the chosen time
+                                                  if (eventDateTime
+                                                      .isAtSameMomentAs(
+                                                          chosenDateTime)) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                            const SnackBar(
+                                                                content: Text(
+                                                                    'The chosen time is occupied')));
+                                                    return;
+                                                  }
+                                                }
+
+                                                // If the chosen time is not occupied, update the Firestore document
+                                                FirebaseFirestore.instance
+                                                    .collection('citas')
+                                                    .doc(snapshot.data![index]
+                                                        ['id'])
+                                                    .update({
+                                                  'date': chosenDateTime,
+                                                });
+                                              });
+                                            }
+                                          });
+                                        }
+                                      });
+                                    },
+                                  ),
+                                  const Padding(padding: EdgeInsets.all(8.0)),
+                                  GestureDetector(
+                                    child: const Text("Eliminar"),
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text('Eliminar cita'),
+                                            content: const Text(
+                                                'Esta seguro que desea eliminar la cita?'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                style: TextButton.styleFrom(
+                                                  foregroundColor: Colors
+                                                      .black, // Change text color
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                style: TextButton.styleFrom(
+                                                  foregroundColor: Colors.white,
+                                                  backgroundColor: Colors
+                                                      .red, // Change background color
+                                                ),
+                                                onPressed: () {
+                                                  FirebaseFirestore.instance
+                                                      .collection('citas')
+                                                      .doc(snapshot.data![index]
+                                                          ['id'])
+                                                      .delete();
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('Eliminar'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: ListTile(
+                      leading: const Icon(Icons.event,
+                          color: Colors.white, size: 40),
+                      title: Text(
+                        'Cita con: ${snapshot.data![index]['attendeeName']}',
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Desde: $formattedStartDate',
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.white)),
+                          Text('Hasta: $formattedEndDate',
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.white)),
+                        ],
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.video_call, color: Colors.white),
+                        onPressed: () =>
+                            openMeetLink(snapshot.data![index]['meet']),
+                      ),
                     ),
                   ),
                 );

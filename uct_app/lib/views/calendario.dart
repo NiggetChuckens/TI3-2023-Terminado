@@ -46,6 +46,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 DateTime(date.year, date.month, date.day, 0, 0))
         .where('date',
             isLessThan: DateTime(date.year, date.month, date.day + 1, 0, 0))
+        .where('attendee', isEqualTo: attendeeEmail)
         .get();
 
     final List<DocumentSnapshot> documents = result.docs;
@@ -66,7 +67,6 @@ class _CalendarPageState extends State<CalendarPage> {
       }
     }
 
-    // No overlapping event exists, add the event
     // No overlapping event exists, add the event
     await _firestore.collection('citas').add({
       'date': date,
@@ -181,7 +181,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
         // Create an appointment on the user's Google Calendar
         calendar.Event event = calendar.Event()
-          ..summary = 'Appointment'
+          ..summary = 'Cita con ${widget.specialistName}'
           ..start = calendar.EventDateTime()
           ..end = calendar.EventDateTime()
           ..start!.dateTime = selectedDateTime
@@ -276,7 +276,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
             // Create an appointment on the user's Google Calendar
             calendar.Event event = calendar.Event()
-              ..summary = 'Appointment'
+              ..summary = 'Cita con ${widget.specialistName}'
               ..start = calendar.EventDateTime()
               ..end = calendar.EventDateTime()
               ..start!.dateTime = selectedDateTime
