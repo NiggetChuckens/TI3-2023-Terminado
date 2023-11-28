@@ -9,11 +9,13 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
+
 class CalendarPage extends StatefulWidget {
   final String specialistEmail;
   final String specialistName;
 
-  const CalendarPage({Key? key, required this.specialistEmail, required this.specialistName})
+  const CalendarPage(
+      {Key? key, required this.specialistEmail, required this.specialistName})
       : super(key: key);
 
   @override
@@ -29,44 +31,43 @@ class _CalendarPageState extends State<CalendarPage> {
   static const int appointmentDurationInHours =
       1; // Set the appointment duration
   Future<bool> addEventToFirestore(
-  DateTime date, 
-  String attendeeEmail, 
-  String requesterEmail, 
-  String attendeeName, 
-  String googleMeetLink, 
-)
- async {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  // Fetch all events for the day
-  final QuerySnapshot result = await _firestore
-      .collection('citas')
-      .where('date',
-          isGreaterThanOrEqualTo:
-              DateTime(date.year, date.month, date.day, 0, 0))
-      .where('date',
-          isLessThan: DateTime(date.year, date.month, date.day + 1, 0, 0))
-      .get();
+    DateTime date,
+    String attendeeEmail,
+    String requesterEmail,
+    String attendeeName,
+    String googleMeetLink,
+  ) async {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    // Fetch all events for the day
+    final QuerySnapshot result = await _firestore
+        .collection('citas')
+        .where('date',
+            isGreaterThanOrEqualTo:
+                DateTime(date.year, date.month, date.day, 0, 0))
+        .where('date',
+            isLessThan: DateTime(date.year, date.month, date.day + 1, 0, 0))
+        .where('attendee', isEqualTo: attendeeEmail)
+        .get();
 
-  final List<DocumentSnapshot> documents = result.docs;
-  final DateTime newEventEndTime =
-      date.add(const Duration(hours: appointmentDurationInHours));
+    final List<DocumentSnapshot> documents = result.docs;
+    final DateTime newEventEndTime =
+        date.add(const Duration(hours: appointmentDurationInHours));
 
-  for (var doc in documents) {
-    final DateTime existingEventStartTime = doc['date'].toDate();
-    final DateTime existingEventEndTime = existingEventStartTime
-        .add(const Duration(hours: appointmentDurationInHours));
+    for (var doc in documents) {
+      final DateTime existingEventStartTime = doc['date'].toDate();
+      final DateTime existingEventEndTime = existingEventStartTime
+          .add(const Duration(hours: appointmentDurationInHours));
 
-    if ((date.isAfter(existingEventStartTime) &&
-            date.isBefore(existingEventEndTime)) ||
-        (newEventEndTime.isAfter(existingEventStartTime) &&
-            newEventEndTime.isBefore(existingEventEndTime))) {
-      _showDialog('Ya hay una cita!');
-      return false;
+      if ((date.isAfter(existingEventStartTime) &&
+              date.isBefore(existingEventEndTime)) ||
+          (newEventEndTime.isAfter(existingEventStartTime) &&
+              newEventEndTime.isBefore(existingEventEndTime))) {
+        _showDialog('Ya hay una cita!');
+        return false;
+      }
     }
-  }
 
-  // No overlapping event exists, add the event
-  // No overlapping event exists, add the event
+    // No overlapping event exists, add the event
     await _firestore.collection('citas').add({
       'date': date,
       'attendee': attendeeEmail,
@@ -75,8 +76,9 @@ class _CalendarPageState extends State<CalendarPage> {
       'googleMeetLink': googleMeetLink, // Add the Google Meet link here
     });
 
-  return true;
-}
+    return true;
+  }
+
   void _showDialog(String message) {
     showDialog(
       context: context,
@@ -84,16 +86,16 @@ class _CalendarPageState extends State<CalendarPage> {
         return AlertDialog(
           title: Text(message),
           actions: <Widget>[
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () {
-              int count = 0;
-              Navigator.popUntil(context, (route) {
-                return count++ == 3;
-              });
-            },
-          ),
-        ],
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                int count = 0;
+                Navigator.popUntil(context, (route) {
+                  return count++ == 3;
+                });
+              },
+            ),
+          ],
         );
       },
     );
@@ -126,23 +128,22 @@ class _CalendarPageState extends State<CalendarPage> {
             ],
           ),
           actions: <Widget>[
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () {
-              int count = 0;
-              Navigator.popUntil(context, (route) {
-                return count++ == 3;
-              });
-            },
-          ),
-        ],
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                int count = 0;
+                Navigator.popUntil(context, (route) {
+                  return count++ == 3;
+                });
+              },
+            ),
+          ],
         );
       },
     );
   }
 
   Future<void> signInWithGoogle() async {
-    
     final GoogleSignIn googleSignIn = GoogleSignIn(
       scopes: [
         'email',
@@ -180,7 +181,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
         // Create an appointment on the user's Google Calendar
         calendar.Event event = calendar.Event()
-          ..summary = 'Appointment'
+          ..summary = 'Cita con ${widget.specialistName}'
           ..start = calendar.EventDateTime()
           ..end = calendar.EventDateTime()
           ..start!.dateTime = selectedDateTime
@@ -193,56 +194,53 @@ class _CalendarPageState extends State<CalendarPage> {
 
         // Add Google Meet link to the event
         // Add Google Meet link to the event
-          calendar.ConferenceData conferenceData = calendar.ConferenceData();
-          calendar.CreateConferenceRequest conferenceRequest = calendar.CreateConferenceRequest();
-          var uuid = const Uuid();
-          conferenceRequest.requestId = uuid.v4();
-          conferenceData.createRequest = conferenceRequest;
-          event.conferenceData = conferenceData;
+        calendar.ConferenceData conferenceData = calendar.ConferenceData();
+        calendar.CreateConferenceRequest conferenceRequest =
+            calendar.CreateConferenceRequest();
+        var uuid = const Uuid();
+        conferenceRequest.requestId = uuid.v4();
+        conferenceData.createRequest = conferenceRequest;
+        event.conferenceData = conferenceData;
 
+        // Create a new http.Client instance
+        final client = http.Client();
 
-          // Create a new http.Client instance
-          final client = http.Client();
+        // Create a new calendar.CalendarApi instance
 
-          // Create a new calendar.CalendarApi instance
+        // Create a new http.Request instance
+        final request = http.Request(
+          'POST',
+          Uri.parse(
+              'https://www.googleapis.com/calendar/v3/calendars/primary/events?conferenceDataVersion=1&sendUpdates=all'),
+        );
 
-          // Create a new http.Request instance
-          final request = http.Request(
-            'POST',
-            Uri.parse(
-                'https://www.googleapis.com/calendar/v3/calendars/primary/events?conferenceDataVersion=1&sendUpdates=all'),
-          );
+        // Set the access token in the request headers
+        request.headers['Authorization'] = 'Bearer ${googleAuth.accessToken}';
 
-          // Set the access token in the request headers
-          request.headers['Authorization'] = 'Bearer ${googleAuth.accessToken}';
+        // Set the request body as JSON
+        request.body = jsonEncode(event.toJson());
 
-          // Set the request body as JSON
-          request.body = jsonEncode(event.toJson());
+        // Send the request and get the response
+        final response = await client.send(request);
+        final responseBody = await response.stream.bytesToString();
+        final responseJson = jsonDecode(responseBody);
+        final googleMeetLink = responseJson['hangoutLink'];
+        // Close the http.Client instance
+        client.close();
 
-          // Send the request and get the response
-          final response = await client.send(request);
-          final responseBody = await response.stream.bytesToString();
-                    final responseJson = jsonDecode(responseBody);
-                    final googleMeetLink = responseJson['hangoutLink'];
-          // Close the http.Client instance
-          client.close();
-          
-        
         if (response.statusCode == 200) {
           // Add the event to Firestore
           bool eventAdded = await addEventToFirestore(
-  selectedDateTime, 
-  widget.specialistEmail, 
-  account.email, 
-  widget.specialistName, 
-  googleMeetLink
-);
+              selectedDateTime,
+              widget.specialistEmail,
+              account.email,
+              widget.specialistName,
+              googleMeetLink);
           if (eventAdded) {
             _showSuccessDialog(
                 selectedDateTime); // Show success dialog only if event was added to Firestore
           }
-        } else {
-        }
+        } else {}
       }
     } catch (error) {
       if (error.toString().contains('access_token_expired')) {
@@ -278,7 +276,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
             // Create an appointment on the user's Google Calendar
             calendar.Event event = calendar.Event()
-              ..summary = 'Appointment'
+              ..summary = 'Cita con ${widget.specialistName}'
               ..start = calendar.EventDateTime()
               ..end = calendar.EventDateTime()
               ..start!.dateTime = selectedDateTime
@@ -291,7 +289,8 @@ class _CalendarPageState extends State<CalendarPage> {
 
             // Add Google Meet link to the event
             calendar.ConferenceData conferenceData = calendar.ConferenceData();
-            calendar.CreateConferenceRequest conferenceRequest = calendar.CreateConferenceRequest();
+            calendar.CreateConferenceRequest conferenceRequest =
+                calendar.CreateConferenceRequest();
             var uuid = const Uuid();
             conferenceRequest.requestId = uuid.v4();
             conferenceData.createRequest = conferenceRequest;
@@ -318,34 +317,30 @@ class _CalendarPageState extends State<CalendarPage> {
 
             // Send the request and get the response
             final response = await client.send(request);
-final responseBody = await response.stream.bytesToString();
-final responseJson = jsonDecode(responseBody);
-final googleMeetLink = responseJson['hangoutLink'];
+            final responseBody = await response.stream.bytesToString();
+            final responseJson = jsonDecode(responseBody);
+            final googleMeetLink = responseJson['hangoutLink'];
             // Close the http.Client instance
             client.close();
-            
+
             // Check the response status code
             // Check the response status code
             if (response.statusCode == 200) {
               // Add the event to Firestore
               bool eventAdded = await addEventToFirestore(
-              selectedDateTime, 
-              widget.specialistEmail, 
-              refreshedAccount.email, 
-              widget.specialistName, 
-              googleMeetLink
-            );          
+                  selectedDateTime,
+                  widget.specialistEmail,
+                  refreshedAccount.email,
+                  widget.specialistName,
+                  googleMeetLink);
               if (eventAdded) {
                 _showSuccessDialog(
                     selectedDateTime); // Show success dialog only if event was added to Firestore
               }
-            } else {
-            }
+            } else {}
           }
-        } catch (refreshError) {
-        }
-      } else {
-      }
+        } catch (refreshError) {}
+      } else {}
     }
   }
 

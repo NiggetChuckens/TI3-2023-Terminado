@@ -84,10 +84,11 @@ class _UpcomingEventsComponentState extends State<UpcomingEventsComponent> {
                 DateTime endDate = startDate.add(const Duration(hours: 1));
                 String formattedStartDate = capitalize(
                     DateFormat('EEE d, HH:mm', 'es').format(startDate));
-                String formattedEndDate =
-                    capitalize(DateFormat('EEE d, HH:mm', 'es').format(endDate));
+                String formattedEndDate = capitalize(
+                    DateFormat('EEE d, HH:mm', 'es').format(endDate));
                 return Container(
-                  margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
@@ -109,92 +110,139 @@ class _UpcomingEventsComponentState extends State<UpcomingEventsComponent> {
                                   GestureDetector(
                                     child: const Text("Reschedule"),
                                     // Reschedule logic
-onTap: () {
-  showDatePicker(
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime.now(),
-    lastDate: DateTime(2100),
-  ).then((date) {
-    if (date != null) {
-      showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-      ).then((time) {
-        if (time != null) {
-          DateTime chosenDateTime = DateTime(date.year, date.month, date.day, time.hour, time.minute);
+                                    onTap: () {
+                                      showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime.now(),
+                                        lastDate: DateTime(2100),
+                                      ).then((date) {
+                                        if (date != null) {
+                                          showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.now(),
+                                          ).then((time) {
+                                            if (time != null) {
+                                              DateTime chosenDateTime =
+                                                  DateTime(
+                                                      date.year,
+                                                      date.month,
+                                                      date.day,
+                                                      time.hour,
+                                                      time.minute);
 
-          // Check if the chosen time is within working hours
-          DateTime startOfWorkingHours = DateTime(date.year, date.month, date.day, 8);
-          DateTime endOfWorkingHours = DateTime(date.year, date.month, date.day, 17);
-          if (chosenDateTime.isBefore(startOfWorkingHours) || chosenDateTime.isAfter(endOfWorkingHours)) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('The chosen time is outside of working hours')));
-            return;
-          }
+                                              // Check if the chosen time is within working hours
+                                              DateTime startOfWorkingHours =
+                                                  DateTime(date.year,
+                                                      date.month, date.day, 8);
+                                              DateTime endOfWorkingHours =
+                                                  DateTime(date.year,
+                                                      date.month, date.day, 17);
+                                              if (chosenDateTime.isBefore(
+                                                      startOfWorkingHours) ||
+                                                  chosenDateTime.isAfter(
+                                                      endOfWorkingHours)) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(const SnackBar(
+                                                        content: Text(
+                                                            'The chosen time is outside of working hours')));
+                                                return;
+                                              }
 
-          // Fetch the events for the chosen date
-          FirebaseFirestore.instance.collection('citas')
-            .where('date', isGreaterThanOrEqualTo: DateTime(date.year, date.month, date.day))
-            .where('date', isLessThan: DateTime(date.year, date.month, date.day + 1))
-            .get()
-            .then((querySnapshot) {
-              for (var doc in querySnapshot.docs) {
-                DateTime eventDateTime = doc['date'].toDate();
+                                              // Fetch the events for the chosen date
+                                              FirebaseFirestore.instance
+                                                  .collection('citas')
+                                                  .where('date',
+                                                      isGreaterThanOrEqualTo:
+                                                          DateTime(
+                                                              date.year,
+                                                              date.month,
+                                                              date.day))
+                                                  .where('date',
+                                                      isLessThan: DateTime(
+                                                          date.year,
+                                                          date.month,
+                                                          date.day + 1))
+                                                  .get()
+                                                  .then((querySnapshot) {
+                                                for (var doc
+                                                    in querySnapshot.docs) {
+                                                  DateTime eventDateTime =
+                                                      doc['date'].toDate();
 
-                // Check if there's an event at the chosen time
-                if (eventDateTime.isAtSameMomentAs(chosenDateTime)) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('The chosen time is occupied')));
-                  return;
-                }
-              }
+                                                  // Check if there's an event at the chosen time
+                                                  if (eventDateTime
+                                                      .isAtSameMomentAs(
+                                                          chosenDateTime)) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                            const SnackBar(
+                                                                content: Text(
+                                                                    'The chosen time is occupied')));
+                                                    return;
+                                                  }
+                                                }
 
-              // If the chosen time is not occupied, update the Firestore document
-              FirebaseFirestore.instance.collection('citas').doc(snapshot.data![index]['id']).update({
-                'date': chosenDateTime,
-              });
-            });
-        }
-      });
-    }
-  });
-},
+                                                // If the chosen time is not occupied, update the Firestore document
+                                                FirebaseFirestore.instance
+                                                    .collection('citas')
+                                                    .doc(snapshot.data![index]
+                                                        ['id'])
+                                                    .update({
+                                                  'date': chosenDateTime,
+                                                });
+                                              });
+                                            }
+                                          });
+                                        }
+                                      });
+                                    },
                                   ),
                                   const Padding(padding: EdgeInsets.all(8.0)),
-GestureDetector(
-  child: const Text("Eliminar"),
-  onTap: () {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Eliminar cita'),
-          content: const Text('Esta seguro que desea eliminar la cita?'),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.black, // Change text color
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Colors.red, // Change background color
-              ),
-              onPressed: () {
-                FirebaseFirestore.instance.collection('citas').doc(snapshot.data![index]['id']).delete();
-                Navigator.of(context).pop();
-              },
-              child: const Text('Eliminar'),
-            ),
-          ],
-        );
-      },
-    );
-  },
-),
+                                  GestureDetector(
+                                    child: const Text("Eliminar"),
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text('Eliminar cita'),
+                                            content: const Text(
+                                                'Esta seguro que desea eliminar la cita?'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                style: TextButton.styleFrom(
+                                                  foregroundColor: Colors
+                                                      .black, // Change text color
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                style: TextButton.styleFrom(
+                                                  foregroundColor: Colors.white,
+                                                  backgroundColor: Colors
+                                                      .red, // Change background color
+                                                ),
+                                                onPressed: () {
+                                                  FirebaseFirestore.instance
+                                                      .collection('citas')
+                                                      .doc(snapshot.data![index]
+                                                          ['id'])
+                                                      .delete();
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('Eliminar'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
                                 ],
                               ),
                             ),
@@ -203,8 +251,8 @@ GestureDetector(
                       );
                     },
                     child: ListTile(
-                      leading:
-                          const Icon(Icons.event, color: Colors.white, size: 40),
+                      leading: const Icon(Icons.event,
+                          color: Colors.white, size: 40),
                       title: Text(
                         'Cita con: ${snapshot.data![index]['attendeeName']}',
                         style: const TextStyle(
@@ -216,7 +264,8 @@ GestureDetector(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Desde: $formattedStartDate',
-                              style: const TextStyle(                                  fontSize: 14, color: Colors.white)),
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.white)),
                           Text('Hasta: $formattedEndDate',
                               style: const TextStyle(
                                   fontSize: 14, color: Colors.white)),

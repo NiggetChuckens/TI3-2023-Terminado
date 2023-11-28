@@ -511,59 +511,95 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                                     },
                                   ),
                                   Text('$dislikes'),
-                                  if (_email ==
-                                      (document.data()
-                                          as Map<String, dynamic>)['email'])
-                                    IconButton(
-                                      icon: const Icon(Icons.edit),
-                                      onPressed: () {
-                                        _editQuestion(
-                                            document.reference,
-                                            document.data()
-                                                as Map<String, dynamic>);
-                                      },
-                                    ),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete),
-                                    onPressed: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: const Text(
-                                                'Confirmar Eliminacion'),
-                                            content: const Text(
-                                                'Esta seguro que desea borrar su pregunta?'),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                child: const Text('Cancelar'),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                              TextButton(
-                                                style: TextButton.styleFrom(
-                                                  foregroundColor: Colors.white,
-                                                  backgroundColor: Colors.red,
-                                                ),
-                                                onPressed: () {
-                                                  document.reference.delete();
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text('Borrar'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
+                                  StreamBuilder<DocumentSnapshot>(
+                                    stream: FirebaseFirestore.instance
+                                        .collection('administradores')
+                                        .doc(_email)
+                                        .snapshots(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<DocumentSnapshot>
+                                            snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return CircularProgressIndicator();
+                                      } else if (snapshot.hasError) {
+                                        return Text("Error: ${snapshot.error}");
+                                      } else if ((snapshot.hasData &&
+                                              snapshot.data!.exists) ||
+                                          _email ==
+                                              (document.data() as Map<String,
+                                                  dynamic>)['email']) {
+                                        // The user is an admin or the owner of the post
+                                        return Row(
+                                          children: [
+                                            IconButton(
+                                              icon: const Icon(Icons.edit),
+                                              onPressed: () {
+                                                _editQuestion(
+                                                    document.reference,
+                                                    document.data() as Map<
+                                                        String, dynamic>);
+                                              },
+                                            ),
+                                            IconButton(
+                                              icon: const Icon(Icons.delete),
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          'Confirmar Eliminacion'),
+                                                      content: const Text(
+                                                          'Esta seguro que desea borrar su pregunta?'),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          child: const Text(
+                                                              'Cancelar'),
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                        ),
+                                                        TextButton(
+                                                          style: TextButton
+                                                              .styleFrom(
+                                                            foregroundColor:
+                                                                Colors.white,
+                                                            backgroundColor:
+                                                                Colors.red,
+                                                          ),
+                                                          onPressed: () {
+                                                            document.reference
+                                                                .delete();
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          child: const Text(
+                                                              'Borrar'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      } else {
+                                        return Container();
+                                      }
                                     },
-                                  ),
+                                  )
                                 ],
                               );
                             },
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -574,7 +610,7 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addQuestion,
-        tooltip: 'Increment',
+        tooltip: 'Agregar Pregunta',
         child: const Icon(Icons.add),
       ),
     );
