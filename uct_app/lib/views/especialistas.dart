@@ -35,32 +35,34 @@ class _SpecialistPageState extends State<SpecialistPage> {
     List<Specialist> specialistList = [];
 
     await specialists.get().then((QuerySnapshot querySnapshot) {
-      for (var doc in querySnapshot.docs) {
-        Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
-        print('Document data: $data'); // Print document data
+    for (var doc in querySnapshot.docs) {
+      Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+      print('Document data: $data'); // Print document data
 
-        try {
-          if (rol == 'Todos' || doc['rol'] == rol) {
-            specialistList.add(
-              Specialist(
-                name: doc['nombre'],
-                email: doc['email'],
-                grado: doc['grado'],
-                rol: doc['rol'],
-                especialidad: doc['especialidad'],
-                pfp: data != null && data.containsKey('pfp')
-                    ? doc['pfp']
-                    : 'https://firebasestorage.googleapis.com/v0/b/flutter-app-400102.appspot.com/o/Default.jpg?alt=media&token=2e6ebc34-bee5-4c6c-b8ea-7204769c092e', // Replace with your specific link
-              ),
-            );
+      try {
+        if (rol == 'Todos' || doc['rol'] == rol) {
+          String pfpLink = 'https://firebasestorage.googleapis.com/v0/b/flutter-app-400102.appspot.com/o/Default.jpg?alt=media&token=2e6ebc34-bee5-4c6c-b8ea-7204769c092e'; // Replace with your specific link
+          if (data != null && data.containsKey('pfp') && data['pfp'] != null && data['pfp'].toString().isNotEmpty) {
+            pfpLink = data['pfp'];
           }
-        } catch (e) {
-          print(
-              'Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
-          print('Error: $e'); // Print the error
+          specialistList.add(
+            Specialist(
+              name: doc['nombre'],
+              email: doc['email'],
+              grado: doc['grado'],
+              rol: doc['rol'],
+              especialidad: doc['especialidad'],
+              pfp: pfpLink,
+            ),
+          );
         }
+      } catch (e) {
+        print(
+            'Failed to process document with ID: ${doc.id}'); // Print document ID if there's an error
+        print('Error: $e'); // Print the error
       }
-    });
+    }
+  });
 
     return specialistList;
   }

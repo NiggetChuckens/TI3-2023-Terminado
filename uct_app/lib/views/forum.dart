@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class QuestionForumPage extends StatefulWidget {
+  const QuestionForumPage({super.key});
+
   @override
   _QuestionForumPageState createState() => _QuestionForumPageState();
 }
@@ -125,6 +127,25 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                 disabledForegroundColor: Colors.grey.withOpacity(0.38),
               ),
               onPressed: () {
+              if (titleController.text.isEmpty || bodyController.text.isEmpty) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Error'),
+                      content: const Text('No se puede dejar el titulo o cuerpo de la pregunta vacio.'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
                 _questions.add({
                   'title': titleController.text,
                   'body': bodyController.text,
@@ -138,8 +159,9 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                   'dislikedBy': [],
                 });
                 Navigator.of(context).pop();
-              },
-              child: const Text('Enviar'),
+              }
+            },
+            child: const Text('Enviar'),
             ),
           ],
         );
@@ -521,7 +543,7 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                                             snapshot) {
                                       if (snapshot.connectionState ==
                                           ConnectionState.waiting) {
-                                        return CircularProgressIndicator();
+                                        return const CircularProgressIndicator();
                                       } else if (snapshot.hasError) {
                                         return Text("Error: ${snapshot.error}");
                                       } else if ((snapshot.hasData &&
@@ -720,17 +742,37 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                 disabledForegroundColor: Colors.grey.withOpacity(0.38),
               ),
               onPressed: () {
+              if (_titleController.text.isEmpty || _bodyController.text.isEmpty) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Error'),
+                      content: Text('No se puede dejar el titulo o cuerpo de la pregunta vacio.'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
                 questionRef.update({
                   'title': _titleController.text,
                   'body': _bodyController.text,
                 });
                 Navigator.of(context).pop();
-              },
-              child: const Text('Guardar'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+              }
+            },
+            child: const Text('Guardar'),
+          ),
+        ],
+      );
+    },
+  );
+}
 }

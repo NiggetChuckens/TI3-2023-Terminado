@@ -84,7 +84,6 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    
                     const Text(
                       'Especialidad',
                       style: TextStyle(
@@ -133,7 +132,6 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                         fontSize: 18,
                       ),
                     ),
-
                     const SizedBox(height: 90),
                     Center(
                       child: ElevatedButton(
@@ -161,6 +159,7 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
+                            color: Colors.white, // Add this line
                           ),
                         ),
                       ),
@@ -181,6 +180,7 @@ class EspecialistaDetailsState extends State<EspecialistaDetails> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
+                            color: Colors.white,
                           ),
                         ),
                       ),

@@ -47,7 +47,7 @@ class programacionRegularPage extends StatelessWidget {
                 const Text('Talleres TICLAB',
                     style: TextStyle(color: Colors.white)),
                 ElevatedButton(
-                  child: Text('>>Mas informacion'),
+                  child: const Text('>>Mas informacion'),
                   onPressed: () async {
                     if (await canLaunch(urls[0])) {
                       await launch(urls[0]);
@@ -64,7 +64,7 @@ class programacionRegularPage extends StatelessWidget {
                 const Text('Curso de profundización EDUCA Blackboard',
                     style: TextStyle(color: Colors.white)),
                 ElevatedButton(
-                  child: Text('>>Mas informacion'),
+                  child: const Text('>>Mas informacion'),
                   onPressed: () async {
                     if (await canLaunch(urls[1])) {
                       await launch(urls[1]);
@@ -81,7 +81,7 @@ class programacionRegularPage extends StatelessWidget {
                 const Text('Formación inicial docente',
                     style: TextStyle(color: Colors.white)),
                 ElevatedButton(
-                  child: Text('>>Mas informacion'),
+                  child: const Text('>>Mas informacion'),
                   onPressed: () async {
                     if (await canLaunch(urls[2])) {
                       await launch(urls[2]);

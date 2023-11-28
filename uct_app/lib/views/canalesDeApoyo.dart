@@ -40,13 +40,13 @@ class CanalesDeApoyoPage extends StatelessWidget {
             const SizedBox(
                 height: 16.0), // Espacio entre el subtítulo y los botones
             ListTile(
-              leading: Icon(Icons.info_outline, color: Colors.blue),
+              leading: const Icon(Icons.info_outline, color: Colors.blue),
               title:
-                  Text('Apoyo en linea', style: TextStyle(color: Colors.blue)),
-              subtitle: Text(
+                  const Text('Apoyo en linea', style: TextStyle(color: Colors.blue)),
+              subtitle: const Text(
                   '-Lunes a viernes\n 09:00 - 11:00 hrs\n -lunes a jueves\n 15:00 - 17:00'),
               trailing: ElevatedButton(
-                child: Text('Revisar'),
+                child: const Text('Revisar'),
                 onPressed: () async {
                   if (await canLaunch(urls[0])) {
                     await launch(urls[0]);
@@ -58,13 +58,13 @@ class CanalesDeApoyoPage extends StatelessWidget {
             ),
             // Repite para los otros tres botornes
             ListTile(
-              leading: Icon(Icons.info_outline, color: Colors.blue),
-              title: Text('material de apoyo docente',
+              leading: const Icon(Icons.info_outline, color: Colors.blue),
+              title: const Text('material de apoyo docente',
                   style: TextStyle(color: Colors.blue)),
-              subtitle: Text(
+              subtitle: const Text(
                   'a continuacion encontrara material con video y/o infografias para ayudarte a ti como docente a utilizar las plataformas LMS'),
               trailing: ElevatedButton(
-                child: Text('Revisar'),
+                child: const Text('Revisar'),
                 onPressed: () async {
                   if (await canLaunch(urls[1])) {
                     await launch(urls[1]);
@@ -75,13 +75,13 @@ class CanalesDeApoyoPage extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.info_outline, color: Colors.blue),
-              title: Text('Solicitud de organizacion',
+              leading: const Icon(Icons.info_outline, color: Colors.blue),
+              title: const Text('Solicitud de organizacion',
                   style: TextStyle(color: Colors.blue)),
-              subtitle: Text(
+              subtitle: const Text(
                   'Las organizaciones permiten conectar a los usuarios de la UC Temuco en ámbitos diferentes a las actividades curriculares regulares.'),
               trailing: ElevatedButton(
-                child: Text('Revisar'),
+                child: const Text('Revisar'),
                 onPressed: () async {
                   if (await canLaunch(urls[2])) {
                     await launch(urls[2]);
@@ -92,13 +92,13 @@ class CanalesDeApoyoPage extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.info_outline, color: Colors.blue),
+              leading: const Icon(Icons.info_outline, color: Colors.blue),
               title:
-                  Text('ticket INKATUN', style: TextStyle(color: Colors.blue)),
-              subtitle: Text(
+                  const Text('ticket INKATUN', style: TextStyle(color: Colors.blue)),
+              subtitle: const Text(
                   'Plataforma de asistencia técnica y solicitud de servicios UCTemuco.'),
               trailing: ElevatedButton(
-                child: Text('Revisar'),
+                child: const Text('Revisar'),
                 onPressed: () async {
                   if (await canLaunch(urls[3])) {
                     await launch(urls[3]);

@@ -26,13 +26,13 @@ class RecursosPage extends StatelessWidget {
     return courseList;
   }
 
-  RecursosPage({Key? key}) : super(key: key);
+  const RecursosPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Recursos',
           style: TextStyle(
             color: Color.fromARGB(255, 221, 221, 221),
@@ -49,7 +49,7 @@ class RecursosPage extends StatelessWidget {
           future: fetchCourses(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else {
@@ -61,7 +61,7 @@ class RecursosPage extends StatelessWidget {
                         const EdgeInsets.all(8.0), // Add padding between cards
                     child: Container(
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [Color(0xFF8FB5E1), Color(0xFFD190E0)],
@@ -87,22 +87,22 @@ class RecursosPage extends StatelessWidget {
                                 child: Image.network(
                                     snapshot.data![index].backgroundImageUrl),
                               ),
-                              SizedBox(height: 10), // Add space
+                              const SizedBox(height: 10), // Add space
                               Text(
                                 snapshot.data![index].courseName,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 20), // Increase font size
                               ),
-                              SizedBox(height: 10), // Add space
+                              const SizedBox(height: 10), // Add space
                               Text(
                                 DateFormat('yyyy-MM-dd').format(
                                   DateTime.parse(
                                       snapshot.data![index].registerDate),
                                 ),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 16), // Increase font size
                               ),
-                              SizedBox(height: 10), // Add space
+                              const SizedBox(height: 10), // Add space
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -111,25 +111,25 @@ class RecursosPage extends StatelessWidget {
                                     onPressed: () {
                                       // Add your code for the "Registrar" button here
                                     },
-                                    child: const Text('Registrar'),
                                     style: ElevatedButton.styleFrom(
-                                      primary: Color(
+                                      primary: const Color(
                                           0xFF8FB5E1), // Set the button color to light blue
                                       fixedSize:
-                                          Size(100, 50), // Set the button size
+                                          const Size(110, 50), // Set the button size
                                     ),
+                                    child: const Text('Registrar'),
                                   ),
                                   ElevatedButton(
                                     onPressed: () {
                                       // Add your code for the "Ver" button here
                                     },
-                                    child: const Text('Ver'),
                                     style: ElevatedButton.styleFrom(
-                                      primary: Color(
+                                      primary: const Color(
                                           0xFF8FB5E1), // Set the button color to light blue
                                       fixedSize:
-                                          Size(100, 50), // Set the button size
+                                          const Size(100, 50), // Set the button size
                                     ),
+                                    child: const Text('Ver'),
                                   ),
                                 ],
                               ),
