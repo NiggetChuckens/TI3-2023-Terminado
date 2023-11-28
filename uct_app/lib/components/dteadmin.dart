@@ -15,7 +15,7 @@ Future<String> uploadImage() async {
 
     // Check if the file is a jpg or png
     if (fileExtension != '.jpg' && fileExtension != '.png') {
-      print('Invalid file type. Only jpg and png are allowed.');
+      print('Archivo Invalido: Solo se permiten imagenes JPG y PNG.');
       return '';
     }
 

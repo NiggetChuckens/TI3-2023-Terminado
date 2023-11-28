@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -171,7 +173,8 @@ void addAdmin(BuildContext context, String collectionName) {
                   .get();
               if (doc.exists) {
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('This email is already an admin.')));
+                    content: Text(
+                        'Este correo ya se encuentra como un administrador.')));
               } else {
                 FirebaseFirestore.instance
                     .collection(collectionName)

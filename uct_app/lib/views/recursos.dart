@@ -22,6 +22,10 @@ class RecursosPage extends StatelessWidget {
             backgroundImageUrl: doc['backgroundImageUrl'],
             registerDate:
                 (doc['registerDate'] as Timestamp).toDate().toString(),
+            Criterio: doc['Criterio'],
+            Fechas: doc['Fechas'],
+            Horario: doc['Horario'],
+            Objetivo: doc['Objetivo'],
           ),
         );
       });
@@ -107,8 +111,7 @@ class RecursosPage extends StatelessWidget {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding:
-                        const EdgeInsets.all(8.0), // Add padding between cards
+                    padding: const EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
@@ -116,20 +119,16 @@ class RecursosPage extends StatelessWidget {
                           end: Alignment.bottomCenter,
                           colors: [Color(0xFF8FB5E1), Color(0xFFD190E0)],
                         ),
-                        borderRadius:
-                            BorderRadius.circular(15.0), // Add rounded corners
+                        borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: Card(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              15.0), // Add rounded corners to the card
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
-                        color: Colors
-                            .transparent, // Make the card transparent to show the gradient
-                        elevation: 0, // Remove shadow
+                        color: Colors.transparent,
+                        elevation: 0,
                         child: Padding(
-                          padding: const EdgeInsets.all(
-                              16.0), // Add padding inside the card
+                          padding: const EdgeInsets.all(16.0),
                           child: Column(
                             children: <Widget>[
                               ClipRRect(
@@ -191,11 +190,57 @@ class RecursosPage extends StatelessWidget {
                                         },
                                       );
                                     },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: const Color(
+                                          0xFF8FB5E1), // Set the button color to light blue
+                                      fixedSize: const Size(100, 50),
+                                    ),
                                     child: const Text('Registrar'),
                                   ),
                                   ElevatedButton(
                                     onPressed: () {
-                                      // Add your code for the "Ver" button here
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15.0),
+                                            ),
+                                            title: Text(snapshot
+                                                .data![index].courseName),
+                                            content: SingleChildScrollView(
+                                              child: ListBody(
+                                                children: <Widget>[
+                                                  Image.network(snapshot
+                                                      .data![index]
+                                                      .backgroundImageUrl),
+                                                  Text('Criterio: ' +
+                                                      snapshot.data![index]
+                                                          .Criterio),
+                                                  Text('Fechas: ' +
+                                                      snapshot
+                                                          .data![index].Fechas),
+                                                  Text('Horario: ' +
+                                                      snapshot.data![index]
+                                                          .Horario),
+                                                  Text('Objetivo: ' +
+                                                      snapshot.data![index]
+                                                          .Objetivo),
+                                                ],
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('Cerrar'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
                                     },
                                     style: ElevatedButton.styleFrom(
                                       primary: const Color(
