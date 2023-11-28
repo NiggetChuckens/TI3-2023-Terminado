@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, unused_label
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uct_app/views/login.dart';
@@ -93,11 +94,32 @@ class TopBar extends StatelessWidget {
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.bold)),
                                         Text(email),
-                                        if (email.endsWith('@alu.uct.cl'))
-                                          const Text('Estudiante'),
-                                        if (email.endsWith('@uct.cl'))
-                                          const Text('Docente'),
-                                        const SizedBox(height: 20),
+                                        StreamBuilder<DocumentSnapshot>(
+                                          stream: FirebaseFirestore.instance
+                                              .collection('administradores')
+                                              .doc(email)
+                                              .snapshots(),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot<DocumentSnapshot>
+                                                  snapshot) {
+                                            if (snapshot.hasData &&
+                                                snapshot.data!.exists) {
+                                              return const Text(
+                                                  'Administrador');
+                                            } else {
+                                              if (email
+                                                  .endsWith('@alu.uct.cl')) {
+                                                return const Text('Estudiante');
+                                              } else if (email
+                                                  .endsWith('@uct.cl')) {
+                                                return const Text('Docente');
+                                              } else {
+                                                return const SizedBox(
+                                                    height: 20);
+                                              }
+                                            }
+                                          },
+                                        ),
                                         ElevatedButton(
                                           style: ButtonStyle(
                                             backgroundColor:
@@ -122,7 +144,11 @@ class TopBar extends StatelessWidget {
                                               (Route<dynamic> route) => false,
                                             );
                                           },
-                                          child: const Text('Cerrar sesión'),
+                                          child: const Text(
+                                            'Cerrar sesión',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
                                         ),
                                       ],
                                     ),

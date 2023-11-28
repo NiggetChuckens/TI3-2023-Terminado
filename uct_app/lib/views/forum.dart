@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class QuestionForumPage extends StatefulWidget {
+  const QuestionForumPage({super.key});
+
   @override
   _QuestionForumPageState createState() => _QuestionForumPageState();
 }
@@ -14,98 +16,152 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
   final String _email = FirebaseAuth.instance.currentUser?.email ?? "";
 
   Future<void> _addQuestion() async {
-    final TextEditingController _titleController = TextEditingController();
-    final TextEditingController _bodyController = TextEditingController();
-    final User? _currentUser = FirebaseAuth.instance.currentUser;
-    final String _email = _currentUser?.email ?? "";
-    final String _profilePic = _currentUser?.photoURL ?? "";
-    final DateTime _date = DateTime.now();
-    final String _fullName = _currentUser?.displayName ?? "";
-    final List<String> _nameParts = _fullName.split(' ');
-    final String _shortName =
-        _nameParts.length > 1 ? '${_nameParts[0]} ${_nameParts[1]}' : _fullName;
+    final TextEditingController titleController = TextEditingController();
+    final TextEditingController bodyController = TextEditingController();
+    final User? currentUser = FirebaseAuth.instance.currentUser;
+    final String email = currentUser?.email ?? "";
+    final String profilePic = currentUser?.photoURL ?? "";
+    final DateTime date = DateTime.now();
+    final String fullName = currentUser?.displayName ?? "";
+    final List<String> nameParts = fullName.split(' ');
+    final String shortName =
+        nameParts.length > 1 ? '${nameParts[0]} ${nameParts[1]}' : fullName;
 
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Cual es su pregunta?'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+                20), // Increase the border radius to make the dialog more rounded
+          ),
+          title: const Center(child: Text('Cual es su pregunta?')),
           content: SizedBox(
             height: 200,
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    width: double.infinity,
-                    height: 50,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: TextField(
-                      controller: _titleController,
-                      decoration: const InputDecoration(
-                        fillColor: Colors.grey,
-                        filled: true,
-                        hintText: "Titulo de la pregunta",
-                        border: InputBorder.none,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: 300, // Set the width to your desired value
+                  height: 50,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.blue, // Change the color to blue
+                    borderRadius: BorderRadius.circular(25),
+                    boxShadow: [
+                      // Add a shadow
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
                       ),
+                    ],
+                  ),
+
+                  child: TextField(
+                    controller: titleController,
+                    decoration: const InputDecoration(
+                      hintText: "Titulo de la pregunta",
+                      border: InputBorder.none,
+
+                      hintStyle: TextStyle(color: Colors.white),
+                      // Add color to the text
+                    ),
+
+                    style:
+                        const TextStyle(color: Colors.white), // Add this line
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  width: 300, // Set the width to your desired value
+                  height: 100,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(25),
+                    boxShadow: [
+                      // Add a shadow
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: bodyController,
+                    maxLines:
+                        null, // This makes the TextField expand vertically
+                    minLines:
+                        3, // This sets the minimum lines for the TextField
+                    decoration: const InputDecoration(
+                      hintText: "Descripcion",
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(
+                          color: Color.fromARGB(
+                              255, 0, 0, 0)), // Add color to the text
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Container(
-                    width: double.infinity,
-                    height: 100,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: TextField(
-                      controller: _bodyController,
-                      decoration: const InputDecoration(
-                        fillColor: Colors.grey,
-                        filled: true,
-                        hintText: "Ingresar pregunta aqui",
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancelar'),
               style: TextButton.styleFrom(
-                foregroundColor: Color.fromARGB(255, 255, 255, 255),
+                foregroundColor: const Color.fromARGB(255, 255, 255, 255),
                 backgroundColor: const Color.fromARGB(255, 255, 0, 0),
                 disabledForegroundColor: Colors.grey.withOpacity(0.38),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              child: const Text('Cancelar'),
             ),
             TextButton(
-              child: const Text('Enviar'),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.green,
                 disabledForegroundColor: Colors.grey.withOpacity(0.38),
               ),
               onPressed: () {
+              if (titleController.text.isEmpty || bodyController.text.isEmpty) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Error'),
+                      content: const Text('No se puede dejar el titulo o cuerpo de la pregunta vacio.'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
                 _questions.add({
-                  'title': _titleController.text,
-                  'body': _bodyController.text,
-                  'email': _email,
-                  'profilePic': _profilePic,
-                  'date': _date,
-                  'shortName': _shortName,
+                  'title': titleController.text,
+                  'body': bodyController.text,
+                  'email': email,
+                  'profilePic': profilePic,
+                  'date': date,
+                  'shortName': shortName,
+                  'likes': 0,
+                  'dislikes': 0,
+                  'likedBy': [],
+                  'dislikedBy': [],
                 });
                 Navigator.of(context).pop();
-              },
+              }
+            },
+            child: const Text('Enviar'),
             ),
           ],
         );
@@ -114,53 +170,76 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
   }
 
   Future<void> _addReply(DocumentReference questionRef) async {
-    final TextEditingController _replyController = TextEditingController();
-    final User? _currentUser = FirebaseAuth.instance.currentUser;
-    final String _email = _currentUser?.email ?? "";
-    final String _fullName = _currentUser?.displayName ?? "";
-    final List<String> _nameParts = _fullName.split(' ');
-    final String _shortName =
-        _nameParts.length > 1 ? '${_nameParts[0]} ${_nameParts[1]}' : _fullName;
+    final TextEditingController replyController = TextEditingController();
+    final User? currentUser = FirebaseAuth.instance.currentUser;
+    final String email = currentUser?.email ?? "";
+    final String fullName = currentUser?.displayName ?? "";
+    final List<String> nameParts = fullName.split(' ');
+    final String shortName =
+        nameParts.length > 1 ? '${nameParts[0]} ${nameParts[1]}' : fullName;
 
-    final DateTime _date = DateTime.now();
+    final DateTime date = DateTime.now();
 
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Center(child: const Text('Ingresar Respuesta')),
-          content: SingleChildScrollView(
-            child: Container(
-              width: 300.0,
-              child: TextField(
-                controller: _replyController,
-                maxLines: null,
-                decoration: InputDecoration(
-                  hintText: "Ingresar Respuesta",
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide: BorderSide.none,
-                  ),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+          title: const Center(child: Text('Ingresar Respuesta')),
+          content: Container(
+            width: 300.0,
+            height: 100.0,
+            child: TextField(
+              controller: replyController,
+              maxLines: 5,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.grey[200],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: BorderSide.none,
                 ),
-                style: TextStyle(color: Colors.black),
+                contentPadding: const EdgeInsets.only(
+                    top: 8.0,
+                    left: 16.0,
+                    right: 16.0), // Add padding to the top
               ),
+              style: const TextStyle(
+                  color: Colors.black,
+                  overflow: TextOverflow.ellipsis), // Make text scrollable
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Enviar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+                backgroundColor: const Color.fromARGB(255, 255, 0, 0),
+                disabledForegroundColor: Colors.grey.withOpacity(0.38),
+              ),
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.green,
+                disabledForegroundColor: Colors.grey.withOpacity(0.38),
+              ),
               onPressed: () {
                 questionRef.collection('replies').add({
-                  'reply': _replyController.text,
-                  'name': _shortName,
-                  'email': _email,
-                  'date': _date,
+                  'reply': replyController.text,
+                  'name': shortName,
+                  'email': email,
+                  'date': date,
+                  'likes': 0,
+                  'dislikes': 0,
+                  'likedBy': [],
+                  'dislikedBy': [],
                 });
                 Navigator.of(context).pop();
               },
+              child: const Text('Enviar'),
             ),
           ],
         );
@@ -172,11 +251,11 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Foro de Preguntas'),
+        title: const Text('Foro de Preguntas'),
         backgroundColor: Colors.blueGrey,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(Icons.arrow_back_ios_new),
           tooltip: 'Volver atras',
           onPressed: () {
             Navigator.pop(context);
@@ -184,7 +263,7 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             tooltip: 'Search',
             onPressed: () {}, // Handle your functionality here
           ),
@@ -204,15 +283,13 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                   final replies =
                       repliesSnapshot.docs.map((doc) => doc.data()).toList();
 
-                  // ignore: use_build_context_synchronously
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Material(
-                          elevation: 5.0, // This adds elevation
-                          borderRadius: BorderRadius.circular(
-                              15.0), // This makes the border rounded
+                          elevation: 5.0,
+                          borderRadius: BorderRadius.circular(15.0),
                           child: Container(
                             padding: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
@@ -228,20 +305,17 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                           ),
                         ),
                         content: Container(
-                          height: 300.0, // Set the height to your desired value
-                          width: 300.0, // Set the width to your desired value
+                          height: 300.0,
+                          width: 300.0,
                           decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Colors.grey), // This adds a border
-                            borderRadius: BorderRadius.circular(
-                                15.0), // This makes the border rounded
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(15.0),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 5,
                                 blurRadius: 7,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
+                                offset: const Offset(0, 3),
                               ),
                             ],
                           ),
@@ -257,7 +331,7 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
 
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return CircularProgressIndicator();
+                                return const CircularProgressIndicator();
                               }
 
                               final replies = snapshot.data!.docs
@@ -289,7 +363,7 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                       );
                     },
                   );
-                  print(replies.length.toString()); // Use replies here
+                  print(replies.length.toString());
                 },
                 child: Container(
                   margin: const EdgeInsets.all(8.0),
@@ -308,8 +382,7 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                     ],
                   ),
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start, // Align text to the left
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -324,15 +397,12 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                               height: 50.0,
                             ),
                           ),
-                          const SizedBox(
-                              width:
-                                  10), // Add some space between the picture and the name
+                          const SizedBox(width: 10),
                           Text(
                             (document.data()
                                     as Map<String, dynamic>)['shortName'] ??
                                 '',
-                            style: TextStyle(
-                                fontSize: 16), // Adjust the style as needed
+                            style: const TextStyle(fontSize: 16),
                           ),
                         ],
                       ),
@@ -369,6 +439,7 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                               ),
                             ),
                           ),
+                          const SizedBox(width: 10),
                           Text(
                             DateFormat('yyyy-MM-dd HH:mm').format(
                               (document.data() as Map<String, dynamic>)['date']
@@ -380,74 +451,175 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
                       ),
                       Row(
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.reply),
-                            onPressed: () {
-                              _addReply(document.reference);
-                            },
-                          ),
-                          StreamBuilder<QuerySnapshot>(
-                            stream: document.reference
-                                .collection('replies')
-                                .snapshots(),
+                          StreamBuilder<DocumentSnapshot>(
+                            stream: document.reference.snapshots(),
                             builder: (BuildContext context,
-                                AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if (snapshot.hasData) {
-                                return Text('${snapshot.data!.docs.length}');
-                              } else if (snapshot.hasError) {
+                                AsyncSnapshot<DocumentSnapshot> snapshot) {
+                              if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               }
-                              return CircularProgressIndicator();
+
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
+                              }
+
+                              final data =
+                                  snapshot.data!.data() as Map<String, dynamic>;
+                              final likes = data['likes'] ?? 0;
+                              final dislikes = data['dislikes'] ?? 0;
+                              final likedBy = data['likedBy'] ?? [];
+                              final dislikedBy = data['dislikedBy'] ?? [];
+                              final userId =
+                                  FirebaseAuth.instance.currentUser?.uid;
+
+                              return Row(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.reply),
+                                    onPressed: () {
+                                      _addReply(document.reference);
+                                    },
+                                  ),
+                                  StreamBuilder<QuerySnapshot>(
+                                    stream: document.reference
+                                        .collection('replies')
+                                        .snapshots(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (snapshot.hasData) {
+                                        return Text(
+                                            '${snapshot.data!.docs.length}');
+                                      } else if (snapshot.hasError) {
+                                        return Text('Error: ${snapshot.error}');
+                                      }
+                                      return const CircularProgressIndicator();
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.thumb_up),
+                                    onPressed: () {
+                                      if (!likedBy.contains(userId)) {
+                                        document.reference.update({
+                                          'likes': FieldValue.increment(1),
+                                          'likedBy':
+                                              FieldValue.arrayUnion([userId]),
+                                          'dislikes':
+                                              dislikedBy.contains(userId)
+                                                  ? FieldValue.increment(-1)
+                                                  : 0,
+                                          'dislikedBy':
+                                              FieldValue.arrayRemove([userId])
+                                        });
+                                      }
+                                    },
+                                  ),
+                                  Text('$likes'),
+                                  IconButton(
+                                    icon: const Icon(Icons.thumb_down),
+                                    onPressed: () {
+                                      if (!dislikedBy.contains(userId)) {
+                                        document.reference.update({
+                                          'dislikes': FieldValue.increment(1),
+                                          'dislikedBy':
+                                              FieldValue.arrayUnion([userId]),
+                                          'likes': likedBy.contains(userId)
+                                              ? FieldValue.increment(-1)
+                                              : 0,
+                                          'likedBy':
+                                              FieldValue.arrayRemove([userId])
+                                        });
+                                      }
+                                    },
+                                  ),
+                                  Text('$dislikes'),
+                                  StreamBuilder<DocumentSnapshot>(
+                                    stream: FirebaseFirestore.instance
+                                        .collection('administradores')
+                                        .doc(_email)
+                                        .snapshots(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<DocumentSnapshot>
+                                            snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return const CircularProgressIndicator();
+                                      } else if (snapshot.hasError) {
+                                        return Text("Error: ${snapshot.error}");
+                                      } else if ((snapshot.hasData &&
+                                              snapshot.data!.exists) ||
+                                          _email ==
+                                              (document.data() as Map<String,
+                                                  dynamic>)['email']) {
+                                        // The user is an admin or the owner of the post
+                                        return Row(
+                                          children: [
+                                            IconButton(
+                                              icon: const Icon(Icons.edit),
+                                              onPressed: () {
+                                                _editQuestion(
+                                                    document.reference,
+                                                    document.data() as Map<
+                                                        String, dynamic>);
+                                              },
+                                            ),
+                                            IconButton(
+                                              icon: const Icon(Icons.delete),
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          'Confirmar Eliminacion'),
+                                                      content: const Text(
+                                                          'Esta seguro que desea borrar su pregunta?'),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          child: const Text(
+                                                              'Cancelar'),
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                        ),
+                                                        TextButton(
+                                                          style: TextButton
+                                                              .styleFrom(
+                                                            foregroundColor:
+                                                                Colors.white,
+                                                            backgroundColor:
+                                                                Colors.red,
+                                                          ),
+                                                          onPressed: () {
+                                                            document.reference
+                                                                .delete();
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          child: const Text(
+                                                              'Borrar'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      } else {
+                                        return Container();
+                                      }
+                                    },
+                                  )
+                                ],
+                              );
                             },
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.thumb_up),
-                            onPressed: () {},
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.thumb_down),
-                            onPressed: () {
-                              // Handle dislike button press
-                            },
-                          ),
-                          if (_email ==
-                              (document.data()
-                                  as Map<String, dynamic>)['email'])
-                            IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title:
-                                          const Text('Confirmar Eliminacion'),
-                                      content: const Text(
-                                          'Esta seguro que desea borrar su pregunta?'),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          child: const Text('Cancel'),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                        TextButton(
-                                          child: const Text('Delete'),
-                                          style: TextButton.styleFrom(
-                                            foregroundColor: Colors.white,
-                                            backgroundColor: Colors.red,
-                                          ),
-                                          onPressed: () {
-                                            document.reference.delete();
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                            ),
                         ],
                       ),
                     ],
@@ -460,9 +632,147 @@ class _QuestionForumPageState extends State<QuestionForumPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addQuestion,
-        tooltip: 'Increment',
+        tooltip: 'Agregar Pregunta',
         child: const Icon(Icons.add),
       ),
     );
   }
+
+  Future<void> _editQuestion(
+      DocumentReference questionRef, Map<String, dynamic> questionData) async {
+    final TextEditingController _titleController =
+        TextEditingController(text: questionData['title']);
+    final TextEditingController _bodyController =
+        TextEditingController(text: questionData['body']);
+
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+                20), // Increase the border radius to make the dialog more rounded
+          ),
+          title: const Center(child: Text('Editar Pregunta')),
+          content: SizedBox(
+            height: 200,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: 300, // Set the width to your desired value
+                  height: 50,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.blue, // Change the color to blue
+                    borderRadius: BorderRadius.circular(25),
+                    boxShadow: [
+                      // Add a shadow
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: _titleController,
+                    decoration: const InputDecoration(
+                      hintText: "Titulo de la pregunta",
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(
+                          color: Colors.white), // Add color to the text
+                    ),
+                    style:
+                        const TextStyle(color: Colors.white), // Add this line
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  width: 300, // Set the width to your desired value
+                  height: 100,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(25),
+                    boxShadow: [
+                      // Add a shadow
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: _bodyController,
+                    maxLines:
+                        null, // This makes the TextField expand vertically
+                    minLines:
+                        3, // This sets the minimum lines for the TextField
+                    decoration: const InputDecoration(
+                      hintText: "Descripcion",
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(
+                          color: Color.fromARGB(
+                              255, 0, 0, 0)), // Add color to the text
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+                backgroundColor: const Color.fromARGB(255, 255, 0, 0),
+                disabledForegroundColor: Colors.grey.withOpacity(0.38),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.green,
+                disabledForegroundColor: Colors.grey.withOpacity(0.38),
+              ),
+              onPressed: () {
+              if (_titleController.text.isEmpty || _bodyController.text.isEmpty) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Error'),
+                      content: Text('No se puede dejar el titulo o cuerpo de la pregunta vacio.'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                questionRef.update({
+                  'title': _titleController.text,
+                  'body': _bodyController.text,
+                });
+                Navigator.of(context).pop();
+              }
+            },
+            child: const Text('Guardar'),
+          ),
+        ],
+      );
+    },
+  );
+}
 }

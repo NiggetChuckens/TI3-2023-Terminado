@@ -5,7 +5,7 @@ class DownloadCard extends StatelessWidget {
   final String coursename;
   final String url;
 
-  DownloadCard({
+  const DownloadCard({super.key, 
     required this.coursename,
     required this.url,
   });

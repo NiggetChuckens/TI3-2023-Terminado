@@ -54,6 +54,10 @@ dependencies:
   shared_preferences: ^2.0.8
   uuid: ^3.0.5
   path_provider: ^2.0.5
+  image_picker: ^1.0.4
+  firebase_storage: ^11.5.2
+  path: ^1.8.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

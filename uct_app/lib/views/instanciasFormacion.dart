@@ -23,7 +23,7 @@ class VistaConImagen extends StatelessWidget {
       backgroundColor:
           Colors.lightBlue, // Cambia el color de fondo a azul claro
       appBar: AppBar(
-        title: Text('instancias formacion'),
+        title: const Text('instancias formacion'),
       ),
       body: GridView.builder(
         itemCount: 6,
@@ -58,7 +58,7 @@ class VistaConImagen extends StatelessWidget {
         }
       },
       child: Container(
-        margin: EdgeInsets.all(8.0), // Agrega un espacio entre las imágenes
+        margin: const EdgeInsets.all(8.0), // Agrega un espacio entre las imágenes
         decoration: BoxDecoration(
           border: Border.all(
             color: Colors.black, // Color del borde

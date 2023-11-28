@@ -8,6 +8,14 @@ import 'dashboard2.dart';
 import 'package:googleapis/calendar/v3.dart' as gcal;
 import 'package:http/http.dart' show BaseRequest, StreamedResponse;
 import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+final FirebaseFirestore firestore = FirebaseFirestore.instance;
+Future<List<String>> getAllowedDomains() async {
+  final QuerySnapshot querySnapshot =
+      await firestore.collection('dominiospermitidos').get();
+  return querySnapshot.docs.map((doc) => doc.id).toList();
+}
 
 String capitalize(String str) {
   if (str.isEmpty) {
@@ -62,56 +70,73 @@ class _LoginPageState extends State<LoginPage> {
   List<gcal.Event>? events;
 
   Future<String?> signInWithGoogle(
-      EventsModel eventsModel, Function(List<gcal.Event>?) callback) async {
-    // Sign out first to ensure the account selection dialog is shown
-    await googleSignIn.signOut();
+    EventsModel eventsModel, Function(List<gcal.Event>?) callback) async {
+  // Sign out first to ensure the account selection dialog is shown
+  await googleSignIn.signOut();
 
-    final GoogleSignInAccount? googleSignInAccount =
-        await googleSignIn.signIn();
-    if (googleSignInAccount != null) {
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
+  final GoogleSignInAccount? googleSignInAccount =
+      await googleSignIn.signIn();
+  if (googleSignInAccount != null) {
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
 
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
 
-      final UserCredential authResult =
-          await firebaseAuth.signInWithCredential(credential);
-      final User? user = authResult.user;
+    final UserCredential authResult =
+        await firebaseAuth.signInWithCredential(credential);
+    final User? user = authResult.user;
 
-      if (user != null) {
-        assert(!user.isAnonymous);
-        assert(await user.getIdToken() != null);
+    if (user != null) {
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
 
-        final User? currentUser = firebaseAuth.currentUser;
-        assert(user.uid == currentUser!.uid);
-        
-        // Check if the email domain is alu.uct.cl
-        if (user.email!.endsWith('@alu.uct.cl')) {
-          print('signInWithGoogle succeeded: $user');
+      final User? currentUser = firebaseAuth.currentUser;
+      assert(user.uid == currentUser!.uid);
 
-          // Split the username on space and keep the first two parts
-          List<String> nameParts = user.displayName!.split(' ');
-          String shortName = user
-              .displayName!; // default to full name if name has less than two parts
-          if (nameParts.length > 1) {
-            shortName =
-                '${capitalize(nameParts[0])} ${capitalize(nameParts[1])}'; // capitalize first and last name
-            print('shortName: $shortName');
-            print('email: ${user.email}');
-          }
+      // Fetch the blocked users
+      final QuerySnapshot blockedUsersSnapshot =
+          await firestore.collection('bloqueados').get();
+      final List<String> blockedUsers =
+          blockedUsersSnapshot.docs.map((doc) => doc.id).toList();
 
-          return shortName;
-        } else {
-          print('signInWithGoogle failed: Email domain is not alu.uct.cl');
-          return null;
+      // Check if the user is blocked
+      if (blockedUsers.contains(user.email)) {
+        print('signInWithGoogle failed: User is blocked');
+        return null;
+      }
+
+      // Fetch the allowed domains
+      List<String> allowedDomains = await getAllowedDomains();
+
+      // Check if the email domain is in the allowed domains
+      String domain = user.email!.split('@').last;
+      if (allowedDomains.contains(domain)) {
+        print('signInWithGoogle succeeded: $user');
+
+        // Split the username on space and keep the first two parts
+        List<String> nameParts = user.displayName!.split(' ');
+        String shortName = user
+            .displayName!; // default to full name if name has less than two parts
+        if (nameParts.length > 1) {
+          shortName =
+              '${capitalize(nameParts[0])} ${capitalize(nameParts[1])}'; // capitalize first and last name
+          print('shortName: $shortName');
+          print('email: ${user.email}');
         }
+
+        return shortName;
+      } else {
+        print(
+            'signInWithGoogle failed: Email domain is not in the allowed domains');
+        return null;
       }
     }
-    return null;
   }
+  return null;
+}
 
   void signOutGoogle() async {
     await googleSignIn.signOut();
@@ -145,45 +170,46 @@ class _LoginPageState extends State<LoginPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     signInWithGoogle(eventsModel, (events) {})
-                        .then((String? shortName) {
-                      if (shortName != null) {
-                        final User? currentUser = firebaseAuth.currentUser;
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            transitionDuration:
-                                const Duration(milliseconds: 500),
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) =>
-                                    Dash(
-                              username: shortName,
-                              email:
-                                  currentUser!.email!, // pass the email to Dash
-                            ),
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
-                              const begin = Offset(0.0, 1.0);
-                              const end = Offset.zero;
-                              const curve = Curves.ease;
-                              final tween = Tween(begin: begin, end: end)
-                                  .chain(CurveTween(curve: curve));
-                              return SlideTransition(
-                                position: animation.drive(tween),
-                                child: child,
-                              );
-                            },
-                          ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Failed to sign in with Google'),
-                            backgroundColor: Colors.red,
-                            duration: Duration(seconds: 1),
-                          ),
-                        );
-                      }
-                    });
+    .then((String? shortName) {
+  if (shortName != null) {
+    final User? currentUser = firebaseAuth.currentUser;
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration:
+            const Duration(milliseconds: 500),
+        pageBuilder:
+            (context, animation, secondaryAnimation) =>
+                Dash(
+          username: shortName,
+          email:
+              currentUser!.email!, // pass the email to Dash
+        ),
+        transitionsBuilder: (context, animation,
+            secondaryAnimation, child) {
+          const begin = Offset(0.0, 1.0);
+          const end = Offset.zero;
+          const curve = Curves.ease;
+          final tween = Tween(begin: begin, end: end)
+              .chain(CurveTween(curve: curve));
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+      ),
+    );
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content:
+            Text('Bloqueado de plataforma, contacte al administrador'),
+        backgroundColor: Colors.red,
+        duration: Duration(seconds: 1),
+      ),
+    );
+  }
+});
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(

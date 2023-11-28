@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+import 'package:uct_app/views/about.dart';
+import 'package:uct_app/views/admin.dart';
+import 'package:uct_app/views/contacto.dart';
 import 'package:uct_app/views/especialistas.dart';
 import 'package:uct_app/views/forum.dart';
 import 'views/compromisosAcademicos.dart';
@@ -74,7 +77,10 @@ class MyApp extends StatelessWidget {
               child: const UpcomingEventsPage(),
             ),
         '/ticlab': (context) => const DocentesPage(),
-        '/foro': (context) => QuestionForumPage(),
+        '/foro': (context) => const QuestionForumPage(),
+        '/admin': (context) => const AdminPanel(),
+        '/contacto': (context) => ContactScreen(),
+        '/about': (context) => const AboutPage(),
       },
     );
   }

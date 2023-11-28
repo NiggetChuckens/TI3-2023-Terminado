@@ -90,7 +90,7 @@ class DocentesPage extends StatelessWidget {
            child: Center(
              child: Text(
                title,
-               style: TextStyle(
+               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
