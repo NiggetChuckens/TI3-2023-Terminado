@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
               username: '',
               email: '',
             ),
-        '/recursos': (context) => const RecursosPage(),
+        '/recursos': (context) => RecursosPage(),
         '/docentes': (context) => const DocentesPage(),
         '/compromisosacademicos': (context) => CompromisosAcademicosPage(),
         '/canalesDeApoyo': (context) => const CanalesDeApoyoPage(),

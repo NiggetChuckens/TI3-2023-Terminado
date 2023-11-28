@@ -50,11 +50,18 @@ Widget buildDteAdminTab(BuildContext context, Function deleteFunction,
         return ListView(
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+            String pfpLink =
+                'https://firebasestorage.googleapis.com/v0/b/flutter-app-400102.appspot.com/o/Default.jpg?alt=media&token=2e6ebc34-bee5-4c6c-b8ea-7204769c092e'; // Replace with your specific link
+            if (data.containsKey('pfp') &&
+                data['pfp'] != null &&
+                data['pfp'].toString().isNotEmpty) {
+              pfpLink = data['pfp'];
+            }
             return Card(
               margin: const EdgeInsets.all(8),
               child: ListTile(
                 leading: CircleAvatar(
-                  backgroundImage: NetworkImage(data['pfp']),
+                  backgroundImage: NetworkImage(pfpLink),
                 ),
                 title: Text(data['nombre'],
                     style: const TextStyle(
@@ -359,8 +366,8 @@ void addDte(BuildContext context, String collectionName) {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: const Text('Confirmar Agregar Funcionario'),
-                    content:
-                        const Text('Esta seguro que desea agregar este funcionario?'),
+                    content: const Text(
+                        'Esta seguro que desea agregar este funcionario?'),
                     actions: <Widget>[
                       TextButton(
                         child: const Text('Cancelar'),
@@ -382,8 +389,8 @@ void addDte(BuildContext context, String collectionName) {
                               builder: (BuildContext context) {
                                 return AlertDialog(
                                   title: const Text('Error'),
-                                  content:
-                                      const Text('Todos los campos son obligatorios.'),
+                                  content: const Text(
+                                      'Todos los campos son obligatorios.'),
                                   actions: <Widget>[
                                     TextButton(
                                       child: const Text('OK'),
